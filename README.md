@@ -1,0 +1,1 @@
+Free, open-source halal mortgage calculator for UK Muslims. Single HTML file, no dependencies, no tracking. Compare Islamic Home Purchase Plans (HPP) with conventional mortgages. Fork it, improve it, share it.
