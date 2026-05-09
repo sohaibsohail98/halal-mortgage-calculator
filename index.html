@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Free Islamic mortgage calculator for UK Muslims. Compare Halal Home Purchase Plans (HPP) vs conventional mortgages — see monthly payments, total cost, and how much interest you avoid.">
+<meta property="og:title" content="Halal Mortgage Calculator — HPP vs Conventional">
+<meta property="og:description" content="Free tool for UK Muslims to compare Islamic Home Purchase Plans with conventional mortgages. No signup. No ads.">
+<meta name="theme-color" content="#1a1a18">
+<title>Halal Mortgage Calculator — Islamic HPP vs Conventional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --teal: #0F6E56; --teal-light: #E1F5EE; --teal-mid: #1D9E75; --teal-dark: #085041;
+  --blue: #185FA5; --blue-light: #E6F1FB; --blue-mid: #378ADD;
+  --coral: #993C1D; --coral-light: #FAECE7; --coral-mid: #D85A30;
+  --gold: #BA7517; --gold-light: #FAEEDA;
+  --ink: #1a1a18; --ink-soft: #4a4a46; --ink-mute: #888780;
+  --paper: #faf9f6; --surface: #f2f0eb; --surface2: #eceae3;
+  --border: rgba(0,0,0,0.09); --border-med: rgba(0,0,0,0.14);
+  --radius: 14px; --radius-sm: 9px; --radius-xs: 6px;
+  --shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--ink);
+  padding: clamp(1.5rem, 5vw, 3rem) clamp(1rem, 4vw, 2rem) clamp(1.25rem, 4vw, 2.5rem);
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute; top: -80px; right: -80px;
+  width: 280px; height: 280px;
+  border: 50px solid rgba(255,255,255,0.035);
+  border-radius: 50%;
+}
+.header::after {
+  content: '';
+  position: absolute; bottom: -50px; left: 38%;
+  width: 180px; height: 180px;
+  border: 36px solid rgba(29,158,117,0.08);
+  border-radius: 50%;
+}
+.header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.header-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.header-text { flex: 1; min-width: 0; }
+.header-eyebrow {
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.13em; text-transform: uppercase;
+  color: var(--teal-mid); margin-bottom: 10px;
+}
+.header h1 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(1.55rem, 5vw, 2.7rem);
+  font-weight: 400; line-height: 1.13;
+  color: #faf9f6; margin-bottom: 10px;
+}
+.header h1 em { font-style: italic; color: var(--teal-mid); }
+.header-sub {
+  font-size: clamp(13px, 2.5vw, 14px);
+  color: rgba(255,255,255,0.45);
+  max-width: 520px; line-height: 1.65;
+}
+.header-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+  align-items: flex-start;
+  padding-top: 4px;
+}
+.btn-ghost {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 500;
+  padding: 9px 16px;
+  border-radius: 30px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.85);
+  cursor: pointer;
+  display: flex; align-items: center; gap: 6px;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.13); border-color: rgba(255,255,255,0.35); }
+.btn-ghost svg { width: 15px; height: 15px; flex-shrink: 0; }
+.btn-teal {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 500;
+  padding: 9px 16px;
+  border-radius: 30px;
+  border: none;
+  background: var(--teal-mid);
+  color: #fff;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 6px;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.btn-teal:hover { background: var(--teal); }
+.btn-teal svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+/* ── MAIN ── */
+.main { max-width: 900px; margin: 0 auto; padding: clamp(1.25rem, 4vw, 2rem) clamp(1rem, 3vw, 1.5rem) 4rem; }
+
+.sec {
+  font-size: 10.5px; font-weight: 500;
+  letter-spacing: 0.11em; text-transform: uppercase;
+  color: var(--ink-mute); margin: 2rem 0 0.85rem;
+}
+
+/* ── CARDS ── */
+.card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: clamp(1rem, 3vw, 1.5rem);
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+/* ── SLIDERS ── */
+.controls-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 clamp(1rem, 4vw, 2.5rem);
+}
+@media (max-width: 580px) { .controls-grid { grid-template-columns: 1fr; } }
+
+.slider-group { margin-bottom: 1rem; }
+.slider-top {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: 7px;
+}
+.slider-name { font-size: 13px; color: var(--ink-soft); }
+.slider-val { font-size: 15px; font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+input[type=range] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 4px;
+  border-radius: 2px; background: var(--surface2);
+  outline: none; cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px; height: 22px;
+  border-radius: 50%; background: var(--ink);
+  cursor: pointer; border: 3px solid #fff;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.2);
+  transition: transform 0.15s;
+}
+input[type=range]:active::-webkit-slider-thumb { transform: scale(1.15); }
+input[type=range].teal::-webkit-slider-thumb { background: var(--teal); }
+input[type=range].blue::-webkit-slider-thumb { background: var(--blue); }
+input[type=range]::-moz-range-thumb {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--ink); border: 3px solid #fff;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.2);
+}
+
+/* ── PRESETS ── */
+.presets { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 0.75rem; }
+.preset-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; padding: 5px 13px;
+  border-radius: 20px; border: 1px solid var(--border-med);
+  background: var(--paper); color: var(--ink-soft);
+  cursor: pointer; transition: all 0.15s;
+}
+.preset-btn:hover { border-color: var(--ink-mute); color: var(--ink); }
+.preset-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* ── COMPARE GRID ── */
+.compare-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; margin: 1.25rem 0;
+}
+@media (max-width: 540px) { .compare-grid { grid-template-columns: 1fr; } }
+
+.result-card {
+  border-radius: var(--radius);
+  padding: clamp(1rem, 3vw, 1.25rem);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.result-card.halal { background: var(--teal-light); border-color: rgba(15,110,86,0.18); }
+.result-card.conv  { background: var(--blue-light);  border-color: rgba(24,95,165,0.18); }
+
+.card-label {
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 7px;
+}
+.card-label.halal { color: var(--teal); }
+.card-label.conv  { color: var(--blue); }
+.card-badge {
+  font-size: 10px; padding: 2px 8px;
+  border-radius: 10px; font-weight: 400; letter-spacing: 0.04em;
+}
+.card-badge.halal { background: rgba(15,110,86,0.13); color: var(--teal); }
+.card-badge.conv  { background: rgba(24,95,165,0.13); color: var(--blue); }
+
+.stat { margin-bottom: 13px; }
+.stat-label { font-size: 11px; color: var(--ink-mute); margin-bottom: 2px; }
+.stat-value { font-size: clamp(18px, 4vw, 22px); font-weight: 300; color: var(--ink); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.stat-sub { font-size: 11px; color: var(--ink-mute); margin-top: 1px; line-height: 1.4; }
+
+/* ── DIFF BOX ── */
+.diff-box {
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.25rem;
+  font-size: 14px; line-height: 1.65;
+  margin-bottom: 1.25rem;
+}
+.diff-box.more { background: var(--coral-light); color: var(--coral); border: 1px solid rgba(153,60,29,0.15); }
+.diff-box.less { background: var(--teal-light);  color: var(--teal);  border: 1px solid rgba(15,110,86,0.15); }
+.diff-box.same { background: var(--gold-light);  color: var(--gold);  border: 1px solid rgba(186,117,23,0.15); }
+.diff-box strong { font-weight: 500; }
+
+/* ── BARS ── */
+.breakdown-label {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--ink-mute); margin-bottom: 5px;
+  flex-wrap: wrap; gap: 2px;
+}
+.breakdown-label span:first-child { font-weight: 500; font-size: 12px; }
+.bar-track {
+  height: 28px; border-radius: 6px;
+  background: var(--surface2); overflow: hidden;
+  display: flex; margin-bottom: 8px;
+}
+.bar-seg {
+  height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 500; color: #fff;
+  transition: width 0.4s ease; min-width: 0;
+}
+.legend-row { display: flex; gap: 14px; font-size: 11px; color: var(--ink-mute); flex-wrap: wrap; }
+.leg { display: flex; align-items: center; gap: 5px; }
+.leg-sq { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
+
+/* ── CHARTS ── */
+.chart-wrap {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: var(--radius); padding: clamp(1rem, 3vw, 1.25rem);
+  margin-bottom: 1.25rem; box-shadow: var(--shadow);
+}
+.chart-title { font-size: 13px; font-weight: 500; color: var(--ink-soft); margin-bottom: 0.75rem; }
+.chart-legend { display: flex; gap: 14px; font-size: 11px; color: var(--ink-mute); margin-bottom: 10px; flex-wrap: wrap; }
+
+/* ── PROVIDERS ── */
+.providers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  gap: 10px; margin-bottom: 1.5rem;
+}
+.provider-card {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 0.875rem 1rem;
+  box-shadow: var(--shadow);
+}
+.provider-name { font-weight: 500; font-size: 13px; color: var(--ink); margin-bottom: 4px; }
+.provider-tag {
+  display: inline-block; font-size: 10px;
+  padding: 1px 7px; border-radius: 8px;
+  margin-bottom: 6px;
+  background: var(--teal-light); color: var(--teal);
+}
+.provider-detail { color: var(--ink-mute); font-size: 12px; line-height: 1.55; }
+
+/* ── FOOTER ── */
+.footer-note {
+  font-size: 12px; color: var(--ink-mute);
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem; margin-top: 1rem; line-height: 1.75;
+}
+.footer-note a { color: var(--teal); text-decoration: none; }
+.footer-note a:hover { text-decoration: underline; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 8px; }
+
+/* ── HOW IT WORKS MODAL ── */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(10,10,8,0.65);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  overflow-y: auto;
+  padding: 1rem;
+}
+.modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; padding-top: 2rem; }
+.modal {
+  background: var(--paper);
+  border-radius: var(--radius);
+  max-width: 620px; width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  overflow: hidden;
+  animation: modal-in 0.22s ease;
+}
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+.modal-header {
+  background: var(--ink);
+  padding: 1.25rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.modal-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.3rem; font-weight: 400;
+  color: #faf9f6;
+}
+.modal-title em { font-style: italic; color: var(--teal-mid); }
+.modal-close {
+  background: rgba(255,255,255,0.1); border: none;
+  color: rgba(255,255,255,0.7); cursor: pointer;
+  width: 32px; height: 32px; border-radius: 50%;
+  font-size: 18px; display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s; flex-shrink: 0;
+}
+.modal-close:hover { background: rgba(255,255,255,0.2); }
+.modal-body { padding: 1.5rem; }
+.how-step {
+  display: flex; gap: 14px;
+  margin-bottom: 1.5rem; align-items: flex-start;
+}
+.how-step:last-child { margin-bottom: 0; }
+.step-num {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--ink); color: #fff;
+  font-size: 13px; font-weight: 500;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 2px;
+}
+.step-body h3 { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+.step-body p  { font-size: 13px; color: var(--ink-soft); line-height: 1.65; }
+.step-body p strong { font-weight: 500; color: var(--ink); }
+
+.modal-divider { height: 1px; background: var(--border); margin: 1.25rem 0; }
+
+.quran-callout {
+  background: var(--teal-light);
+  border-left: 3px solid var(--teal-mid);
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+  padding: 0.875rem 1rem;
+  font-size: 13px; color: var(--teal-dark); line-height: 1.65;
+}
+.quran-callout em { font-style: italic; }
+
+/* ── SHARE TOAST ── */
+.toast {
+  position: fixed; bottom: 1.5rem; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink); color: #fff;
+  font-size: 13px; padding: 10px 20px;
+  border-radius: 30px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  opacity: 0; transition: all 0.25s; z-index: 200;
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── PRINT / PDF ── */
+@media print {
+  .header-actions, .presets, .modal-overlay, .toast, .no-print { display: none !important; }
+  .header { padding: 1.5rem; }
+  .main { padding: 1rem; }
+  body { background: #fff; }
+  .card, .result-card, .chart-wrap, .provider-card { box-shadow: none !important; border: 1px solid #ddd !important; }
+  .controls-grid { grid-template-columns: 1fr 1fr; }
+  .compare-grid { grid-template-columns: 1fr 1fr; }
+  .chart-wrap { page-break-inside: avoid; }
+  canvas { max-width: 100%; }
+}
+
+/* ── MOBILE FINE-TUNING ── */
+@media (max-width: 420px) {
+  .header-actions { width: 100%; margin-top: 1rem; }
+  .btn-ghost, .btn-teal { flex: 1; justify-content: center; }
+  .stat-value { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HOW IT WORKS MODAL -->
+<div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-text" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title-text">How Islamic mortgages <em>actually</em> work</span>
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="quran-callout">
+        <em>"Allah has permitted trade and forbidden interest (riba)."</em><br>
+        — Quran 2:275. Islamic mortgages replace interest with a co-ownership and rental structure.
+      </div>
+
+      <div class="modal-divider"></div>
+
+      <div class="how-step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>The bank co-buys the property with you</h3>
+          <p>Instead of lending you money, the Islamic bank <strong>purchases the property jointly</strong> with you. Your deposit is your initial ownership share. If you put down 20%, you own 20% from day one and the bank owns 80%.</p>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>You pay two things each month</h3>
+          <p><strong>Rent</strong> — on the bank's share of the property (this is how they make their profit, not interest). <strong>Acquisition payment</strong> — which buys a slice of the bank's share every month, increasing your ownership percentage over time.</p>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Your ownership grows, your rent falls</h3>
+          <p>As you acquire more of the property, the bank's share shrinks — and so does the rent you owe on it. This is called <strong>Diminishing Musharakah</strong> (diminishing partnership). By the end of the term, you own 100% and owe nothing.</p>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Why does it cost more right now?</h3>
+          <p>Islamic lenders (mainly Gatehouse Bank and StrideUp in the UK) have fewer customers and higher admin costs than mainstream banks, so their rental rates are typically <strong>1–2% higher</strong> than conventional mortgage rates. This gap is narrowing as the market grows. At equal rates, an HPP costs exactly the same as a conventional mortgage.</p>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Is it truly halal?</h3>
+          <p>UK Home Purchase Plans (HPPs) are structured under a specific legal framework created for Islamic finance and are <strong>FCA-regulated</strong>. Gatehouse Bank and StrideUp are both considered halal by mainstream Islamic scholars. Consult your imam if you have personal doubts — the structure is widely accepted, but scholars differ on some fine details.</p>
+        </div>
+      </div>
+
+      <div class="modal-divider"></div>
+      <p style="font-size:12px;color:var(--ink-mute);line-height:1.65;">This calculator is for education only. Always speak to an FCA-regulated Islamic mortgage broker before making any financial decisions. Providers: <a href="https://gatehousebank.com" target="_blank" style="color:var(--teal);">Gatehouse Bank</a> · <a href="https://strideup.co" target="_blank" style="color:var(--teal);">StrideUp</a> · <a href="https://www.islamicfinanceguru.com" target="_blank" style="color:var(--teal);">Islamic Finance Guru</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-top-row">
+      <div class="header-text">
+        <p class="header-eyebrow">Shariah-compliant finance · UK 2025</p>
+        <h1>Halal mortgage <em>vs</em> conventional<br>— what does it actually cost?</h1>
+        <p class="header-sub">A free, honest side-by-side calculator for UK Muslims comparing Islamic Home Purchase Plans with conventional mortgages. No signup. No ads. No fluff.</p>
+      </div>
+      <div class="header-actions no-print">
+        <button class="btn-ghost" onclick="openModal()" aria-label="How it works">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          How it works
+        </button>
+        <button class="btn-teal" onclick="shareOrExport()" aria-label="Share or export">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Share / Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="main-content">
+
+  <p class="sec">Property &amp; mortgage details</p>
+  <div class="card">
+    <div class="controls-grid">
+      <div>
+        <div class="slider-group">
+          <div class="slider-top"><span class="slider-name">Home price</span><span class="slider-val" id="price-out">£180,000</span></div>
+          <input type="range" min="50000" max="700000" step="5000" value="180000" id="price" oninput="calc()" aria-label="Home price">
+        </div>
+        <div class="slider-group">
+          <div class="slider-top"><span class="slider-name">Deposit</span><span class="slider-val" id="dep-out">20%</span></div>
+          <input type="range" min="5" max="40" step="1" value="20" id="deposit" oninput="calc()" aria-label="Deposit percentage">
+        </div>
+        <div class="slider-group">
+          <div class="slider-top"><span class="slider-name">Mortgage term</span><span class="slider-val" id="term-out">25 years</span></div>
+          <input type="range" min="5" max="35" step="1" value="25" id="term" oninput="calc()" aria-label="Mortgage term in years">
+        </div>
+      </div>
+      <div>
+        <div class="slider-group">
+          <div class="slider-top">
+            <span class="slider-name" style="color:var(--teal);display:flex;align-items:center;gap:5px;">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--teal-mid);display:inline-block;"></span>
+              Halal rental rate
+            </span>
+            <span class="slider-val" id="hrate-out">5.8%</span>
+          </div>
+          <input type="range" class="teal" min="3" max="10" step="0.1" value="5.8" id="hrate" oninput="calc()" aria-label="Islamic HPP rental rate">
+        </div>
+        <div class="slider-group">
+          <div class="slider-top">
+            <span class="slider-name" style="color:var(--blue);display:flex;align-items:center;gap:5px;">
+              <span style="width:8px;height:8px;border-radius:50%;background:var(--blue-mid);display:inline-block;"></span>
+              Conventional rate
+            </span>
+            <span class="slider-val" id="crate-out">4.5%</span>
+          </div>
+          <input type="range" class="blue" min="1" max="10" step="0.1" value="4.5" id="crate" oninput="calc()" aria-label="Conventional mortgage rate">
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--ink-mute);margin-bottom:7px;letter-spacing:0.05em;text-transform:uppercase;">Quick presets — real 2025 UK rates</div>
+          <div class="presets">
+            <button class="preset-btn active" onclick="setPreset(5.8,4.5,this)">Gatehouse vs avg</button>
+            <button class="preset-btn" onclick="setPreset(5.9,4.5,this)">StrideUp 10% dep</button>
+            <button class="preset-btn" onclick="setPreset(6.2,4.8,this)">Higher rates</button>
+            <button class="preset-btn" onclick="setPreset(4.5,4.5,this)">Parity</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="sec">Side-by-side results</p>
+  <div class="compare-grid">
+    <div class="result-card halal">
+      <div class="card-label halal">Islamic HPP <span class="card-badge halal">Halal ✓</span></div>
+      <div class="stat">
+        <div class="stat-label">Monthly payment</div>
+        <div class="stat-value" id="h-monthly">—</div>
+        <div class="stat-sub">rent + acquisition (no riba)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Total paid over full term</div>
+        <div class="stat-value" id="h-total">—</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Bank's profit margin (not interest)</div>
+        <div class="stat-value" id="h-profit">—</div>
+        <div class="stat-sub">earned through rental, not riba</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Deposit required</div>
+        <div class="stat-value" id="h-deposit">—</div>
+        <div class="stat-sub" id="h-dep-note"></div>
+      </div>
+    </div>
+    <div class="result-card conv">
+      <div class="card-label conv">Conventional <span class="card-badge conv">Interest ✗</span></div>
+      <div class="stat">
+        <div class="stat-label">Monthly payment</div>
+        <div class="stat-value" id="c-monthly">—</div>
+        <div class="stat-sub">principal + interest (riba)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Total paid over full term</div>
+        <div class="stat-value" id="c-total">—</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Total interest (riba) paid</div>
+        <div class="stat-value" id="c-interest">—</div>
+        <div class="stat-sub">not permissible in Islam</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Deposit required</div>
+        <div class="stat-value" id="c-deposit">—</div>
+        <div class="stat-sub">can be 5% with some lenders</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="diff-box" id="diff-box"></div>
+
+  <p class="sec">Monthly payment breakdown — year 1 (what you're actually paying)</p>
+  <div class="card">
+    <div style="margin-bottom:1.1rem;">
+      <div class="breakdown-label">
+        <span style="color:var(--teal);">Islamic HPP</span>
+        <span id="h-bar-label" style="color:var(--ink-mute);"></span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-seg" id="bar-h-acq" style="background:var(--teal-mid);"></div>
+        <div class="bar-seg" id="bar-h-rent" style="background:#9FE1CB;"></div>
+      </div>
+    </div>
+    <div>
+      <div class="breakdown-label">
+        <span style="color:var(--blue);">Conventional</span>
+        <span id="c-bar-label" style="color:var(--ink-mute);"></span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-seg" id="bar-c-p" style="background:var(--blue-mid);"></div>
+        <div class="bar-seg" id="bar-c-i" style="background:#B5D4F4;"></div>
+      </div>
+    </div>
+    <div class="legend-row" style="margin-top:12px;">
+      <div class="leg"><div class="leg-sq" style="background:var(--teal-mid);"></div>Acquisition (builds your ownership)</div>
+      <div class="leg"><div class="leg-sq" style="background:#9FE1CB;"></div>Rent on bank's share</div>
+      <div class="leg"><div class="leg-sq" style="background:var(--blue-mid);"></div>Principal repayment</div>
+      <div class="leg"><div class="leg-sq" style="background:#B5D4F4;"></div>Interest (riba)</div>
+    </div>
+  </div>
+
+  <p class="sec">Remaining balance over time</p>
+  <div class="chart-wrap">
+    <div class="chart-title">How quickly you pay off the property — year by year</div>
+    <div class="chart-legend">
+      <div class="leg"><div class="leg-sq" style="background:var(--teal-mid);"></div>Islamic HPP balance</div>
+      <div class="leg"><div class="leg-sq" style="border:2px dashed var(--blue-mid);background:transparent;width:14px;border-radius:0;"></div>Conventional balance</div>
+    </div>
+    <div style="position:relative;width:100%;height:220px;">
+      <canvas id="chart1" role="img" aria-label="Line chart comparing remaining balance for Islamic HPP and conventional mortgage over the mortgage term">Balance comparison over time.</canvas>
+    </div>
+  </div>
+
+  <p class="sec">Cumulative extra cost of going halal</p>
+  <div class="chart-wrap">
+    <div class="chart-title">Running total of additional cost (or saving) of the Islamic HPP vs conventional</div>
+    <div class="chart-legend">
+      <div class="leg"><div class="leg-sq" style="background:var(--coral-mid);"></div>Halal costs more</div>
+      <div class="leg"><div class="leg-sq" style="background:var(--teal-mid);"></div>Halal costs less</div>
+    </div>
+    <div style="position:relative;width:100%;height:190px;">
+      <canvas id="chart2" role="img" aria-label="Bar chart showing cumulative difference in cost between Islamic HPP and conventional mortgage year by year">Cumulative cost difference.</canvas>
+    </div>
+  </div>
+
+  <p class="sec">UK Islamic mortgage providers (2025)</p>
+  <div class="providers">
+    <div class="provider-card">
+      <div class="provider-name">Gatehouse Bank</div>
+      <div class="provider-tag">Most established</div>
+      <div class="provider-detail">From 5% deposit. Up to 80% LTV. England &amp; Wales. FCA-regulated. Competitive pricing.</div>
+    </div>
+    <div class="provider-card">
+      <div class="provider-name">StrideUp</div>
+      <div class="provider-tag">Good for first-time buyers</div>
+      <div class="provider-detail">From 10% deposit. Gifted deposits accepted. Up to 6.5× income. Complex incomes considered.</div>
+    </div>
+    <div class="provider-card">
+      <div class="provider-name">Offa</div>
+      <div class="provider-tag">New · FCA 2025</div>
+      <div class="provider-detail">New Islamic fintech. Fast specialist decisions. Shariah-compliant residential finance.</div>
+    </div>
+    <div class="provider-card">
+      <div class="provider-name">Wayhome / Pfida</div>
+      <div class="provider-tag">Alternative models</div>
+      <div class="provider-detail">Shared ownership &amp; community-driven. Pfida has waiting lists. Wayhome flexible &amp; interest-free.</div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    <strong>Important:</strong> This calculator is for educational purposes only and does not constitute financial advice. It is not regulated by the FCA. Rates are illustrative, based on publicly available 2025 market data and will change frequently. Always obtain a personalised quote and speak to a qualified Islamic mortgage broker before making any financial decisions.<br><br>
+    <div class="footer-links">
+      <a href="https://gatehousebank.com/personal/home-finance" target="_blank">Gatehouse Bank</a>
+      <a href="https://strideup.co" target="_blank">StrideUp</a>
+      <a href="https://www.islamicfinanceguru.com" target="_blank">Islamic Finance Guru</a>
+      <a href="https://www.moneyhelper.org.uk/en/homes/buying-a-home/sharia-compliant-home-purchase-plans" target="_blank">MoneyHelper guide</a>
+    </div>
+    <div style="margin-top:12px;font-size:11px;color:var(--ink-mute);">Built as a free community resource. Share freely. No copyright claimed.</div>
+  </div>
+</div>
+
+<script>
+/* ── STATE ── */
+let chart1 = null, chart2 = null;
+
+/* ── UTILS ── */
+function fmt(n) { return '£' + Math.round(n).toLocaleString('en-GB'); }
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+/* ── MODAL ── */
+function openModal() {
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ── SHARE / EXPORT ── */
+function shareOrExport() {
+  const url = window.location.href;
+  const text = 'Free halal mortgage calculator — compare Islamic HPP vs conventional mortgages in the UK. No signup, no ads.';
+
+  /* Native share sheet — works on mobile (iOS Safari, Android Chrome) */
+  if (navigator.share) {
+    navigator.share({ title: 'Halal Mortgage Calculator', text: text, url: url })
+      .catch(() => {});
+    return;
+  }
+
+  /* Desktop fallback — show mini share panel */
+  showSharePanel();
+}
+
+function showSharePanel() {
+  /* Remove existing panel if any */
+  const existing = document.getElementById('share-panel');
+  if (existing) { existing.remove(); return; }
+
+  const panel = document.createElement('div');
+  panel.id = 'share-panel';
+  panel.style.cssText = `
+    position:fixed; bottom:1.5rem; right:1.5rem; z-index:150;
+    background:#fff; border:1px solid rgba(0,0,0,0.12);
+    border-radius:14px; padding:1rem 1.25rem;
+    box-shadow:0 8px 30px rgba(0,0,0,0.15);
+    min-width:220px; font-family:'DM Sans',sans-serif;
+    animation: panel-in 0.18s ease;
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = '@keyframes panel-in { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }';
+  document.head.appendChild(style);
+
+  const url = window.location.href;
+  const twitterUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent('Free halal mortgage calculator — compare Islamic HPP vs conventional mortgages 🕌') + '&url=' + encodeURIComponent(url);
+  const waUrl = 'https://wa.me/?text=' + encodeURIComponent('Free halal mortgage calculator for UK Muslims — compare HPP vs conventional: ' + url);
+
+  panel.innerHTML = `
+    <div style="font-size:12px;font-weight:500;color:#888;margin-bottom:10px;letter-spacing:0.06em;text-transform:uppercase;">Share this tool</div>
+    <div style="display:flex;flex-direction:column;gap:7px;">
+      <button onclick="copyLink()" style="font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 14px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);background:#f2f0eb;color:#1a1a18;cursor:pointer;text-align:left;display:flex;align-items:center;gap:8px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Copy link
+      </button>
+      <a href="${waUrl}" target="_blank" style="font-size:13px;padding:8px 14px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);background:#f2f0eb;color:#1a1a18;text-decoration:none;display:flex;align-items:center;gap:8px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Share on WhatsApp
+      </a>
+      <a href="${twitterUrl}" target="_blank" style="font-size:13px;padding:8px 14px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);background:#f2f0eb;color:#1a1a18;text-decoration:none;display:flex;align-items:center;gap:8px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        Share on X
+      </a>
+      <button onclick="savePDF()" style="font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 14px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);background:#1a1a18;color:#fff;cursor:pointer;text-align:left;display:flex;align-items:center;gap:8px;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Save as PDF
+      </button>
+    </div>
+    <button onclick="document.getElementById('share-panel').remove()" style="position:absolute;top:8px;right:10px;background:none;border:none;cursor:pointer;color:#888;font-size:16px;padding:4px;">✕</button>
+  `;
+  panel.style.position = 'fixed';
+  document.body.appendChild(panel);
+
+  /* Close on outside click */
+  setTimeout(() => {
+    document.addEventListener('click', function handler(e) {
+      if (!panel.contains(e.target) && !e.target.closest('.btn-teal')) {
+        panel.remove();
+        document.removeEventListener('click', handler);
+      }
+    });
+  }, 100);
+}
+
+function copyLink() {
+  const url = window.location.href;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(() => showToast('Link copied to clipboard ✓'));
+  } else {
+    const el = document.createElement('textarea');
+    el.value = url; document.body.appendChild(el);
+    el.select(); document.execCommand('copy');
+    document.body.removeChild(el);
+    showToast('Link copied ✓');
+  }
+  const panel = document.getElementById('share-panel');
+  if (panel) panel.remove();
+}
+
+function savePDF() {
+  const panel = document.getElementById('share-panel');
+  if (panel) panel.remove();
+  showToast('Opening print / save as PDF…');
+  setTimeout(() => window.print(), 400);
+}
+
+/* ── PRESETS ── */
+function setPreset(hr, cr, el) {
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('hrate').value = hr;
+  document.getElementById('crate').value = cr;
+  calc();
+}
+
+/* ── CALC ── */
+function calc() {
+  const price    = +document.getElementById('price').value;
+  const depPct   = +document.getElementById('deposit').value;
+  const termYrs  = +document.getElementById('term').value;
+  const hRateAnn = +document.getElementById('hrate').value;
+  const cRateAnn = +document.getElementById('crate').value;
+
+  document.getElementById('price-out').textContent = fmt(price);
+  document.getElementById('dep-out').textContent   = depPct + '%';
+  document.getElementById('term-out').textContent  = termYrs + ' yrs';
+  document.getElementById('hrate-out').textContent = hRateAnn.toFixed(1) + '%';
+  document.getElementById('crate-out').textContent = cRateAnn.toFixed(1) + '%';
+
+  const deposit = price * depPct / 100;
+  const loan    = price - deposit;
+  const n       = termYrs * 12;
+
+  const cr = cRateAnn / 100 / 12;
+  const cM = cr === 0 ? loan/n : loan * cr * Math.pow(1+cr,n) / (Math.pow(1+cr,n)-1);
+  const cTotal = cM * n, cInterest = cTotal - loan;
+
+  const hr = hRateAnn / 100 / 12;
+  const hM = hr === 0 ? loan/n : loan * hr * Math.pow(1+hr,n) / (Math.pow(1+hr,n)-1);
+  const hTotal = hM * n, hProfit = hTotal - loan;
+
+  /* Results */
+  document.getElementById('h-monthly').textContent  = fmt(hM);
+  document.getElementById('h-total').textContent    = fmt(hTotal);
+  document.getElementById('h-profit').textContent   = fmt(hProfit);
+  document.getElementById('h-deposit').textContent  = fmt(deposit);
+  document.getElementById('h-dep-note').textContent =
+    depPct >= 20 ? 'Accepted by all HPP providers'
+    : depPct >= 10 ? 'StrideUp accepts from 10%'
+    : 'Gatehouse accepts 5% on select products';
+
+  document.getElementById('c-monthly').textContent  = fmt(cM);
+  document.getElementById('c-total').textContent    = fmt(cTotal);
+  document.getElementById('c-interest').textContent = fmt(cInterest);
+  document.getElementById('c-deposit').textContent  = fmt(deposit);
+
+  /* Diff */
+  const diff = hTotal - cTotal, mDiff = hM - cM;
+  const box  = document.getElementById('diff-box');
+  if (Math.abs(diff) < 300) {
+    box.className = 'diff-box same';
+    box.innerHTML = 'At these rates the total cost over the full term is <strong>essentially identical</strong>. You get Shariah compliance with no meaningful financial penalty.';
+  } else if (diff > 0) {
+    box.className = 'diff-box more';
+    box.innerHTML = `The Islamic HPP costs <strong>${fmt(diff)} more</strong> over ${termYrs} years — about <strong>${fmt(mDiff)}/month extra</strong>. This reflects the higher rental rate Islamic lenders currently charge. The gap is narrowing year on year as competition in the market grows.`;
+  } else {
+    box.className = 'diff-box less';
+    box.innerHTML = `At these rates the Islamic HPP costs <strong>${fmt(Math.abs(diff))} less</strong> over ${termYrs} years — about <strong>${fmt(Math.abs(mDiff))}/month cheaper</strong>. Staying halal is the financially stronger choice at these rates.`;
+  }
+
+  /* Breakdown bars */
+  const firstRent = loan * hr, firstAcq = hM - firstRent;
+  const firstInt  = loan * cr, firstPrin = cM - firstInt;
+  const hAcqPct  = Math.round(firstAcq / hM * 100);
+  const hRentPct = 100 - hAcqPct;
+  const cPrinPct = Math.round(firstPrin / cM * 100);
+  const cIntPct  = 100 - cPrinPct;
+
+  const bHA = document.getElementById('bar-h-acq');
+  const bHR = document.getElementById('bar-h-rent');
+  const bCP = document.getElementById('bar-c-p');
+  const bCI = document.getElementById('bar-c-i');
+
+  bHA.style.width = hAcqPct + '%'; bHA.textContent = hAcqPct > 14 ? hAcqPct + '%' : '';
+  bHR.style.width = hRentPct + '%'; bHR.textContent = hRentPct > 14 ? hRentPct + '%' : '';
+  bCP.style.width = cPrinPct + '%'; bCP.textContent = cPrinPct > 14 ? cPrinPct + '%' : '';
+  bCI.style.width = cIntPct + '%'; bCI.textContent = cIntPct > 14 ? cIntPct + '%' : '';
+
+  document.getElementById('h-bar-label').textContent = fmt(hM) + '/mo · ' + hAcqPct + '% acquiring · ' + hRentPct + '% rent';
+  document.getElementById('c-bar-label').textContent = fmt(cM) + '/mo · ' + cPrinPct + '% principal · ' + cIntPct + '% interest';
+
+  /* Charts */
+  const labels = [], hBals = [], cBals = [], cumDiffs = [];
+  let hBal = loan, cBal = loan, cumDiff = 0;
+  for (let y = 1; y <= termYrs; y++) {
+    for (let m = 0; m < 12; m++) {
+      hBal = Math.max(0, hBal - (hM - hBal * hr));
+      cBal = Math.max(0, cBal - (cM - cBal * cr));
+      cumDiff += (hM - cM);
+    }
+    labels.push('Yr ' + y);
+    hBals.push(Math.round(hBal));
+    cBals.push(Math.round(cBal));
+    cumDiffs.push(Math.round(cumDiff));
+  }
+
+  const tc = 'rgba(74,74,70,0.55)', gc = 'rgba(0,0,0,0.04)';
+
+  if (chart1) chart1.destroy();
+  chart1 = new Chart(document.getElementById('chart1'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        { label: 'Islamic HPP', data: hBals, borderColor: '#1D9E75', backgroundColor: 'transparent', tension: 0.35, pointRadius: 0, borderWidth: 2.5 },
+        { label: 'Conventional', data: cBals, borderColor: '#378ADD', backgroundColor: 'transparent', tension: 0.35, pointRadius: 0, borderWidth: 2.5, borderDash: [6,3] }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + fmt(ctx.raw) } } },
+      scales: {
+        x: { ticks: { color: tc, font: { size: 10 }, maxTicksLimit: 10 }, grid: { color: gc } },
+        y: { ticks: { color: tc, font: { size: 10 }, callback: v => '£' + (v>=1000 ? Math.round(v/1000)+'k' : v) }, grid: { color: gc } }
+      }
+    }
+  });
+
+  if (chart2) chart2.destroy();
+  chart2 = new Chart(document.getElementById('chart2'), {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{ label: 'Difference', data: cumDiffs, backgroundColor: cumDiffs.map(v => v >= 0 ? '#D85A30' : '#1D9E75'), borderWidth: 0, borderRadius: 2 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => (ctx.raw >= 0 ? ' Halal costs ' : ' Halal saves ') + fmt(Math.abs(ctx.raw)) + ' so far' } } },
+      scales: {
+        x: { ticks: { color: tc, font: { size: 10 }, maxTicksLimit: 10 }, grid: { color: gc } },
+        y: { ticks: { color: tc, font: { size: 10 }, callback: v => (v<0?'-':'')+'£'+(Math.abs(v)>=1000?Math.round(Math.abs(v)/1000)+'k':Math.abs(v)) }, grid: { color: gc } }
+      }
+    }
+  });
+}
+
+calc();
+</script>
+</body>
+</html>
