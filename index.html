@@ -88,7 +88,7 @@ body {
 .header h1 em { font-style: italic; color: var(--teal-mid); }
 .header-sub {
   font-size: clamp(13px, 2.5vw, 14px);
-  color: rgba(255,255,255,0.45);
+  color: rgba(255,255,255,0.65);
   max-width: 520px; line-height: 1.65;
 }
 .header-actions {
@@ -269,6 +269,12 @@ input[type=range]::-moz-range-thumb {
 .leg { display: flex; align-items: center; gap: 5px; }
 .leg-sq { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
 
+/* Bar segment colors */
+.bar-teal-dark { background: var(--teal-mid); }
+.bar-teal-light { background: #9FE1CB; }
+.bar-blue-dark { background: var(--blue-mid); }
+.bar-blue-light { background: #B5D4F4; }
+
 /* ── CHARTS ── */
 .chart-wrap {
   background: #fff; border: 1px solid var(--border);
@@ -410,6 +416,449 @@ input[type=range]::-moz-range-thumb {
   .btn-ghost, .btn-teal { flex: 1; justify-content: center; }
   .stat-value { font-size: 20px; }
 }
+
+/* ── COLLAPSIBLE ── */
+.collapsible-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 0.875rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: background 0.15s;
+}
+.collapsible-header:hover { background: var(--surface2); }
+.collapsible-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.collapsible-chevron {
+  width: 18px;
+  height: 18px;
+  color: var(--ink-mute);
+  transition: transform 0.2s;
+}
+.collapsible-header.open .collapsible-chevron { transform: rotate(180deg); }
+.collapsible-content {
+  display: none;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  background: #fff;
+}
+.collapsible-content.open { display: block; }
+
+/* ── CITY PRESETS ── */
+.city-presets {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+.city-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 16px;
+  border: 1px solid var(--border-med);
+  background: var(--paper);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.city-btn:hover { border-color: var(--ink-mute); color: var(--ink); }
+.city-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* ── RATE FRESHNESS ── */
+.rate-freshness {
+  font-size: 12px;
+  color: var(--ink-mute);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 0.6rem;
+}
+.rate-freshness svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+/* ── STAMP DUTY TOGGLE ── */
+.stamp-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+.stamp-toggle label {
+  font-size: 13px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.stamp-toggle input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--teal);
+  cursor: pointer;
+}
+.stamp-result {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.stamp-card {
+  flex: 1;
+  min-width: 140px;
+  background: var(--gold-light);
+  border: 1px solid rgba(186,117,23,0.18);
+  border-radius: var(--radius-sm);
+  padding: 0.875rem 1rem;
+}
+.stamp-card .stat-label { color: var(--gold); }
+
+/* ── AFFORDABILITY ── */
+.afford-input-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.afford-input-row label {
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.afford-input {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-med);
+  border-radius: var(--radius-xs);
+  width: 140px;
+  background: #fff;
+  color: var(--ink);
+}
+.afford-input:focus { outline: none; border-color: var(--teal); }
+.afford-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 0.75rem;
+}
+@media (max-width: 540px) { .afford-grid { grid-template-columns: 1fr; } }
+.afford-card {
+  border-radius: var(--radius-sm);
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--border);
+  background: #fff;
+}
+.afford-card.green { background: var(--teal-light); border-color: rgba(15,110,86,0.18); }
+.afford-card.amber { background: var(--gold-light); border-color: rgba(186,117,23,0.18); }
+.afford-card.red { background: var(--coral-light); border-color: rgba(153,60,29,0.18); }
+.afford-note {
+  font-size: 12px;
+  color: var(--ink-mute);
+  line-height: 1.5;
+}
+
+/* ── OVERPAYMENT ── */
+.overpay-results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+@media (max-width: 540px) { .overpay-results { grid-template-columns: 1fr; } }
+.overpay-card {
+  background: var(--teal-light);
+  border: 1px solid rgba(15,110,86,0.18);
+  border-radius: var(--radius-sm);
+  padding: 0.875rem 1rem;
+}
+.overpay-card .stat-label { color: var(--teal); }
+
+/* ── STICKY NAV ── */
+.sticky-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--paper);
+  border-bottom: 1px solid var(--border);
+  padding: 0.6rem clamp(1rem, 3vw, 1.5rem);
+  margin: 0 calc(-1 * clamp(1rem, 3vw, 1.5rem));
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.sticky-nav::-webkit-scrollbar { display: none; }
+.sticky-nav-inner {
+  display: flex;
+  gap: 6px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.nav-link {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 16px;
+  border: 1px solid var(--border-med);
+  background: var(--paper);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.nav-link:hover { border-color: var(--ink-mute); color: var(--ink); }
+.nav-link.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* ── TERM PRESETS ── */
+.term-presets {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+.term-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 16px;
+  border: 1px solid var(--border-med);
+  background: var(--paper);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.term-btn:hover { border-color: var(--ink-mute); color: var(--ink); }
+.term-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* ── COMPARISON SUMMARY ── */
+.summary-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.summary-main {
+  flex: 1;
+  min-width: 200px;
+}
+.summary-headline {
+  font-size: clamp(20px, 4vw, 26px);
+  font-weight: 300;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.summary-sub {
+  font-size: 13px;
+  color: var(--ink-mute);
+  margin-top: 2px;
+}
+.summary-badge {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.summary-badge.more { background: var(--coral-light); color: var(--coral); }
+.summary-badge.less { background: var(--teal-light); color: var(--teal); }
+.summary-badge.same { background: var(--gold-light); color: var(--gold); }
+
+/* ── DARK MODE ── */
+.theme-toggle {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.85);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s;
+  flex-shrink: 0;
+}
+.theme-toggle:hover { background: rgba(255,255,255,0.2); }
+.theme-toggle svg { width: 18px; height: 18px; }
+
+[data-theme="dark"] {
+  --paper: #1a1a18;
+  --surface: #252523;
+  --surface2: #2f2f2c;
+  --ink: #faf9f6;
+  --ink-soft: #c8c8c2;
+  --ink-mute: #8a8a82;
+  --border: rgba(255,255,255,0.1);
+  --border-med: rgba(255,255,255,0.15);
+  --shadow: 0 2px 12px rgba(0,0,0,0.3);
+  /* Dark mode color variants */
+  --teal-light: rgba(15,110,86,0.2);
+  --blue-light: rgba(24,95,165,0.2);
+  --coral-light: rgba(153,60,29,0.2);
+  --gold-light: rgba(186,117,23,0.2);
+}
+[data-theme="dark"] .header { background: #0f0f0e; }
+[data-theme="dark"] .card,
+[data-theme="dark"] .chart-wrap,
+[data-theme="dark"] .provider-card,
+[data-theme="dark"] .summary-card { background: var(--surface); }
+[data-theme="dark"] .result-card.halal { background: rgba(15,110,86,0.15); }
+[data-theme="dark"] .result-card.conv { background: rgba(24,95,165,0.15); }
+[data-theme="dark"] .sticky-nav { background: var(--paper); }
+[data-theme="dark"] .modal { background: var(--surface); }
+[data-theme="dark"] .modal-header { background: #0f0f0e; }
+[data-theme="dark"] .modal-title { color: #faf9f6; }
+[data-theme="dark"] .modal-body { color: var(--ink); }
+[data-theme="dark"] .how-step h3 { color: var(--ink); }
+[data-theme="dark"] .how-step p { color: var(--ink-soft); }
+[data-theme="dark"] .afford-input { background: var(--surface2); color: var(--ink); }
+
+/* Dark mode - Collapsible / Stamp duty */
+[data-theme="dark"] .collapsible-header { background: var(--surface); }
+[data-theme="dark"] .collapsible-header:hover { background: var(--surface2); }
+[data-theme="dark"] .collapsible-content { background: var(--surface); }
+[data-theme="dark"] .stamp-card { background: rgba(186,117,23,0.15); }
+[data-theme="dark"] .stamp-card .stat-value { color: var(--ink); }
+
+/* Dark mode - Affordability */
+[data-theme="dark"] .afford-card { background: var(--surface); }
+[data-theme="dark"] .afford-card.green { background: rgba(15,110,86,0.2); }
+[data-theme="dark"] .afford-card.amber { background: rgba(186,117,23,0.2); }
+[data-theme="dark"] .afford-card.red { background: rgba(153,60,29,0.2); }
+[data-theme="dark"] .afford-card .stat-value { color: var(--ink); }
+[data-theme="dark"] .afford-card .stat-label { color: var(--ink-soft); }
+[data-theme="dark"] .afford-card .stat-sub { color: var(--ink-mute); }
+
+/* Dark mode - Overpayment */
+[data-theme="dark"] .overpay-card { background: rgba(15,110,86,0.2); }
+[data-theme="dark"] .overpay-card .stat-value { color: var(--ink); }
+[data-theme="dark"] .overpay-card .stat-label { color: #1D9E75; }
+
+/* Dark mode - General text fixes */
+[data-theme="dark"] .stat-value { color: var(--ink); }
+[data-theme="dark"] .diff-box { color: var(--ink); }
+[data-theme="dark"] .diff-box.more { background: rgba(153,60,29,0.2); }
+[data-theme="dark"] .diff-box.less { background: rgba(15,110,86,0.2); }
+[data-theme="dark"] .diff-box.same { background: rgba(186,117,23,0.2); }
+[data-theme="dark"] .quran-callout { background: rgba(15,110,86,0.15); color: #1D9E75; }
+[data-theme="dark"] .share-modal { background: var(--surface); }
+[data-theme="dark"] .share-modal-header { background: #0f0f0e; }
+
+/* Dark mode - Buttons with active states */
+[data-theme="dark"] .preset-btn.active,
+[data-theme="dark"] .city-btn.active,
+[data-theme="dark"] .term-btn.active,
+[data-theme="dark"] .nav-link.active {
+  background: #faf9f6;
+  color: #1a1a18;
+  border-color: #faf9f6;
+}
+
+/* Dark mode - Bar chart colors */
+[data-theme="dark"] .bar-teal-light { background: rgba(29,158,117,0.5); }
+[data-theme="dark"] .bar-blue-light { background: rgba(55,138,221,0.5); }
+[data-theme="dark"] .bar-track { background: var(--surface2); }
+[data-theme="dark"] .leg-sq { border: 1px solid rgba(255,255,255,0.1); }
+
+/* ── SHARE MODAL (Full) ── */
+.share-modal {
+  background: var(--paper);
+  border-radius: var(--radius);
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  overflow: hidden;
+  animation: modal-in 0.22s ease;
+}
+.share-modal-header {
+  background: var(--ink);
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.share-modal-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: #faf9f6;
+}
+.share-modal-body { padding: 1.25rem; }
+.share-section {
+  margin-bottom: 1.25rem;
+}
+.share-section:last-child { margin-bottom: 0; }
+.share-section-title {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 0.6rem;
+}
+.share-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.share-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  padding: 10px 16px;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--border-med);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s;
+  flex: 1;
+  min-width: 120px;
+  justify-content: center;
+}
+.share-btn:hover { border-color: var(--ink-mute); background: var(--surface2); }
+.share-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+.share-btn.primary {
+  background: var(--teal-mid);
+  border-color: var(--teal-mid);
+  color: #fff;
+}
+.share-btn.primary:hover { background: var(--teal); }
+.share-config-url {
+  font-size: 12px;
+  color: var(--ink-mute);
+  background: var(--surface2);
+  padding: 8px 12px;
+  border-radius: var(--radius-xs);
+  word-break: break-all;
+  margin-top: 0.5rem;
+}
+
+/* ── PRINT IMPROVEMENTS ── */
+@media print {
+  .sticky-nav, .theme-toggle, .city-presets, .term-presets { display: none !important; }
+  .summary-card { break-inside: avoid; }
+  .header { background: #1a1a18 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .result-card.halal { background: #E1F5EE !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .result-card.conv { background: #E6F1FB !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
 </style>
 </head>
 <body>
@@ -471,7 +920,50 @@ input[type=range]::-moz-range-thumb {
       </div>
 
       <div class="modal-divider"></div>
-      <p style="font-size:12px;color:var(--ink-mute);line-height:1.65;">This calculator is for education only. Always speak to an FCA-regulated Islamic mortgage broker before making any financial decisions. Providers: <a href="https://gatehousebank.com" target="_blank" style="color:var(--teal);">Gatehouse Bank</a> · <a href="https://strideup.co" target="_blank" style="color:var(--teal);">StrideUp</a> · <a href="https://www.islamicfinanceguru.com" target="_blank" style="color:var(--teal);">Islamic Finance Guru</a></p>
+      <p style="font-size:12px;color:var(--ink-mute);line-height:1.65;">This calculator is for education only. Always speak to an FCA-regulated Islamic mortgage broker before making any financial decisions. Providers: <a href="https://gatehousebank.com" target="_blank" rel="noopener" style="color:var(--teal);">Gatehouse Bank</a> · <a href="https://strideup.co" target="_blank" rel="noopener" style="color:var(--teal);">StrideUp</a> · <a href="https://www.islamicfinanceguru.com" target="_blank" rel="noopener" style="color:var(--teal);">Islamic Finance Guru</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- SHARE MODAL -->
+<div class="modal-overlay" id="share-modal-overlay" role="dialog" aria-modal="true" onclick="if(event.target===this)closeShareModal()">
+  <div class="share-modal">
+    <div class="share-modal-header">
+      <span class="share-modal-title">Share or Save</span>
+      <button class="modal-close" onclick="closeShareModal()" aria-label="Close">✕</button>
+    </div>
+    <div class="share-modal-body">
+      <div class="share-section">
+        <div class="share-section-title">Quick share</div>
+        <div class="share-buttons">
+          <button class="share-btn" onclick="shareWhatsApp()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            WhatsApp
+          </button>
+          <button class="share-btn" onclick="shareTwitter()">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            X / Twitter
+          </button>
+          <button class="share-btn" onclick="copyConfigLink()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            Copy Link
+          </button>
+        </div>
+        <div class="share-config-url" id="share-config-url"></div>
+      </div>
+      <div class="share-section">
+        <div class="share-section-title">Save &amp; Email</div>
+        <div class="share-buttons">
+          <button class="share-btn primary" onclick="savePDF()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Save as PDF
+          </button>
+          <button class="share-btn" onclick="emailResults()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Email Results
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -484,16 +976,20 @@ input[type=range]::-moz-range-thumb {
   <div class="header-inner">
     <div class="header-top-row">
       <div class="header-text">
-        <p class="header-eyebrow">Shariah-compliant finance · UK 2025</p>
+        <p class="header-eyebrow">Shariah-compliant finance · UK 2026</p>
         <h1>Halal mortgage <em>vs</em> conventional<br>— what does it actually cost?</h1>
         <p class="header-sub">A free, honest side-by-side calculator for UK Muslims comparing Islamic Home Purchase Plans with conventional mortgages. No signup. No ads. No fluff.</p>
       </div>
       <div class="header-actions no-print">
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" id="theme-toggle">
+          <svg id="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <svg id="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
         <button class="btn-ghost" onclick="openModal()" aria-label="How it works">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           How it works
         </button>
-        <button class="btn-teal" onclick="shareOrExport()" aria-label="Share or export">
+        <button class="btn-teal" onclick="openShareModal()" aria-label="Share or export">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
           Share / Save
         </button>
@@ -502,13 +998,34 @@ input[type=range]::-moz-range-thumb {
   </div>
 </div>
 
-<!-- MAIN -->
+<!-- STICKY NAV -->
 <div class="main" id="main-content">
+  <nav class="sticky-nav no-print" aria-label="Jump to section">
+    <div class="sticky-nav-inner">
+      <a href="#section-property" class="nav-link">Property</a>
+      <a href="#section-results" class="nav-link">Results</a>
+      <a href="#section-breakdown" class="nav-link">Breakdown</a>
+      <a href="#section-charts" class="nav-link">Charts</a>
+      <a href="#section-stamp" class="nav-link">Stamp Duty</a>
+      <a href="#section-afford" class="nav-link">Affordability</a>
+      <a href="#section-overpay" class="nav-link">Overpay</a>
+      <a href="#section-providers" class="nav-link">Providers</a>
+    </div>
+  </nav>
 
-  <p class="sec">Property &amp; mortgage details</p>
+  <p class="sec" id="section-property">Property &amp; mortgage details</p>
   <div class="card">
     <div class="controls-grid">
       <div>
+        <div style="font-size:11px;color:var(--ink-mute);margin-bottom:7px;letter-spacing:0.05em;text-transform:uppercase;">Quick city examples</div>
+        <div class="city-presets">
+          <button class="city-btn" onclick="setCity(190000,this)">Preston</button>
+          <button class="city-btn" onclick="setCity(250000,this)">Manchester</button>
+          <button class="city-btn" onclick="setCity(185000,this)">Bradford</button>
+          <button class="city-btn" onclick="setCity(230000,this)">Birmingham</button>
+          <button class="city-btn" onclick="setCity(235000,this)">Leicester</button>
+          <button class="city-btn" onclick="setCity(540000,this)">London</button>
+        </div>
         <div class="slider-group">
           <div class="slider-top"><span class="slider-name">Home price</span><span class="slider-val" id="price-out">£180,000</span></div>
           <input type="range" min="50000" max="700000" step="5000" value="180000" id="price" oninput="calc()" aria-label="Home price">
@@ -520,6 +1037,12 @@ input[type=range]::-moz-range-thumb {
         <div class="slider-group">
           <div class="slider-top"><span class="slider-name">Mortgage term</span><span class="slider-val" id="term-out">25 years</span></div>
           <input type="range" min="5" max="35" step="1" value="25" id="term" oninput="calc()" aria-label="Mortgage term in years">
+          <div class="term-presets">
+            <button class="term-btn" onclick="setTerm(15,this)">15 yrs</button>
+            <button class="term-btn" onclick="setTerm(20,this)">20 yrs</button>
+            <button class="term-btn active" onclick="setTerm(25,this)">25 yrs</button>
+            <button class="term-btn" onclick="setTerm(30,this)">30 yrs</button>
+          </div>
         </div>
       </div>
       <div>
@@ -529,9 +1052,9 @@ input[type=range]::-moz-range-thumb {
               <span style="width:8px;height:8px;border-radius:50%;background:var(--teal-mid);display:inline-block;"></span>
               Halal rental rate
             </span>
-            <span class="slider-val" id="hrate-out">5.8%</span>
+            <span class="slider-val" id="hrate-out">5.9%</span>
           </div>
-          <input type="range" class="teal" min="3" max="10" step="0.1" value="5.8" id="hrate" oninput="calc()" aria-label="Islamic HPP rental rate">
+          <input type="range" class="teal" min="3" max="10" step="0.1" value="5.9" id="hrate" oninput="calc()" aria-label="Islamic HPP rental rate">
         </div>
         <div class="slider-group">
           <div class="slider-top">
@@ -539,24 +1062,38 @@ input[type=range]::-moz-range-thumb {
               <span style="width:8px;height:8px;border-radius:50%;background:var(--blue-mid);display:inline-block;"></span>
               Conventional rate
             </span>
-            <span class="slider-val" id="crate-out">4.5%</span>
+            <span class="slider-val" id="crate-out">5.5%</span>
           </div>
-          <input type="range" class="blue" min="1" max="10" step="0.1" value="4.5" id="crate" oninput="calc()" aria-label="Conventional mortgage rate">
+          <input type="range" class="blue" min="3" max="10" step="0.1" value="5.5" id="crate" oninput="calc()" aria-label="Conventional mortgage rate">
         </div>
         <div>
-          <div style="font-size:11px;color:var(--ink-mute);margin-bottom:7px;letter-spacing:0.05em;text-transform:uppercase;">Quick presets — real 2025 UK rates</div>
+          <div style="font-size:11px;color:var(--ink-mute);margin-bottom:7px;letter-spacing:0.05em;text-transform:uppercase;">Quick presets — real 2026 UK rates</div>
           <div class="presets">
-            <button class="preset-btn active" onclick="setPreset(5.8,4.5,this)">Gatehouse vs avg</button>
-            <button class="preset-btn" onclick="setPreset(5.9,4.5,this)">StrideUp 10% dep</button>
-            <button class="preset-btn" onclick="setPreset(6.2,4.8,this)">Higher rates</button>
-            <button class="preset-btn" onclick="setPreset(4.5,4.5,this)">Parity</button>
+            <button class="preset-btn active" onclick="setPreset(5.9,5.5,this)">Gatehouse 2yr</button>
+            <button class="preset-btn" onclick="setPreset(6.2,5.5,this)">StrideUp 10% dep</button>
+            <button class="preset-btn" onclick="setPreset(6.8,6.0,this)">Higher rates</button>
+            <button class="preset-btn" onclick="setPreset(5.5,5.5,this)">Parity</button>
+          </div>
+          <div class="rate-freshness">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Rates last verified: May 2026 — always confirm directly with providers before applying.
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <p class="sec">Side-by-side results</p>
+  <p class="sec" id="section-results">Side-by-side results</p>
+
+  <!-- Comparison Summary Card -->
+  <div class="summary-card" id="summary-card">
+    <div class="summary-main">
+      <div class="summary-headline" id="summary-headline">—</div>
+      <div class="summary-sub" id="summary-sub">Calculating...</div>
+    </div>
+    <div class="summary-badge same" id="summary-badge">Comparing</div>
+  </div>
+
   <div class="compare-grid">
     <div class="result-card halal">
       <div class="card-label halal">Islamic HPP <span class="card-badge halal">Halal ✓</span></div>
@@ -606,7 +1143,7 @@ input[type=range]::-moz-range-thumb {
 
   <div class="diff-box" id="diff-box"></div>
 
-  <p class="sec">Monthly payment breakdown — year 1 (what you're actually paying)</p>
+  <p class="sec" id="section-breakdown">Monthly payment breakdown — year 1 (what you're actually paying)</p>
   <div class="card">
     <div style="margin-bottom:1.1rem;">
       <div class="breakdown-label">
@@ -614,8 +1151,8 @@ input[type=range]::-moz-range-thumb {
         <span id="h-bar-label" style="color:var(--ink-mute);"></span>
       </div>
       <div class="bar-track">
-        <div class="bar-seg" id="bar-h-acq" style="background:var(--teal-mid);"></div>
-        <div class="bar-seg" id="bar-h-rent" style="background:#9FE1CB;"></div>
+        <div class="bar-seg bar-teal-dark" id="bar-h-acq"></div>
+        <div class="bar-seg bar-teal-light" id="bar-h-rent"></div>
       </div>
     </div>
     <div>
@@ -624,19 +1161,19 @@ input[type=range]::-moz-range-thumb {
         <span id="c-bar-label" style="color:var(--ink-mute);"></span>
       </div>
       <div class="bar-track">
-        <div class="bar-seg" id="bar-c-p" style="background:var(--blue-mid);"></div>
-        <div class="bar-seg" id="bar-c-i" style="background:#B5D4F4;"></div>
+        <div class="bar-seg bar-blue-dark" id="bar-c-p"></div>
+        <div class="bar-seg bar-blue-light" id="bar-c-i"></div>
       </div>
     </div>
     <div class="legend-row" style="margin-top:12px;">
-      <div class="leg"><div class="leg-sq" style="background:var(--teal-mid);"></div>Acquisition (builds your ownership)</div>
-      <div class="leg"><div class="leg-sq" style="background:#9FE1CB;"></div>Rent on bank's share</div>
-      <div class="leg"><div class="leg-sq" style="background:var(--blue-mid);"></div>Principal repayment</div>
-      <div class="leg"><div class="leg-sq" style="background:#B5D4F4;"></div>Interest (riba)</div>
+      <div class="leg"><div class="leg-sq bar-teal-dark"></div>Acquisition (builds your ownership)</div>
+      <div class="leg"><div class="leg-sq bar-teal-light"></div>Rent on bank's share</div>
+      <div class="leg"><div class="leg-sq bar-blue-dark"></div>Principal repayment</div>
+      <div class="leg"><div class="leg-sq bar-blue-light"></div>Interest (riba)</div>
     </div>
   </div>
 
-  <p class="sec">Remaining balance over time</p>
+  <p class="sec" id="section-charts">Remaining balance over time</p>
   <div class="chart-wrap">
     <div class="chart-title">How quickly you pay off the property — year by year</div>
     <div class="chart-legend">
@@ -660,7 +1197,106 @@ input[type=range]::-moz-range-thumb {
     </div>
   </div>
 
-  <p class="sec">UK Islamic mortgage providers (2025)</p>
+  <p class="sec" id="section-stamp">Stamp duty estimate</p>
+  <div class="collapsible-header" id="stamp-header" onclick="toggleStampDuty()">
+    <span class="collapsible-title">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+      UK stamp duty for this property
+    </span>
+    <svg class="collapsible-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
+  <div class="collapsible-content" id="stamp-content">
+    <div class="stamp-toggle">
+      <label>
+        <input type="checkbox" id="ftb-check" onchange="calcStampDuty()">
+        I'm a first-time buyer
+      </label>
+    </div>
+    <div class="stamp-result">
+      <div class="stamp-card">
+        <div class="stat">
+          <div class="stat-label">Stamp duty to pay</div>
+          <div class="stat-value" id="stamp-amount">—</div>
+          <div class="stat-sub" id="stamp-note">Based on current 2026 UK rates</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="sec" id="section-afford">Can I afford this?</p>
+  <div class="card">
+    <div class="afford-input-row">
+      <label for="salary-input">Your annual salary</label>
+      <input type="number" id="salary-input" class="afford-input" placeholder="£50,000" oninput="calcAffordability()">
+    </div>
+    <div class="afford-grid">
+      <div class="afford-card">
+        <div class="stat">
+          <div class="stat-label">Conventional max borrow</div>
+          <div class="stat-value" id="afford-conv">—</div>
+          <div class="stat-sub">Salary × 4.5</div>
+        </div>
+      </div>
+      <div class="afford-card">
+        <div class="stat">
+          <div class="stat-label">Gatehouse max borrow</div>
+          <div class="stat-value" id="afford-gatehouse">—</div>
+          <div class="stat-sub">Salary × 4.75</div>
+        </div>
+      </div>
+      <div class="afford-card">
+        <div class="stat">
+          <div class="stat-label">StrideUp max borrow</div>
+          <div class="stat-value" id="afford-stride">—</div>
+          <div class="stat-sub">Salary × 6.5</div>
+        </div>
+      </div>
+      <div class="afford-card" id="afford-loan-card">
+        <div class="stat">
+          <div class="stat-label">Your loan amount</div>
+          <div class="stat-value" id="afford-loan">—</div>
+          <div class="stat-sub">Price minus deposit</div>
+        </div>
+      </div>
+    </div>
+    <div class="afford-note" id="afford-note">Enter your salary above to see if you can afford this property.</div>
+  </div>
+
+  <p class="sec" id="section-overpay">What if I overpay?</p>
+  <div class="card">
+    <div class="slider-group">
+      <div class="slider-top">
+        <span class="slider-name">Extra monthly payment</span>
+        <span class="slider-val" id="overpay-out">£0</span>
+      </div>
+      <input type="range" class="teal" min="0" max="1000" step="25" value="0" id="overpay" oninput="calcOverpayment()" aria-label="Extra monthly payment">
+    </div>
+    <div class="overpay-results">
+      <div class="overpay-card">
+        <div class="stat">
+          <div class="stat-label">Months saved</div>
+          <div class="stat-value" id="overpay-months">0</div>
+          <div class="stat-sub">Off your term</div>
+        </div>
+      </div>
+      <div class="overpay-card">
+        <div class="stat">
+          <div class="stat-label">New term length</div>
+          <div class="stat-value" id="overpay-term">—</div>
+          <div class="stat-sub">Years and months</div>
+        </div>
+      </div>
+      <div class="overpay-card">
+        <div class="stat">
+          <div class="stat-label">Total profit saved</div>
+          <div class="stat-value" id="overpay-saved">£0</div>
+          <div class="stat-sub">Less paid to lender</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="sec" id="section-providers">UK Islamic mortgage providers (2026)</p>
   <div class="providers">
     <div class="provider-card">
       <div class="provider-name">Gatehouse Bank</div>
@@ -674,8 +1310,8 @@ input[type=range]::-moz-range-thumb {
     </div>
     <div class="provider-card">
       <div class="provider-name">Offa</div>
-      <div class="provider-tag">New · FCA 2025</div>
-      <div class="provider-detail">New Islamic fintech. Fast specialist decisions. Shariah-compliant residential finance.</div>
+      <div class="provider-tag">Fast decisions</div>
+      <div class="provider-detail">Islamic fintech with 1-hour decisions. Shariah-compliant residential finance. FCA regulated.</div>
     </div>
     <div class="provider-card">
       <div class="provider-name">Wayhome / Pfida</div>
@@ -685,12 +1321,12 @@ input[type=range]::-moz-range-thumb {
   </div>
 
   <div class="footer-note">
-    <strong>Important:</strong> This calculator is for educational purposes only and does not constitute financial advice. It is not regulated by the FCA. Rates are illustrative, based on publicly available 2025 market data and will change frequently. Always obtain a personalised quote and speak to a qualified Islamic mortgage broker before making any financial decisions.<br><br>
+    <strong>Important:</strong> This calculator is for educational purposes only and does not constitute financial advice. It is not regulated by the FCA. Rates are illustrative, based on publicly available 2026 market data and will change frequently. Always obtain a personalised quote and speak to a qualified Islamic mortgage broker before making any financial decisions.<br><br>
     <div class="footer-links">
-      <a href="https://gatehousebank.com/personal/home-finance" target="_blank">Gatehouse Bank</a>
-      <a href="https://strideup.co" target="_blank">StrideUp</a>
-      <a href="https://www.islamicfinanceguru.com" target="_blank">Islamic Finance Guru</a>
-      <a href="https://www.moneyhelper.org.uk/en/homes/buying-a-home/sharia-compliant-home-purchase-plans" target="_blank">MoneyHelper guide</a>
+      <a href="https://gatehousebank.com/personal/home-finance" target="_blank" rel="noopener">Gatehouse Bank</a>
+      <a href="https://strideup.co" target="_blank" rel="noopener">StrideUp</a>
+      <a href="https://www.islamicfinanceguru.com" target="_blank" rel="noopener">Islamic Finance Guru</a>
+      <a href="https://www.moneyhelper.org.uk/en/homes/buying-a-home/sharia-compliant-home-purchase-plans" target="_blank" rel="noopener">MoneyHelper guide</a>
     </div>
     <div style="margin-top:12px;font-size:11px;color:var(--ink-mute);">Built as a free community resource. Share freely. No copyright claimed.</div>
   </div>
@@ -721,100 +1357,124 @@ function closeModal() {
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-/* ── SHARE / EXPORT ── */
-function shareOrExport() {
-  const url = window.location.href;
-  const text = 'Free halal mortgage calculator — compare Islamic HPP vs conventional mortgages in the UK. No signup, no ads.';
-
-  /* Native share sheet — works on mobile (iOS Safari, Android Chrome) */
-  if (navigator.share) {
-    navigator.share({ title: 'Halal Mortgage Calculator', text: text, url: url })
-      .catch(() => {});
-    return;
-  }
-
-  /* Desktop fallback — show mini share panel */
-  showSharePanel();
+/* ── THEME TOGGLE ── */
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  html.setAttribute('data-theme', newTheme);
+  try { localStorage.setItem('theme', newTheme); } catch (e) { /* Private mode */ }
+  updateThemeIcon();
 }
 
-function showSharePanel() {
-  /* Remove existing panel if any */
-  const existing = document.getElementById('share-panel');
-  if (existing) { existing.remove(); return; }
-
-  const panel = document.createElement('div');
-  panel.id = 'share-panel';
-  panel.style.cssText = `
-    position:fixed; bottom:1.5rem; right:1.5rem; z-index:150;
-    background:#fff; border:1px solid rgba(0,0,0,0.12);
-    border-radius:14px; padding:1rem 1.25rem;
-    box-shadow:0 8px 30px rgba(0,0,0,0.15);
-    min-width:220px; font-family:'DM Sans',sans-serif;
-    animation: panel-in 0.18s ease;
-  `;
-
-  const style = document.createElement('style');
-  style.textContent = '@keyframes panel-in { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }';
-  document.head.appendChild(style);
-
-  const url = window.location.href;
-  const twitterUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent('Free halal mortgage calculator — compare Islamic HPP vs conventional mortgages 🕌') + '&url=' + encodeURIComponent(url);
-  const waUrl = 'https://wa.me/?text=' + encodeURIComponent('Free halal mortgage calculator for UK Muslims — compare HPP vs conventional: ' + url);
-
-  panel.innerHTML = `
-    <div style="font-size:12px;font-weight:500;color:#888;margin-bottom:10px;letter-spacing:0.06em;text-transform:uppercase;">Share this tool</div>
-    <div style="display:flex;flex-direction:column;gap:7px;">
-      <button onclick="copyLink()" style="font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 14px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);background:#f2f0eb;color:#1a1a18;cursor:pointer;text-align:left;display:flex;align-items:center;gap:8px;">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-        Copy link
-      </button>
-      <a href="${waUrl}" target="_blank" style="font-size:13px;padding:8px 14px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);background:#f2f0eb;color:#1a1a18;text-decoration:none;display:flex;align-items:center;gap:8px;">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        Share on WhatsApp
-      </a>
-      <a href="${twitterUrl}" target="_blank" style="font-size:13px;padding:8px 14px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);background:#f2f0eb;color:#1a1a18;text-decoration:none;display:flex;align-items:center;gap:8px;">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        Share on X
-      </a>
-      <button onclick="savePDF()" style="font-family:'DM Sans',sans-serif;font-size:13px;padding:8px 14px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);background:#1a1a18;color:#fff;cursor:pointer;text-align:left;display:flex;align-items:center;gap:8px;">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Save as PDF
-      </button>
-    </div>
-    <button onclick="document.getElementById('share-panel').remove()" style="position:absolute;top:8px;right:10px;background:none;border:none;cursor:pointer;color:#888;font-size:16px;padding:4px;">✕</button>
-  `;
-  panel.style.position = 'fixed';
-  document.body.appendChild(panel);
-
-  /* Close on outside click */
-  setTimeout(() => {
-    document.addEventListener('click', function handler(e) {
-      if (!panel.contains(e.target) && !e.target.closest('.btn-teal')) {
-        panel.remove();
-        document.removeEventListener('click', handler);
-      }
-    });
-  }, 100);
+function updateThemeIcon() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.getElementById('theme-icon-sun').style.display = isDark ? 'none' : 'block';
+  document.getElementById('theme-icon-moon').style.display = isDark ? 'block' : 'none';
 }
 
-function copyLink() {
-  const url = window.location.href;
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(url).then(() => showToast('Link copied to clipboard ✓'));
-  } else {
+function initTheme() {
+  let saved = null;
+  try { saved = localStorage.getItem('theme'); } catch (e) { /* Private mode */ }
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = saved || (prefersDark ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', theme);
+  updateThemeIcon();
+}
+
+/* ── URL STATE ── */
+function updateUrlState() {
+  const state = {
+    p: document.getElementById('price').value,
+    d: document.getElementById('deposit').value,
+    t: document.getElementById('term').value,
+    h: document.getElementById('hrate').value,
+    c: document.getElementById('crate').value
+  };
+  const hash = new URLSearchParams(state).toString();
+  history.replaceState(null, '', '#' + hash);
+}
+
+function loadFromUrl() {
+  const hash = window.location.hash.slice(1);
+  if (!hash) return;
+  const params = new URLSearchParams(hash);
+  const setIfValid = (id, val, min, max) => {
+    const n = parseFloat(val);
+    if (!isNaN(n) && n >= min && n <= max) {
+      document.getElementById(id).value = n;
+    }
+  };
+  if (params.get('p')) setIfValid('price', params.get('p'), 50000, 2000000);
+  if (params.get('d')) setIfValid('deposit', params.get('d'), 5, 40);
+  if (params.get('t')) setIfValid('term', params.get('t'), 5, 35);
+  if (params.get('h')) setIfValid('hrate', params.get('h'), 3, 10);
+  if (params.get('c')) setIfValid('crate', params.get('c'), 3, 10);
+}
+
+function getConfigUrl() {
+  const base = window.location.origin + window.location.pathname;
+  const state = {
+    p: document.getElementById('price').value,
+    d: document.getElementById('deposit').value,
+    t: document.getElementById('term').value,
+    h: document.getElementById('hrate').value,
+    c: document.getElementById('crate').value
+  };
+  return base + '#' + new URLSearchParams(state).toString();
+}
+
+/* ── SHARE MODAL ── */
+function openShareModal() {
+  document.getElementById('share-modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('share-config-url').textContent = getConfigUrl();
+}
+
+function closeShareModal() {
+  document.getElementById('share-modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function shareWhatsApp() {
+  const hM = document.getElementById('h-monthly').textContent;
+  const cM = document.getElementById('c-monthly').textContent;
+  const url = getConfigUrl();
+  const text = `I calculated my halal mortgage: ${hM}/month vs ${cM} conventional. Check it out: ${url}`;
+  window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+  closeShareModal();
+}
+
+function shareTwitter() {
+  const hM = document.getElementById('h-monthly').textContent;
+  const cM = document.getElementById('c-monthly').textContent;
+  const url = getConfigUrl();
+  const text = `Halal mortgage: ${hM}/month vs ${cM} conventional. Free calculator for UK Muslims 🕌`;
+  window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url), '_blank');
+  closeShareModal();
+}
+
+function copyConfigLink() {
+  const url = getConfigUrl();
+  const fallbackCopy = () => {
     const el = document.createElement('textarea');
     el.value = url; document.body.appendChild(el);
     el.select(); document.execCommand('copy');
     document.body.removeChild(el);
     showToast('Link copied ✓');
+  };
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url)
+      .then(() => showToast('Link with your config copied ✓'))
+      .catch(() => fallbackCopy());
+  } else {
+    fallbackCopy();
   }
-  const panel = document.getElementById('share-panel');
-  if (panel) panel.remove();
+  closeShareModal();
 }
 
 function savePDF() {
-  const panel = document.getElementById('share-panel');
-  if (panel) panel.remove();
+  closeShareModal();
   showToast('Opening print / save as PDF…');
   setTimeout(() => window.print(), 400);
 }
@@ -825,6 +1485,14 @@ function setPreset(hr, cr, el) {
   el.classList.add('active');
   document.getElementById('hrate').value = hr;
   document.getElementById('crate').value = cr;
+  calc();
+}
+
+/* ── TERM PRESETS ── */
+function setTerm(years, el) {
+  document.querySelectorAll('.term-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('term').value = years;
   calc();
 }
 
@@ -872,15 +1540,31 @@ function calc() {
   /* Diff */
   const diff = hTotal - cTotal, mDiff = hM - cM;
   const box  = document.getElementById('diff-box');
+  const summaryHeadline = document.getElementById('summary-headline');
+  const summarySub = document.getElementById('summary-sub');
+  const summaryBadge = document.getElementById('summary-badge');
+
   if (Math.abs(diff) < 300) {
     box.className = 'diff-box same';
     box.innerHTML = 'At these rates the total cost over the full term is <strong>essentially identical</strong>. You get Shariah compliance with no meaningful financial penalty.';
+    summaryHeadline.textContent = 'Essentially equal';
+    summarySub.textContent = `Only ${fmt(Math.abs(diff))} difference over ${termYrs} years`;
+    summaryBadge.className = 'summary-badge same';
+    summaryBadge.textContent = 'No penalty for going halal';
   } else if (diff > 0) {
     box.className = 'diff-box more';
     box.innerHTML = `The Islamic HPP costs <strong>${fmt(diff)} more</strong> over ${termYrs} years — about <strong>${fmt(mDiff)}/month extra</strong>. This reflects the higher rental rate Islamic lenders currently charge. The gap is narrowing year on year as competition in the market grows.`;
+    summaryHeadline.textContent = fmt(mDiff) + '/month more';
+    summarySub.textContent = `${fmt(diff)} extra over ${termYrs} years for halal`;
+    summaryBadge.className = 'summary-badge more';
+    summaryBadge.textContent = 'Halal costs more';
   } else {
     box.className = 'diff-box less';
     box.innerHTML = `At these rates the Islamic HPP costs <strong>${fmt(Math.abs(diff))} less</strong> over ${termYrs} years — about <strong>${fmt(Math.abs(mDiff))}/month cheaper</strong>. Staying halal is the financially stronger choice at these rates.`;
+    summaryHeadline.textContent = fmt(Math.abs(mDiff)) + '/month less';
+    summarySub.textContent = `${fmt(Math.abs(diff))} saved over ${termYrs} years with halal`;
+    summaryBadge.className = 'summary-badge less';
+    summaryBadge.textContent = 'Halal saves money';
   }
 
   /* Breakdown bars */
@@ -957,9 +1641,262 @@ function calc() {
       }
     }
   });
+
+  /* Update dependent calculators */
+  calcStampDuty();
+  calcAffordability();
+  calcOverpayment();
+
+  /* Update URL state for sharing */
+  updateUrlState();
 }
 
+/* ── CITY PRESETS ── */
+function setCity(price, el) {
+  document.querySelectorAll('.city-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('price').value = price;
+  calc();
+}
+
+/* ── STAMP DUTY ── */
+function toggleStampDuty() {
+  const header = document.getElementById('stamp-header');
+  const content = document.getElementById('stamp-content');
+  header.classList.toggle('open');
+  content.classList.toggle('open');
+  if (content.classList.contains('open')) {
+    calcStampDuty();
+  }
+}
+
+function calcStampDuty() {
+  const price = +document.getElementById('price').value;
+  const isFTB = document.getElementById('ftb-check').checked;
+  let duty = 0;
+  let note = '';
+
+  if (isFTB) {
+    // First-time buyer rates (2025)
+    // 0% up to £425,000
+    // 5% on £425,001–£625,000
+    // Above £625k, FTB relief is removed - use standard rates
+    if (price <= 625000) {
+      if (price <= 425000) {
+        duty = 0;
+      } else {
+        duty = (price - 425000) * 0.05;
+      }
+      note = 'First-time buyer relief applied';
+    } else {
+      // FTB relief removed above £625k - use standard rates
+      duty = 0; // 0% on first £125k
+      duty += Math.min(125000, Math.max(0, price - 125000)) * 0.02; // 2% on £125k-£250k
+      duty += Math.min(675000, Math.max(0, price - 250000)) * 0.05; // 5% on £250k-£925k
+      if (price > 925000) {
+        duty += Math.min(575000, Math.max(0, price - 925000)) * 0.10; // 10% on £925k-£1.5m
+      }
+      note = 'FTB relief not available above £625k';
+    }
+  } else {
+    // Non-first-time buyer rates (2025)
+    // 0% up to £125,000
+    // 2% on £125,001–£250,000
+    // 5% on £250,001–£925,000
+    // 10% on £925,001–£1.5m
+    if (price <= 125000) {
+      duty = 0;
+    } else if (price <= 250000) {
+      duty = (price - 125000) * 0.02;
+    } else if (price <= 925000) {
+      duty = 125000 * 0.02 + (price - 250000) * 0.05;
+    } else {
+      duty = 125000 * 0.02 + 675000 * 0.05 + (price - 925000) * 0.10;
+    }
+    note = 'Standard stamp duty rates';
+  }
+
+  document.getElementById('stamp-amount').textContent = fmt(duty);
+  document.getElementById('stamp-note').textContent = note;
+}
+
+/* ── AFFORDABILITY ── */
+function calcAffordability() {
+  const salary = +document.getElementById('salary-input').value;
+  const price = +document.getElementById('price').value;
+  const depPct = +document.getElementById('deposit').value;
+  const loan = price - (price * depPct / 100);
+
+  const convMax = salary * 4.5;
+  const gatehouseMax = salary * 4.75;
+  const strideMax = salary * 6.5;
+
+  document.getElementById('afford-conv').textContent = salary > 0 ? fmt(convMax) : '—';
+  document.getElementById('afford-gatehouse').textContent = salary > 0 ? fmt(gatehouseMax) : '—';
+  document.getElementById('afford-stride').textContent = salary > 0 ? fmt(strideMax) : '—';
+  document.getElementById('afford-loan').textContent = fmt(loan);
+
+  const card = document.getElementById('afford-loan-card');
+  const noteEl = document.getElementById('afford-note');
+
+  // Remove all color classes
+  card.classList.remove('green', 'amber', 'red');
+
+  if (salary <= 0) {
+    noteEl.textContent = 'Enter your salary above to see if you can afford this property.';
+    return;
+  }
+
+  if (loan <= convMax) {
+    card.classList.add('green');
+    noteEl.textContent = 'Your loan is within conventional lending limits (4.5× salary). Most lenders should consider this.';
+  } else if (loan <= gatehouseMax) {
+    card.classList.add('green');
+    noteEl.textContent = 'Your loan exceeds conventional limits but is within Gatehouse Bank\'s 4.75× income threshold.';
+  } else if (loan <= strideMax) {
+    card.classList.add('amber');
+    noteEl.textContent = 'Your loan exceeds Gatehouse limits but is within StrideUp\'s 6.5× income threshold.';
+  } else {
+    card.classList.add('red');
+    noteEl.textContent = 'Your loan exceeds all standard lender limits. Consider a larger deposit or lower price.';
+  }
+}
+
+/* ── OVERPAYMENT ── */
+function calcOverpayment() {
+  const price = +document.getElementById('price').value;
+  const depPct = +document.getElementById('deposit').value;
+  const termYrs = +document.getElementById('term').value;
+  const hRateAnn = +document.getElementById('hrate').value;
+  const overpay = +document.getElementById('overpay').value;
+
+  document.getElementById('overpay-out').textContent = fmt(overpay);
+
+  const deposit = price * depPct / 100;
+  const loan = price - deposit;
+  const n = termYrs * 12;
+  const hr = hRateAnn / 100 / 12;
+
+  // Calculate standard monthly payment
+  const hM = hr === 0 ? loan / n : loan * hr * Math.pow(1 + hr, n) / (Math.pow(1 + hr, n) - 1);
+
+  // Calculate with overpayment
+  const newPayment = hM + overpay;
+  let balance = loan;
+  let months = 0;
+  let totalPaidWithOverpay = 0;
+  const maxMonths = n; // Original term in months
+
+  if (overpay === 0) {
+    document.getElementById('overpay-months').textContent = '0';
+    document.getElementById('overpay-term').textContent = termYrs + ' years 0 months';
+    document.getElementById('overpay-saved').textContent = '£0';
+    return;
+  }
+
+  while (balance > 0 && months < maxMonths * 2) {
+    const rentPortion = balance * hr;
+    const acquisitionPortion = newPayment - rentPortion;
+
+    if (acquisitionPortion <= 0) {
+      // Can't even cover rent - shouldn't happen with valid inputs
+      break;
+    }
+
+    balance = Math.max(0, balance - acquisitionPortion);
+    totalPaidWithOverpay += newPayment;
+    months++;
+
+    if (balance <= 0) break;
+  }
+
+  // Calculate original total
+  const originalTotal = hM * n;
+
+  // Months saved
+  const monthsSaved = n - months;
+
+  // Interest/profit saved
+  const profitSaved = originalTotal - totalPaidWithOverpay;
+
+  // Format new term
+  const newYears = Math.floor(months / 12);
+  const newMonths = months % 12;
+
+  document.getElementById('overpay-months').textContent = monthsSaved > 0 ? monthsSaved : '0';
+  document.getElementById('overpay-term').textContent = newYears + ' years ' + newMonths + ' months';
+  document.getElementById('overpay-saved').textContent = profitSaved > 0 ? fmt(profitSaved) : '£0';
+}
+
+/* ── EMAIL RESULTS ── */
+function emailResults() {
+  const price = document.getElementById('price-out').textContent;
+  const deposit = document.getElementById('dep-out').textContent;
+  const term = document.getElementById('term-out').textContent;
+  const hRate = document.getElementById('hrate-out').textContent;
+  const cRate = document.getElementById('crate-out').textContent;
+  const hMonthly = document.getElementById('h-monthly').textContent;
+  const cMonthly = document.getElementById('c-monthly').textContent;
+  const hTotal = document.getElementById('h-total').textContent;
+  const cTotal = document.getElementById('c-total').textContent;
+  const hProfit = document.getElementById('h-profit').textContent;
+  const cInterest = document.getElementById('c-interest').textContent;
+
+  const diffBox = document.getElementById('diff-box');
+  const diffText = diffBox.textContent.trim();
+  const configUrl = getConfigUrl();
+  const date = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  const subject = 'My halal mortgage calculation';
+  const body = `HALAL MORTGAGE CALCULATION
+==========================
+Calculated on ${date}
+
+PROPERTY DETAILS
+- Home price: ${price}
+- Deposit: ${deposit}
+- Mortgage term: ${term}
+
+RATES USED
+- Islamic HPP rate: ${hRate}
+- Conventional rate: ${cRate}
+
+ISLAMIC HPP (Halal)
+- Monthly payment: ${hMonthly}
+- Total paid over term: ${hTotal}
+- Bank's profit margin: ${hProfit}
+
+CONVENTIONAL MORTGAGE
+- Monthly payment: ${cMonthly}
+- Total paid over term: ${cTotal}
+- Total interest (riba): ${cInterest}
+
+COMPARISON
+${diffText}
+
+--
+View this calculation interactively: ${configUrl}
+
+This calculator is for educational purposes only.
+Always speak to a qualified broker before making decisions.`;
+
+  const mailtoUrl = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+  closeShareModal();
+  window.location.href = mailtoUrl;
+}
+
+/* ── INIT ── */
+initTheme();
+loadFromUrl();
 calc();
+
+/* Close modals on escape */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeShareModal();
+  }
+});
 </script>
 </body>
 </html>
