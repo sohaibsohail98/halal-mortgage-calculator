@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- ════════════════════════════════════════
+     SECTION: META & HEAD
+     ════════════════════════════════════════ -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Free Islamic mortgage calculator for UK Muslims. Compare Halal Home Purchase Plans (HPP) vs conventional mortgages — see monthly payments, total cost, and how much interest you avoid.">
@@ -11,6 +14,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<!-- ════════════════════════════════════════
+     SECTION: CSS VARIABLES & RESET
+     ════════════════════════════════════════ -->
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -902,16 +908,102 @@ input[type=range]::-moz-range-thumb {
 [data-theme="dark"] .author-footer {
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
+/* Utility classes to replace inline styles */
+.preset-label {
+  font-size: 11px;
+  color: var(--ink-mute);
+  margin-bottom: 7px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.modal-disclaimer {
+  font-size: 12px;
+  color: var(--ink-mute);
+  line-height: 1.65;
+}
+.modal-disclaimer a {
+  color: var(--teal);
+}
+.slider-name-teal {
+  color: var(--teal);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.slider-name-blue {
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.rate-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.rate-dot-teal {
+  background: var(--teal-mid);
+}
+.rate-dot-blue {
+  background: var(--blue-mid);
+}
+.breakdown-section {
+  margin-bottom: 1.1rem;
+}
+.text-teal {
+  color: var(--teal);
+}
+.text-blue {
+  color: var(--blue);
+}
+.text-muted {
+  color: var(--ink-mute);
+}
+.legend-row-mt {
+  margin-top: 12px;
+}
+.leg-sq-teal-mid {
+  background: var(--teal-mid);
+}
+.leg-sq-blue-dashed {
+  border: 2px dashed var(--blue-mid);
+  background: transparent;
+  width: 14px;
+  border-radius: 0;
+}
+.leg-sq-coral-mid {
+  background: var(--coral-mid);
+}
+.chart-container {
+  position: relative;
+  width: 100%;
+}
+.chart-container-tall {
+  height: 220px;
+}
+.chart-container-short {
+  height: 190px;
+}
+.footer-credit {
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--ink-mute);
+}
 </style>
 </head>
 <body>
+
+<!-- ════════════════════════════════════════
+     SECTION: MODALS
+     ════════════════════════════════════════ -->
 
 <!-- HOW IT WORKS MODAL -->
 <div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-text" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-header">
       <span class="modal-title" id="modal-title-text">How Islamic mortgages <em>actually</em> work</span>
-      <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+      <button type="button" class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
     </div>
     <div class="modal-body">
 
@@ -963,7 +1055,7 @@ input[type=range]::-moz-range-thumb {
       </div>
 
       <div class="modal-divider"></div>
-      <p style="font-size:12px;color:var(--ink-mute);line-height:1.65;">This calculator is for education only. Always speak to an FCA-regulated Islamic mortgage broker before making any financial decisions. Providers: <a href="https://gatehousebank.com" target="_blank" rel="noopener" style="color:var(--teal);">Gatehouse Bank</a> · <a href="https://strideup.co" target="_blank" rel="noopener" style="color:var(--teal);">StrideUp</a> · <a href="https://www.islamicfinanceguru.com" target="_blank" rel="noopener" style="color:var(--teal);">Islamic Finance Guru</a></p>
+      <p class="modal-disclaimer">This calculator is for education only. Always speak to an FCA-regulated Islamic mortgage broker before making any financial decisions. Providers: <a href="https://gatehousebank.com" target="_blank" rel="noopener">Gatehouse Bank</a> · <a href="https://strideup.co" target="_blank" rel="noopener">StrideUp</a> · <a href="https://www.islamicfinanceguru.com" target="_blank" rel="noopener">Islamic Finance Guru</a></p>
     </div>
   </div>
 </div>
@@ -973,21 +1065,21 @@ input[type=range]::-moz-range-thumb {
   <div class="share-modal">
     <div class="share-modal-header">
       <span class="share-modal-title">Share or Save</span>
-      <button class="modal-close" onclick="closeShareModal()" aria-label="Close">✕</button>
+      <button type="button" class="modal-close" onclick="closeShareModal()" aria-label="Close">✕</button>
     </div>
     <div class="share-modal-body">
       <div class="share-section">
         <div class="share-section-title">Quick share</div>
         <div class="share-buttons">
-          <button class="share-btn" onclick="shareWhatsApp()">
+          <button type="button" class="share-btn" onclick="shareWhatsApp()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             WhatsApp
           </button>
-          <button class="share-btn" onclick="shareTwitter()">
+          <button type="button" class="share-btn" onclick="shareTwitter()">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             X / Twitter
           </button>
-          <button class="share-btn" onclick="copyConfigLink()">
+          <button type="button" class="share-btn" onclick="copyConfigLink()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
             Copy Link
           </button>
@@ -997,11 +1089,11 @@ input[type=range]::-moz-range-thumb {
       <div class="share-section">
         <div class="share-section-title">Save &amp; Email</div>
         <div class="share-buttons">
-          <button class="share-btn primary" onclick="savePDF()">
+          <button type="button" class="share-btn primary" onclick="savePDF()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Save as PDF
           </button>
-          <button class="share-btn" onclick="emailResults()">
+          <button type="button" class="share-btn" onclick="emailResults()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             Email Results
           </button>
@@ -1014,7 +1106,9 @@ input[type=range]::-moz-range-thumb {
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
-<!-- HEADER -->
+<!-- ════════════════════════════════════════
+     SECTION: HEADER
+     ════════════════════════════════════════ -->
 <div class="header">
   <div class="header-inner">
     <div class="header-top-row">
@@ -1024,15 +1118,15 @@ input[type=range]::-moz-range-thumb {
         <p class="header-sub">A free, honest side-by-side calculator for UK Muslims comparing Islamic Home Purchase Plans with conventional mortgages. No signup. No ads. No fluff.</p>
       </div>
       <div class="header-actions no-print">
-        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" id="theme-toggle">
+        <button type="button" class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" id="theme-toggle">
           <svg id="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
           <svg id="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
         </button>
-        <button class="btn-ghost" onclick="openModal()" aria-label="How it works">
+        <button type="button" class="btn-ghost" onclick="openModal()" aria-label="How it works">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           How it works
         </button>
-        <button class="btn-teal" onclick="openShareModal()" aria-label="Share or export">
+        <button type="button" class="btn-teal" onclick="openShareModal()" aria-label="Share or export">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
           Share / Save
         </button>
@@ -1041,7 +1135,9 @@ input[type=range]::-moz-range-thumb {
   </div>
 </div>
 
-<!-- STICKY NAV -->
+<!-- ════════════════════════════════════════
+     SECTION: MAIN CALCULATOR
+     ════════════════════════════════════════ -->
 <div class="main" id="main-content">
   <nav class="sticky-nav no-print" aria-label="Jump to section">
     <div class="sticky-nav-inner">
@@ -1060,14 +1156,14 @@ input[type=range]::-moz-range-thumb {
   <div class="card">
     <div class="controls-grid">
       <div>
-        <div style="font-size:11px;color:var(--ink-mute);margin-bottom:7px;letter-spacing:0.05em;text-transform:uppercase;">Quick city examples</div>
+        <div class="preset-label">Quick city examples</div>
         <div class="city-presets">
-          <button class="city-btn" onclick="setCity(190000,this)">Preston</button>
-          <button class="city-btn" onclick="setCity(250000,this)">Manchester</button>
-          <button class="city-btn" onclick="setCity(185000,this)">Bradford</button>
-          <button class="city-btn" onclick="setCity(230000,this)">Birmingham</button>
-          <button class="city-btn" onclick="setCity(235000,this)">Leicester</button>
-          <button class="city-btn" onclick="setCity(540000,this)">London</button>
+          <button type="button" class="city-btn" onclick="setCity(190000,this)">Preston</button>
+          <button type="button" class="city-btn" onclick="setCity(250000,this)">Manchester</button>
+          <button type="button" class="city-btn" onclick="setCity(185000,this)">Bradford</button>
+          <button type="button" class="city-btn" onclick="setCity(230000,this)">Birmingham</button>
+          <button type="button" class="city-btn" onclick="setCity(235000,this)">Leicester</button>
+          <button type="button" class="city-btn" onclick="setCity(540000,this)">London</button>
         </div>
         <div class="slider-group">
           <div class="slider-top"><span class="slider-name">Home price</span><span class="slider-val" id="price-out">£180,000</span></div>
@@ -1081,18 +1177,18 @@ input[type=range]::-moz-range-thumb {
           <div class="slider-top"><span class="slider-name">Mortgage term</span><span class="slider-val" id="term-out">25 years</span></div>
           <input type="range" min="5" max="35" step="1" value="25" id="term" oninput="calc()" aria-label="Mortgage term in years">
           <div class="term-presets">
-            <button class="term-btn" onclick="setTerm(15,this)">15 yrs</button>
-            <button class="term-btn" onclick="setTerm(20,this)">20 yrs</button>
-            <button class="term-btn active" onclick="setTerm(25,this)">25 yrs</button>
-            <button class="term-btn" onclick="setTerm(30,this)">30 yrs</button>
+            <button type="button" class="term-btn" onclick="setTerm(15,this)">15 yrs</button>
+            <button type="button" class="term-btn" onclick="setTerm(20,this)">20 yrs</button>
+            <button type="button" class="term-btn active" onclick="setTerm(25,this)">25 yrs</button>
+            <button type="button" class="term-btn" onclick="setTerm(30,this)">30 yrs</button>
           </div>
         </div>
       </div>
       <div>
         <div class="slider-group">
           <div class="slider-top">
-            <span class="slider-name" style="color:var(--teal);display:flex;align-items:center;gap:5px;">
-              <span style="width:8px;height:8px;border-radius:50%;background:var(--teal-mid);display:inline-block;"></span>
+            <span class="slider-name slider-name-teal">
+              <span class="rate-dot rate-dot-teal"></span>
               Halal rental rate
             </span>
             <span class="slider-val" id="hrate-out">5.9%</span>
@@ -1101,8 +1197,8 @@ input[type=range]::-moz-range-thumb {
         </div>
         <div class="slider-group">
           <div class="slider-top">
-            <span class="slider-name" style="color:var(--blue);display:flex;align-items:center;gap:5px;">
-              <span style="width:8px;height:8px;border-radius:50%;background:var(--blue-mid);display:inline-block;"></span>
+            <span class="slider-name slider-name-blue">
+              <span class="rate-dot rate-dot-blue"></span>
               Conventional rate
             </span>
             <span class="slider-val" id="crate-out">5.5%</span>
@@ -1110,12 +1206,12 @@ input[type=range]::-moz-range-thumb {
           <input type="range" class="blue" min="3" max="10" step="0.1" value="5.5" id="crate" oninput="calc()" aria-label="Conventional mortgage rate">
         </div>
         <div>
-          <div style="font-size:11px;color:var(--ink-mute);margin-bottom:7px;letter-spacing:0.05em;text-transform:uppercase;">Quick presets — real 2026 UK rates</div>
+          <div class="preset-label">Quick presets — real 2026 UK rates</div>
           <div class="presets">
-            <button class="preset-btn active" onclick="setPreset(5.9,5.5,this)">Gatehouse 2yr</button>
-            <button class="preset-btn" onclick="setPreset(6.2,5.5,this)">StrideUp 10% dep</button>
-            <button class="preset-btn" onclick="setPreset(6.8,6.0,this)">Higher rates</button>
-            <button class="preset-btn" onclick="setPreset(5.5,5.5,this)">Parity</button>
+            <button type="button" class="preset-btn active" onclick="setPreset(5.9,5.5,this)">Gatehouse 2yr</button>
+            <button type="button" class="preset-btn" onclick="setPreset(6.2,5.5,this)">StrideUp 10% dep</button>
+            <button type="button" class="preset-btn" onclick="setPreset(6.8,6.0,this)">Higher rates</button>
+            <button type="button" class="preset-btn" onclick="setPreset(5.5,5.5,this)">Parity</button>
           </div>
           <div class="rate-freshness">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -1126,6 +1222,9 @@ input[type=range]::-moz-range-thumb {
     </div>
   </div>
 
+  <!-- ════════════════════════════════════════
+       SECTION: RESULTS CARDS
+       ════════════════════════════════════════ -->
   <p class="sec" id="section-results">Side-by-side results</p>
 
   <!-- Comparison Summary Card -->
@@ -1188,10 +1287,10 @@ input[type=range]::-moz-range-thumb {
 
   <p class="sec" id="section-breakdown">Monthly payment breakdown — year 1 (what you're actually paying)</p>
   <div class="card">
-    <div style="margin-bottom:1.1rem;">
+    <div class="breakdown-section">
       <div class="breakdown-label">
-        <span style="color:var(--teal);">Islamic HPP</span>
-        <span id="h-bar-label" style="color:var(--ink-mute);"></span>
+        <span class="text-teal">Islamic HPP</span>
+        <span id="h-bar-label" class="text-muted"></span>
       </div>
       <div class="bar-track">
         <div class="bar-seg bar-teal-dark" id="bar-h-acq"></div>
@@ -1200,15 +1299,15 @@ input[type=range]::-moz-range-thumb {
     </div>
     <div>
       <div class="breakdown-label">
-        <span style="color:var(--blue);">Conventional</span>
-        <span id="c-bar-label" style="color:var(--ink-mute);"></span>
+        <span class="text-blue">Conventional</span>
+        <span id="c-bar-label" class="text-muted"></span>
       </div>
       <div class="bar-track">
         <div class="bar-seg bar-blue-dark" id="bar-c-p"></div>
         <div class="bar-seg bar-blue-light" id="bar-c-i"></div>
       </div>
     </div>
-    <div class="legend-row" style="margin-top:12px;">
+    <div class="legend-row legend-row-mt">
       <div class="leg"><div class="leg-sq bar-teal-dark"></div>Acquisition (builds your ownership)</div>
       <div class="leg"><div class="leg-sq bar-teal-light"></div>Rent on bank's share</div>
       <div class="leg"><div class="leg-sq bar-blue-dark"></div>Principal repayment</div>
@@ -1216,14 +1315,17 @@ input[type=range]::-moz-range-thumb {
     </div>
   </div>
 
+  <!-- ════════════════════════════════════════
+       SECTION: CHARTS
+       ════════════════════════════════════════ -->
   <p class="sec" id="section-charts">Remaining balance over time</p>
   <div class="chart-wrap">
     <div class="chart-title">How quickly you pay off the property — year by year</div>
     <div class="chart-legend">
-      <div class="leg"><div class="leg-sq" style="background:var(--teal-mid);"></div>Islamic HPP balance</div>
-      <div class="leg"><div class="leg-sq" style="border:2px dashed var(--blue-mid);background:transparent;width:14px;border-radius:0;"></div>Conventional balance</div>
+      <div class="leg"><div class="leg-sq leg-sq-teal-mid"></div>Islamic HPP balance</div>
+      <div class="leg"><div class="leg-sq leg-sq-blue-dashed"></div>Conventional balance</div>
     </div>
-    <div style="position:relative;width:100%;height:220px;">
+    <div class="chart-container chart-container-tall">
       <canvas id="chart1" role="img" aria-label="Line chart comparing remaining balance for Islamic HPP and conventional mortgage over the mortgage term">Balance comparison over time.</canvas>
     </div>
   </div>
@@ -1232,10 +1334,10 @@ input[type=range]::-moz-range-thumb {
   <div class="chart-wrap">
     <div class="chart-title">Running total of additional cost (or saving) of the Islamic HPP vs conventional</div>
     <div class="chart-legend">
-      <div class="leg"><div class="leg-sq" style="background:var(--coral-mid);"></div>Halal costs more</div>
-      <div class="leg"><div class="leg-sq" style="background:var(--teal-mid);"></div>Halal costs less</div>
+      <div class="leg"><div class="leg-sq leg-sq-coral-mid"></div>Halal costs more</div>
+      <div class="leg"><div class="leg-sq leg-sq-teal-mid"></div>Halal costs less</div>
     </div>
-    <div style="position:relative;width:100%;height:190px;">
+    <div class="chart-container chart-container-short">
       <canvas id="chart2" role="img" aria-label="Bar chart showing cumulative difference in cost between Islamic HPP and conventional mortgage year by year">Cumulative cost difference.</canvas>
     </div>
   </div>
@@ -1339,6 +1441,9 @@ input[type=range]::-moz-range-thumb {
     </div>
   </div>
 
+  <!-- ════════════════════════════════════════
+       SECTION: PROVIDERS
+       ════════════════════════════════════════ -->
   <p class="sec" id="section-providers">UK Islamic mortgage providers (2026)</p>
   <div class="providers">
     <div class="provider-card">
@@ -1371,15 +1476,19 @@ input[type=range]::-moz-range-thumb {
       <a href="https://www.islamicfinanceguru.com" target="_blank" rel="noopener">Islamic Finance Guru</a>
       <a href="https://www.moneyhelper.org.uk/en/homes/buying-a-home/sharia-compliant-home-purchase-plans" target="_blank" rel="noopener">MoneyHelper guide</a>
     </div>
-    <div style="margin-top:12px;font-size:11px;color:var(--ink-mute);">Built as a free community resource. Share freely. No copyright claimed.</div>
+    <div class="footer-credit">Built as a free community resource. Share freely. No copyright claimed.</div>
   </div>
 </div>
 
+<!-- ════════════════════════════════════════
+     SECTION: JAVASCRIPT
+     ════════════════════════════════════════ -->
 <script>
-/* ── STATE ── */
+/* ════════════════════════════════════════
+   JAVASCRIPT — STATE & UTILITIES
+   ════════════════════════════════════════ */
 let chart1 = null, chart2 = null;
 
-/* ── UTILS ── */
 function fmt(n) { return '£' + Math.round(n).toLocaleString('en-GB'); }
 
 function showToast(msg) {
@@ -1467,7 +1576,9 @@ function getConfigUrl() {
   return base + '#' + new URLSearchParams(state).toString();
 }
 
-/* ── SHARE MODAL ── */
+/* ════════════════════════════════════════
+   JAVASCRIPT — SHARE / EXPORT
+   ════════════════════════════════════════ */
 function openShareModal() {
   document.getElementById('share-modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1539,7 +1650,9 @@ function setTerm(years, el) {
   calc();
 }
 
-/* ── CALC ── */
+/* ════════════════════════════════════════
+   JAVASCRIPT — CALCULATIONS
+   ════════════════════════════════════════ */
 function calc() {
   const price    = +document.getElementById('price').value;
   const depPct   = +document.getElementById('deposit').value;
@@ -1631,7 +1744,7 @@ function calc() {
   document.getElementById('h-bar-label').textContent = fmt(hM) + '/mo · ' + hAcqPct + '% acquiring · ' + hRentPct + '% rent';
   document.getElementById('c-bar-label').textContent = fmt(cM) + '/mo · ' + cPrinPct + '% principal · ' + cIntPct + '% interest';
 
-  /* Charts */
+  /* ── CHART RENDERING ── */
   const labels = [], hBals = [], cBals = [], cumDiffs = [];
   let hBal = loan, cBal = loan, cumDiff = 0;
   for (let y = 1; y <= termYrs; y++) {
