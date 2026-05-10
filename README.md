@@ -11,13 +11,18 @@ Free, open-source tool for UK Muslims to compare Islamic Home Purchase Plans wit
 - Side-by-side HPP vs conventional comparison
 - Live sliders for price, deposit, term and rates
 - Year-by-year balance charts with table view
-- Stamp duty calculator with first-time buyer relief
-- Affordability checker with employment status (employed/self-employed)
+- **Remortgage calculator** with break-even analysis
+- Stamp duty & buying costs calculator (solicitor, survey, broker fees)
+- Affordability checker with employment status and **joint applicant support**
 - Customisable income multiples (4.5×–6× conventional, 4.75× Gatehouse, 6.5× StrideUp)
+- **Custom deposit amount** option for precise budgeting
 - Overpayment calculator with equity explanation
-- City price presets
+- **Year-by-year breakdown selector** (see how payment split changes over time)
+- City price presets with rate explanations
+- Shared ownership comparison (Heylo/Your Home model)
 - Shareable URLs
 - Dark mode
+- Feedback form for suggestions
 - No tracking, works offline
 
 ---
@@ -65,8 +70,9 @@ Keep it as a single file with no build process.
 
 ## Roadmap
 
-- Remortgage calculator
+- Shared ownership staircasing projection
 - Amortisation CSV export
+- Print/PDF summary export
 - Language toggles (Urdu, Arabic, Somali)
 - Embed version for community sites
 
