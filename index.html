@@ -18,6 +18,7 @@
 :root {
   --teal: #0F6E56; --teal-light: #E1F5EE; --teal-mid: #1D9E75; --teal-dark: #085041;
   --blue: #185FA5; --blue-light: #E6F1FB; --blue-mid: #378ADD;
+  --purple: #8B5CF6; --purple-light: rgba(139,92,246,0.15); --purple-mid: #A78BFA;
   --coral: #993C1D; --coral-light: #FAECE7; --coral-mid: #D85A30;
   --gold: #BA7517; --gold-light: #FAEEDA;
   --ink: #1a1a18; --ink-soft: #4a4a46; --ink-mute: #888780;
@@ -166,6 +167,11 @@ body {
 .slider-name { font-size: 13px; color: var(--ink-soft); }
 .slider-val { font-size: 15px; font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
 
+.custom-deposit-row { margin-top: 8px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.toggle-label.compact { font-size: 12px; gap: 6px; }
+.toggle-label.compact input[type="checkbox"] { width: 14px; height: 14px; }
+.custom-deposit-input { width: 110px; padding: 5px 8px; font-size: 13px; border: 1px solid var(--border-med); border-radius: var(--radius-xs); }
+
 input[type=range] {
   -webkit-appearance: none; appearance: none;
   width: 100%; height: 4px;
@@ -310,6 +316,21 @@ input[type=range]::-moz-range-thumb {
   background: var(--teal-light); color: var(--teal);
 }
 .provider-detail { color: var(--ink-mute); font-size: 12px; line-height: 1.55; }
+
+/* ── FEEDBACK ── */
+.feedback-intro { font-size: 13px; color: var(--ink-soft); margin-bottom: 1rem; }
+.feedback-form { display: flex; flex-direction: column; gap: 0.75rem; }
+.feedback-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  border: 1px solid var(--border-med);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+  min-height: 80px;
+}
+.feedback-form .btn-teal { align-self: flex-start; }
 
 /* ── FOOTER ── */
 .footer-note {
@@ -544,6 +565,8 @@ input[type=range]::-moz-range-thumb {
 }
 .toggle-text { font-weight: 500; }
 .toggle-hint { color: var(--ink-mute); font-size: 12px; }
+.info-icon { cursor: help; font-size: 14px; margin-left: 4px; opacity: 0.7; }
+.info-icon:hover { opacity: 1; }
 .so-inputs {
   margin-top: 1rem;
   padding: 1rem;
@@ -638,6 +661,7 @@ input[type="range"].purple {
   font-size: 13px;
   text-align: right;
 }
+.cost-hint { display: block; font-size: 10px; color: var(--ink-mute); margin-top: 2px; }
 .cost-total-row {
   display: flex;
   justify-content: space-between;
@@ -667,6 +691,11 @@ input[type="range"].purple {
 .afford-input-row label {
   font-size: 13px;
   color: var(--ink-soft);
+}
+.afford-toggle-row {
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--border);
 }
 .afford-input {
   font-family: 'DM Sans', sans-serif;
@@ -741,6 +770,36 @@ input[type="range"].purple {
   padding: 0.875rem 1rem;
 }
 .overpay-card .stat-label { color: var(--teal); }
+
+/* ── REMORTGAGE ── */
+.card-intro { font-size: 13px; color: var(--ink-soft); margin-bottom: 1rem; }
+.remort-results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 12px;
+}
+@media (max-width: 540px) { .remort-results { grid-template-columns: 1fr; } }
+.remort-card { border-radius: var(--radius-sm); padding: 0.875rem 1rem; }
+.remort-card.current { background: var(--blue-light); border: 1px solid rgba(24,95,165,0.18); }
+.remort-card.current .stat-label { color: var(--blue); }
+.remort-card.new { background: var(--teal-light); border: 1px solid rgba(15,110,86,0.18); }
+.remort-card.new .stat-label { color: var(--teal); }
+.remort-card.savings { background: var(--teal-light); border: 1px solid rgba(15,110,86,0.18); }
+.remort-card.savings .stat-label { color: var(--teal); }
+.remort-card.savings.negative { background: var(--coral-light); border: 1px solid rgba(153,60,29,0.18); }
+.remort-card.savings.negative .stat-label { color: var(--coral); }
+.remort-total-card {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+}
+@media (max-width: 540px) { .remort-total-card { grid-template-columns: 1fr; } }
+.remort-total-row .stat { margin-bottom: 0; }
 
 /* ── STICKY NAV ── */
 .sticky-nav {
@@ -909,6 +968,21 @@ input[type="range"].purple {
 [data-theme="dark"] .overpay-card { background: rgba(15,110,86,0.2); }
 [data-theme="dark"] .overpay-card .stat-value { color: var(--ink); }
 [data-theme="dark"] .overpay-card .stat-label { color: #1D9E75; }
+
+/* Dark mode - Remortgage */
+[data-theme="dark"] .remort-card.current { background: rgba(24,95,165,0.15); }
+[data-theme="dark"] .remort-card.current .stat-value { color: var(--ink); }
+[data-theme="dark"] .remort-card.current .stat-label { color: #378ADD; }
+[data-theme="dark"] .remort-card.new { background: rgba(15,110,86,0.2); }
+[data-theme="dark"] .remort-card.new .stat-value { color: var(--ink); }
+[data-theme="dark"] .remort-card.new .stat-label { color: #1D9E75; }
+[data-theme="dark"] .remort-card.savings { background: rgba(15,110,86,0.2); }
+[data-theme="dark"] .remort-card.savings .stat-value { color: var(--ink); }
+[data-theme="dark"] .remort-card.savings .stat-label { color: #1D9E75; }
+[data-theme="dark"] .remort-card.savings.negative { background: rgba(153,60,29,0.2); }
+[data-theme="dark"] .remort-card.savings.negative .stat-label { color: #D85A30; }
+[data-theme="dark"] .remort-total-card { background: var(--surface); }
+[data-theme="dark"] .remort-total-card .stat-value { color: var(--ink); }
 
 /* Dark mode - General text fixes */
 [data-theme="dark"] .stat-value { color: var(--ink); }
@@ -1105,6 +1179,16 @@ input[type="range"].purple {
 .rate-dot-blue {
   background: var(--blue-mid);
 }
+.breakdown-year-select {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.breakdown-year-select label { font-size: 13px; color: var(--ink-soft); }
+.breakdown-year-select select { width: auto; }
+.breakdown-hint { font-size: 11px; color: var(--ink-mute); }
 .breakdown-section {
   margin-bottom: 1.1rem;
 }
@@ -1332,7 +1416,7 @@ input[type="range"].purple {
   <div class="header-inner">
     <div class="header-top-row">
       <div class="header-text">
-        <p class="header-eyebrow">Shariah-compliant finance · UK 2026</p>
+        <p class="header-eyebrow">🇬🇧 Shariah-compliant finance · UK · Rates updated May 2026</p>
         <h1>UK Islamic mortgage calculator<br>— compare costs, affordability &amp; fees</h1>
         <p class="header-sub">A free, honest side-by-side calculator for UK Muslims comparing Islamic Home Purchase Plans with conventional mortgages. No signup. No ads. No fluff.</p>
       </div>
@@ -1365,7 +1449,9 @@ input[type="range"].purple {
       <a href="#section-stamp" class="nav-link">Stamp Duty</a>
       <a href="#section-afford" class="nav-link">Affordability</a>
       <a href="#section-overpay" class="nav-link">Overpay</a>
+      <a href="#section-remortgage" class="nav-link">Remortgage</a>
       <a href="#section-providers" class="nav-link">Providers</a>
+      <a href="#section-feedback" class="nav-link">Feedback</a>
     </div>
   </nav>
 
@@ -1390,6 +1476,13 @@ input[type="range"].purple {
         <div class="slider-group">
           <div class="slider-top"><span class="slider-name">Deposit</span><span class="slider-val" id="dep-out">20%</span></div>
           <input type="range" min="5" max="40" step="1" value="20" id="deposit" oninput="calc()" aria-label="Deposit percentage">
+          <div class="custom-deposit-row" id="custom-deposit-row">
+            <label class="toggle-label compact">
+              <input type="checkbox" id="custom-deposit-toggle" onchange="toggleCustomDeposit()">
+              <span>Enter exact £ amount</span>
+            </label>
+            <input type="number" id="custom-deposit-input" class="custom-deposit-input" placeholder="£36,000" style="display:none;" oninput="calcFromCustomDeposit()">
+          </div>
         </div>
         <div class="slider-group">
           <div class="slider-top"><span class="slider-name">Mortgage term</span><span class="slider-val" id="term-out">25 years</span></div>
@@ -1424,7 +1517,7 @@ input[type="range"].purple {
           <input type="range" class="blue" min="3" max="10" step="0.1" value="5.5" id="crate" oninput="calc()" aria-label="Conventional mortgage rate">
         </div>
         <div>
-          <div class="preset-label">Quick presets — real 2026 UK rates</div>
+          <div class="preset-label">Quick presets — real 2026 UK rates <span class="info-icon" title="These presets use current average rates from UK Islamic mortgage providers. 'Gatehouse 2yr' is their 2-year fixed rate, 'StrideUp 10% dep' is for 10% deposits, 'Higher rates' shows a cautious scenario, and 'Parity' assumes equal rates for comparison.">?</span></div>
           <div class="presets">
             <button type="button" class="preset-btn active" onclick="setPreset(5.9,5.5,this)">Gatehouse 2yr</button>
             <button type="button" class="preset-btn" onclick="setPreset(6.2,5.5,this)">StrideUp 10% dep</button>
@@ -1444,8 +1537,9 @@ input[type="range"].purple {
       <label class="toggle-label">
         <input type="checkbox" id="so-toggle" onchange="toggleSharedOwnership()">
         <span class="toggle-text">Compare with Shared Ownership</span>
-        <span class="toggle-hint">(Heylo/Your Home model)</span>
+        <span class="info-icon" title="Shared ownership lets you buy a portion (25-75%) of a home and pay rent on the rest. Ideal if you can't afford a full deposit for the whole property.">ℹ️</span>
       </label>
+      <span class="toggle-hint">(Heylo/Your Home model)</span>
     </div>
     <div class="so-inputs" id="so-inputs" style="display: none;">
       <div class="so-inputs-grid">
@@ -1552,8 +1646,20 @@ input[type="range"].purple {
   <!-- [/SECTION:DIFF_BOX] -->
 
   <!-- [SECTION:BREAKDOWN_BARS] -->
-  <p class="sec" id="section-breakdown">Monthly payment breakdown — year 1 (what you're actually paying)</p>
+  <p class="sec" id="section-breakdown">Monthly payment breakdown (what you're actually paying)</p>
   <div class="card">
+    <div class="breakdown-year-select">
+      <label for="breakdown-year">Show breakdown for:</label>
+      <select id="breakdown-year" class="afford-input" onchange="updateBreakdown()">
+        <option value="1">Year 1</option>
+        <option value="5">Year 5</option>
+        <option value="10">Year 10</option>
+        <option value="15">Year 15</option>
+        <option value="20">Year 20</option>
+        <option value="25">Year 25</option>
+      </select>
+      <span class="breakdown-hint">See how the split changes over time</span>
+    </div>
     <div class="breakdown-section">
       <div class="breakdown-label">
         <span class="text-teal">Islamic HPP</span>
@@ -1636,7 +1742,7 @@ input[type="range"].purple {
   </div>
   <!-- [/SECTION:CHARTS] -->
 
-  <p class="sec" id="section-stamp">Stamp duty estimate</p>
+  <p class="sec" id="section-stamp">Stamp duty &amp; buying costs</p>
   <div class="collapsible-header" id="stamp-header" onclick="toggleStampDuty()">
     <span class="collapsible-title">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
@@ -1678,6 +1784,11 @@ input[type="range"].purple {
           <span class="cost-value" id="cost-searches">—</span>
         </div>
         <div class="cost-row cost-row-input">
+          <label class="cost-label" for="cost-broker">Broker fee (optional)</label>
+          <input type="number" id="cost-broker" class="cost-input" placeholder="£0" value="0" oninput="calcBuyingCosts()">
+          <span class="cost-hint">Typically £300-500 if using a broker</span>
+        </div>
+        <div class="cost-row cost-row-input">
           <label class="cost-label" for="cost-other">Other costs (optional)</label>
           <input type="number" id="cost-other" class="cost-input" placeholder="£0" value="0" oninput="calcBuyingCosts()">
         </div>
@@ -1695,6 +1806,17 @@ input[type="range"].purple {
     <div class="afford-input-row">
       <label for="salary-input">Your annual salary</label>
       <input type="number" id="salary-input" class="afford-input" placeholder="£50,000" oninput="calcAffordability()">
+    </div>
+    <div class="afford-toggle-row">
+      <label class="toggle-label">
+        <input type="checkbox" id="second-applicant-toggle" onchange="toggleSecondApplicant()">
+        <span class="toggle-text">Add second applicant</span>
+        <span class="info-icon" title="Joint applications typically allow higher borrowing as both incomes are considered.">ℹ️</span>
+      </label>
+    </div>
+    <div class="afford-input-row" id="second-salary-row" style="display:none;">
+      <label for="salary-input-2">Second applicant salary</label>
+      <input type="number" id="salary-input-2" class="afford-input" placeholder="£0" oninput="calcAffordability()">
     </div>
     <div class="afford-input-row">
       <label for="conv-mult">Conventional multiplier</label>
@@ -1779,7 +1901,7 @@ input[type="range"].purple {
     </div>
     <div class="afford-note" id="afford-note">Enter your salary above to see if you can afford this property.</div>
     <p class="afford-disclaimer">
-      <strong>Disclaimer:</strong> These figures are estimates only and do not constitute financial advice. Actual affordability depends on your credit history, existing debts, deposit size, and individual lender criteria. Debt calculations are approximate—lenders use their own affordability models. Self-employed and contractor applicants typically need additional documentation. Please consult a qualified mortgage adviser for your specific circumstances.
+      <strong>Methodology:</strong> Estimates use salary × multiplier (4.5× conventional, 4.75× Gatehouse, 6.5× StrideUp). Debt impact uses a simplified £3 reduction per £1 annual debt—real lenders use stress tests and specific DTI (debt-to-income) thresholds. Self-employed applicants typically see reduced multipliers. These are rough estimates only—consult a mortgage adviser for accurate figures based on your credit history and circumstances.
     </p>
   </div>
 
@@ -1820,6 +1942,71 @@ input[type="range"].purple {
     </p>
   </div>
 
+  <!-- [SECTION:REMORTGAGE] -->
+  <p class="sec" id="section-remortgage">What if I remortgage?</p>
+  <div class="card">
+    <p class="card-intro">Compare switching from a conventional mortgage to an Islamic HPP. Note: No stamp duty applies to remortgages.</p>
+    <div class="slider-group">
+      <div class="slider-top"><span class="slider-name">Current mortgage balance</span><span class="slider-val" id="remort-balance-out">£250,000</span></div>
+      <input type="range" class="blue" min="50000" max="1000000" step="5000" value="250000" id="remort-balance" oninput="calcRemortgage()" aria-label="Current mortgage balance">
+    </div>
+    <div class="slider-group">
+      <div class="slider-top"><span class="slider-name">Current interest rate</span><span class="slider-val" id="remort-current-rate-out">5.5%</span></div>
+      <input type="range" class="blue" min="1" max="10" step="0.1" value="5.5" id="remort-current-rate" oninput="calcRemortgage()" aria-label="Current interest rate">
+    </div>
+    <div class="slider-group">
+      <div class="slider-top"><span class="slider-name">New Islamic rate</span><span class="slider-val" id="remort-new-rate-out">5.25%</span></div>
+      <input type="range" class="teal" min="1" max="10" step="0.1" value="5.25" id="remort-new-rate" oninput="calcRemortgage()" aria-label="New Islamic rate">
+    </div>
+    <div class="slider-group">
+      <div class="slider-top"><span class="slider-name">Remaining term</span><span class="slider-val" id="remort-term-out">20 years</span></div>
+      <input type="range" class="teal" min="5" max="35" step="1" value="20" id="remort-term" oninput="calcRemortgage()" aria-label="Remaining term">
+    </div>
+    <div class="remort-results">
+      <div class="remort-card current">
+        <div class="stat">
+          <div class="stat-label">Current monthly</div>
+          <div class="stat-value" id="remort-current-monthly">£1,719</div>
+          <div class="stat-sub">Conventional payment</div>
+        </div>
+      </div>
+      <div class="remort-card new">
+        <div class="stat">
+          <div class="stat-label">New monthly</div>
+          <div class="stat-value" id="remort-new-monthly">£1,684</div>
+          <div class="stat-sub">Islamic HPP payment</div>
+        </div>
+      </div>
+      <div class="remort-card savings" id="remort-savings-card">
+        <div class="stat">
+          <div class="stat-label">Monthly difference</div>
+          <div class="stat-value" id="remort-monthly-diff">£35</div>
+          <div class="stat-sub" id="remort-diff-direction">Less per month</div>
+        </div>
+      </div>
+    </div>
+    <div class="remort-total-card">
+      <div class="remort-total-row">
+        <div class="stat">
+          <div class="stat-label">Total cost difference</div>
+          <div class="stat-value" id="remort-total-diff">£8,400</div>
+          <div class="stat-sub">Over remaining term</div>
+        </div>
+      </div>
+      <div class="remort-total-row">
+        <div class="stat">
+          <div class="stat-label">Break-even point</div>
+          <div class="stat-value" id="remort-breakeven">4y 9m</div>
+          <div class="stat-sub" id="remort-breakeven-sub">When savings cover £2,000 switching costs</div>
+        </div>
+      </div>
+    </div>
+    <p class="afford-note spaced">
+      <strong>Typical remortgage costs:</strong> Expect around £1,500-£3,000 in fees including arrangement fees (£500-£1,500), valuation (£150-£400), and legal fees (£500-£1,000). The break-even calculation assumes £2,000 in total costs.
+    </p>
+  </div>
+  <!-- [/SECTION:REMORTGAGE] -->
+
   <!-- [SECTION:PROVIDERS] -->
   <p class="sec" id="section-providers">UK Islamic mortgage providers (2026)</p>
   <div class="providers">
@@ -1851,6 +2038,27 @@ input[type="range"].purple {
   </div>
   <!-- [/SECTION:PROVIDERS] -->
 
+  <!-- [SECTION:FEEDBACK] -->
+  <p class="sec" id="section-feedback">Send feedback</p>
+  <div class="card feedback-card">
+    <p class="feedback-intro">Have suggestions, found a bug, or want to see new features? I'd love to hear from you.</p>
+    <div class="feedback-form">
+      <div class="afford-input-row">
+        <label for="feedback-name">Your name (optional)</label>
+        <input type="text" id="feedback-name" class="afford-input" placeholder="Anonymous" style="width: 200px;">
+      </div>
+      <div class="afford-input-row" style="flex-direction: column; align-items: flex-start;">
+        <label for="feedback-message">Your message</label>
+        <textarea id="feedback-message" class="feedback-textarea" placeholder="What would make this calculator more useful for you?" rows="4"></textarea>
+      </div>
+      <button type="button" class="btn-teal" onclick="sendFeedback()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Send Feedback
+      </button>
+    </div>
+  </div>
+  <!-- [/SECTION:FEEDBACK] -->
+
   <!-- [SECTION:FOOTER] -->
   <div class="footer-note">
     <strong>Important:</strong> This calculator is for educational purposes only and does not constitute financial advice. It is not regulated by the FCA. Rates are illustrative, based on publicly available 2026 market data and will change frequently. Always obtain a personalised quote and speak to a qualified Islamic mortgage broker before making any financial decisions.<br><br>
@@ -1867,10 +2075,44 @@ input[type="range"].purple {
 </div>
 
 <script>
+// [JS:CONFIG]
+const CONFIG = {
+  // Stamp duty thresholds (UK 2025)
+  stampDuty: {
+    ftb: { threshold1: 425000, threshold2: 625000, rate1: 0.05 },
+    standard: { band1: 125000, band2: 250000, band3: 925000, band4: 1500000, rate1: 0.02, rate2: 0.05, rate3: 0.10 }
+  },
+  // Student loan thresholds (UK 2025)
+  studentLoans: {
+    plan1: 24990, plan2: 27295, plan4: 31395, plan5: 25000, postgrad: 21000,
+    repaymentRate: 0.09
+  },
+  // Salary multipliers
+  multipliers: { conventional: 4.5, gatehouse: 4.75, strideUp: 6.5, selfEmployedReduction: 0.5 },
+  // Default rates
+  defaultRates: { halal: 5.25, conventional: 4.89 },
+  // Remortgage/switching costs
+  remortgageCosts: 2000,
+  // Chart colors
+  chartColors: {
+    hppLine: '#1D9E75', convLine: '#378ADD', convLineDark: '#5AA8F0',
+    positive: '#D85A30', negative: '#1D9E75',
+    gridLight: 'rgba(0,0,0,0.04)', tickLight: 'rgba(74,74,70,0.55)'
+  }
+};
+// [/JS:CONFIG]
+
 // [JS:UTILS]
 let chart1 = null, chart2 = null;
 
 function fmt(n) { return '£' + Math.round(n).toLocaleString('en-GB'); }
+
+// DRY helper: Calculate monthly payment using standard amortization formula
+function calcMonthlyPayment(principal, annualRate, months) {
+  const r = annualRate / 100 / 12;
+  if (r === 0) return principal / months;
+  return principal * r * Math.pow(1 + r, months) / (Math.pow(1 + r, months) - 1);
+}
 
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -1904,6 +2146,7 @@ function toggleTheme() {
     try { localStorage.setItem('theme', 'dark'); } catch (e) { /* Private mode */ }
   }
   updateThemeIcon();
+  calc(); // Refresh charts with correct dark/light mode colors
 }
 
 function updateThemeIcon() {
@@ -2059,13 +2302,15 @@ function calc() {
   const loan    = price - deposit;
   const n       = termYrs * 12;
 
-  const cr = cRateAnn / 100 / 12;
-  const cM = cr === 0 ? loan/n : loan * cr * Math.pow(1+cr,n) / (Math.pow(1+cr,n)-1);
+  const cM = calcMonthlyPayment(loan, cRateAnn, n);
   const cTotal = cM * n, cInterest = cTotal - loan;
 
-  const hr = hRateAnn / 100 / 12;
-  const hM = hr === 0 ? loan/n : loan * hr * Math.pow(1+hr,n) / (Math.pow(1+hr,n)-1);
+  const hM = calcMonthlyPayment(loan, hRateAnn, n);
   const hTotal = hM * n, hProfit = hTotal - loan;
+
+  // Monthly rates for breakdown calculations
+  const cr = cRateAnn / 100 / 12;
+  const hr = hRateAnn / 100 / 12;
 
   /* Results */
   document.getElementById('h-monthly').textContent  = fmt(hM);
@@ -2149,7 +2394,7 @@ function calc() {
     const soLoan = shareValue - soDeposit;
 
     // Mortgage on your share (using halal rate)
-    const soMortgage = hr === 0 ? soLoan/n : soLoan * hr * Math.pow(1+hr,n) / (Math.pow(1+hr,n)-1);
+    const soMortgage = calcMonthlyPayment(soLoan, hRateAnn, n);
 
     // Monthly rent on unowned share
     const annualRent = unownedValue * soRentRate / 100;
@@ -2209,14 +2454,19 @@ function calc() {
 
   const tc = 'rgba(74,74,70,0.55)', gc = 'rgba(0,0,0,0.04)';
 
+  // Detect dark mode for chart colors
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const convLineColor = isDark ? CONFIG.chartColors.convLineDark : CONFIG.chartColors.convLine;
+  const convLineWidth = isDark ? 3 : 2.5;
+
   if (chart1) chart1.destroy();
   chart1 = new Chart(document.getElementById('chart1'), {
     type: 'line',
     data: {
       labels,
       datasets: [
-        { label: 'Islamic HPP', data: hBals, borderColor: '#1D9E75', backgroundColor: 'transparent', tension: 0.35, pointRadius: 0, borderWidth: 2.5 },
-        { label: 'Conventional', data: cBals, borderColor: '#378ADD', backgroundColor: 'transparent', tension: 0.35, pointRadius: 0, borderWidth: 2.5, borderDash: [6,3] }
+        { label: 'Islamic HPP', data: hBals, borderColor: CONFIG.chartColors.hppLine, backgroundColor: 'transparent', tension: 0.35, pointRadius: 0, borderWidth: 2.5 },
+        { label: 'Conventional', data: cBals, borderColor: convLineColor, backgroundColor: 'transparent', tension: 0.35, pointRadius: 0, borderWidth: convLineWidth, borderDash: [6,3] }
       ]
     },
     options: {
@@ -2309,6 +2559,36 @@ function toggleSharedOwnership() {
   if (enabled) calc();
 }
 
+/* ── SECOND APPLICANT TOGGLE ── */
+function toggleSecondApplicant() {
+  const enabled = document.getElementById('second-applicant-toggle').checked;
+  document.getElementById('second-salary-row').style.display = enabled ? 'flex' : 'none';
+  if (!enabled) document.getElementById('salary-input-2').value = '';
+  calcAffordability();
+}
+
+/* ── CUSTOM DEPOSIT ── */
+function toggleCustomDeposit() {
+  const enabled = document.getElementById('custom-deposit-toggle').checked;
+  const input = document.getElementById('custom-deposit-input');
+  const slider = document.getElementById('deposit');
+  input.style.display = enabled ? 'inline-block' : 'none';
+  slider.disabled = enabled;
+  if (enabled) {
+    const price = +document.getElementById('price').value;
+    const depPct = +document.getElementById('deposit').value;
+    input.value = Math.round(price * depPct / 100);
+  }
+}
+
+function calcFromCustomDeposit() {
+  const price = +document.getElementById('price').value;
+  const customDep = +document.getElementById('custom-deposit-input').value || 0;
+  const pct = Math.min(40, Math.max(5, Math.round(customDep / price * 100)));
+  document.getElementById('deposit').value = pct;
+  calc();
+}
+
 function calcStampDuty() {
   const price = +document.getElementById('price').value;
   const isFTB = document.getElementById('ftb-check').checked;
@@ -2366,6 +2646,7 @@ function calcStampDuty() {
 function calcBuyingCosts() {
   const price = +document.getElementById('price').value;
   const stampDuty = parseFloat(document.getElementById('stamp-amount').textContent.replace(/[£,]/g, '')) || 0;
+  const brokerFee = +document.getElementById('cost-broker').value || 0;
   const otherCosts = +document.getElementById('cost-other').value || 0;
 
   // Solicitor/conveyancing: ~£1,200 base + 0.1% of price (typical UK 2026)
@@ -2382,7 +2663,7 @@ function calcBuyingCosts() {
   const searches = price < 300000 ? 400 : (price < 500000 ? 500 : 600);
 
   // Total
-  const total = stampDuty + solicitor + survey + searches + otherCosts;
+  const total = stampDuty + solicitor + survey + searches + brokerFee + otherCosts;
 
   // Update display
   document.getElementById('cost-solicitor').textContent = fmt(solicitor);
@@ -2393,7 +2674,10 @@ function calcBuyingCosts() {
 
 /* ── AFFORDABILITY ── */
 function calcAffordability() {
-  const salary = +document.getElementById('salary-input').value;
+  const salary1 = +document.getElementById('salary-input').value;
+  const hasSecond = document.getElementById('second-applicant-toggle').checked;
+  const salary2 = hasSecond ? (+document.getElementById('salary-input-2').value || 0) : 0;
+  const salary = salary1 + salary2;
   const price = +document.getElementById('price').value;
   const depPct = +document.getElementById('deposit').value;
   const loan = price - (price * depPct / 100);
@@ -2420,13 +2704,12 @@ function calcAffordability() {
   const monthlyLoans = debtOpen ? (+document.getElementById('monthly-loans').value || 0) : 0;
   const studentLoanPlan = debtOpen ? document.getElementById('student-loan').value : 'none';
 
-  // Calculate student loan monthly payment
+  // Calculate student loan monthly payment (using CONFIG thresholds)
   let studentLoanPayment = 0;
   if (studentLoanPlan !== 'none' && salary > 0) {
-    const thresholds = { plan1: 24990, plan2: 27295, plan4: 31395, plan5: 25000, postgrad: 21000 };
-    const threshold = thresholds[studentLoanPlan] || 0;
+    const threshold = CONFIG.studentLoans[studentLoanPlan] || 0;
     const annualAbove = Math.max(0, salary - threshold);
-    studentLoanPayment = (annualAbove * 0.09) / 12;
+    studentLoanPayment = (annualAbove * CONFIG.studentLoans.repaymentRate) / 12;
   }
 
   // Calculate total monthly debt impact
@@ -2504,7 +2787,7 @@ function calcOverpayment() {
   const hr = hRateAnn / 100 / 12;
 
   // Calculate standard monthly payment
-  const hM = hr === 0 ? loan / n : loan * hr * Math.pow(1 + hr, n) / (Math.pow(1 + hr, n) - 1);
+  const hM = calcMonthlyPayment(loan, hRateAnn, n);
 
   // Calculate with overpayment
   const newPayment = hM + overpay;
@@ -2552,6 +2835,149 @@ function calcOverpayment() {
   document.getElementById('overpay-months').textContent = monthsSaved > 0 ? monthsSaved : '0';
   document.getElementById('overpay-term').textContent = newYears + ' years ' + newMonths + ' months';
   document.getElementById('overpay-saved').textContent = profitSaved > 0 ? fmt(profitSaved) : '£0';
+}
+
+/* ── BREAKDOWN YEAR SELECTOR ── */
+function updateBreakdown() {
+  const year = +document.getElementById('breakdown-year').value;
+  const price = +document.getElementById('price').value;
+  const depPct = +document.getElementById('deposit').value;
+  const termYrs = +document.getElementById('term').value;
+  const hRateAnn = +document.getElementById('hrate').value;
+  const cRateAnn = +document.getElementById('crate').value;
+
+  const deposit = price * depPct / 100;
+  const loan = price - deposit;
+  const n = termYrs * 12;
+  const hr = hRateAnn / 100 / 12;
+  const cr = cRateAnn / 100 / 12;
+  const hM = calcMonthlyPayment(loan, hRateAnn, n);
+  const cM = calcMonthlyPayment(loan, cRateAnn, n);
+
+  // Simulate balance after (year-1) years
+  let hBal = loan, cBal = loan;
+  const monthsElapsed = (year - 1) * 12;
+  for (let m = 0; m < monthsElapsed; m++) {
+    hBal = Math.max(0, hBal - (hM - hBal * hr));
+    cBal = Math.max(0, cBal - (cM - cBal * cr));
+  }
+
+  // Calculate breakdown for selected year
+  const yearRent = hBal * hr, yearAcq = hM - yearRent;
+  const yearInt = cBal * cr, yearPrin = cM - yearInt;
+  const hAcqPct = Math.round(yearAcq / hM * 100);
+  const hRentPct = 100 - hAcqPct;
+  const cPrinPct = Math.round(yearPrin / cM * 100);
+  const cIntPct = 100 - cPrinPct;
+
+  // Update bars
+  const bHA = document.getElementById('bar-h-acq');
+  const bHR = document.getElementById('bar-h-rent');
+  const bCP = document.getElementById('bar-c-p');
+  const bCI = document.getElementById('bar-c-i');
+
+  bHA.style.width = hAcqPct + '%'; bHA.textContent = hAcqPct > 14 ? hAcqPct + '%' : '';
+  bHR.style.width = hRentPct + '%'; bHR.textContent = hRentPct > 14 ? hRentPct + '%' : '';
+  bCP.style.width = cPrinPct + '%'; bCP.textContent = cPrinPct > 14 ? cPrinPct + '%' : '';
+  bCI.style.width = cIntPct + '%'; bCI.textContent = cIntPct > 14 ? cIntPct + '%' : '';
+
+  document.getElementById('h-bar-label').textContent = fmt(hM) + '/mo · ' + hAcqPct + '% acquiring · ' + hRentPct + '% rent (year ' + year + ')';
+  document.getElementById('c-bar-label').textContent = fmt(cM) + '/mo · ' + cPrinPct + '% principal · ' + cIntPct + '% interest (year ' + year + ')';
+}
+
+// [JS:REMORTGAGE]
+function calcRemortgage() {
+  const balance = +document.getElementById('remort-balance').value;
+  const currentRateAnn = +document.getElementById('remort-current-rate').value;
+  const newRateAnn = +document.getElementById('remort-new-rate').value;
+  const termYrs = +document.getElementById('remort-term').value;
+
+  // Update slider output displays
+  document.getElementById('remort-balance-out').textContent = fmt(balance);
+  document.getElementById('remort-current-rate-out').textContent = currentRateAnn.toFixed(1) + '%';
+  document.getElementById('remort-new-rate-out').textContent = newRateAnn.toFixed(1) + '%';
+  document.getElementById('remort-term-out').textContent = termYrs + ' years';
+
+  const n = termYrs * 12;
+  const SWITCHING_COST = CONFIG.remortgageCosts;
+
+  // Calculate monthly payments using DRY helper
+  const currentMonthly = calcMonthlyPayment(balance, currentRateAnn, n);
+  const newMonthly = calcMonthlyPayment(balance, newRateAnn, n);
+
+  // Calculate differences
+  const monthlyDiff = currentMonthly - newMonthly; // Positive = savings
+  const totalCurrentCost = currentMonthly * n;
+  const totalNewCost = newMonthly * n;
+  const totalDiff = totalCurrentCost - totalNewCost; // Positive = savings
+
+  // Break-even calculation
+  let breakeven = '—';
+  let breakevenSub = 'When savings cover £' + (SWITCHING_COST / 1000) + 'k switching costs';
+
+  if (monthlyDiff > 0) {
+    const breakevenMonths = Math.ceil(SWITCHING_COST / monthlyDiff);
+    if (breakevenMonths <= n) {
+      const breakevenYears = Math.floor(breakevenMonths / 12);
+      const breakevenRemMonths = breakevenMonths % 12;
+      breakeven = breakevenYears > 0 ? breakevenYears + 'y ' + breakevenRemMonths + 'm' : breakevenMonths + ' months';
+    } else {
+      breakeven = 'Beyond term';
+      breakevenSub = 'Savings won\'t cover costs in remaining term';
+    }
+  } else if (monthlyDiff < 0) {
+    breakeven = 'Never';
+    breakevenSub = 'New rate is higher—no savings';
+  } else {
+    breakeven = '—';
+    breakevenSub = 'Same rate—no difference';
+  }
+
+  // Update DOM
+  document.getElementById('remort-current-monthly').textContent = fmt(currentMonthly);
+  document.getElementById('remort-new-monthly').textContent = fmt(newMonthly);
+  document.getElementById('remort-monthly-diff').textContent = fmt(Math.abs(monthlyDiff));
+  document.getElementById('remort-total-diff').textContent = fmt(Math.abs(totalDiff));
+  document.getElementById('remort-breakeven').textContent = breakeven;
+  document.getElementById('remort-breakeven-sub').textContent = breakevenSub;
+
+  // Update direction text and styling
+  const diffDirection = document.getElementById('remort-diff-direction');
+  const savingsCard = document.getElementById('remort-savings-card');
+
+  if (monthlyDiff > 0) {
+    diffDirection.textContent = 'Less per month';
+    savingsCard.classList.remove('negative');
+  } else if (monthlyDiff < 0) {
+    diffDirection.textContent = 'More per month';
+    savingsCard.classList.add('negative');
+  } else {
+    diffDirection.textContent = 'Same payment';
+    savingsCard.classList.remove('negative');
+  }
+}
+// [/JS:REMORTGAGE]
+
+/* ── FEEDBACK ── */
+function sendFeedback() {
+  const name = document.getElementById('feedback-name').value.trim() || 'Anonymous';
+  const message = document.getElementById('feedback-message').value.trim();
+
+  if (!message) {
+    showToast('Please enter a message');
+    return;
+  }
+
+  const subject = encodeURIComponent('Halal Mortgage Calculator Feedback');
+  const body = encodeURIComponent(`Feedback from: ${name}\n\n${message}\n\n---\nSent from: ${window.location.href}`);
+  const mailtoUrl = `mailto:sscontactenquiries@gmail.com?subject=${subject}&body=${body}`;
+
+  window.location.href = mailtoUrl;
+  showToast('Opening email client...');
+
+  // Clear the form
+  document.getElementById('feedback-name').value = '';
+  document.getElementById('feedback-message').value = '';
 }
 
 /* ── EMAIL RESULTS ── */
@@ -2616,6 +3042,7 @@ Always speak to a qualified broker before making decisions.`;
 initTheme();
 loadFromUrl();
 calc();
+calcRemortgage();
 
 /* Close modals on escape */
 document.addEventListener('keydown', e => {
