@@ -10,10 +10,11 @@ Free, open-source tool for UK Muslims to compare Islamic Home Purchase Plans wit
 
 - Side-by-side HPP vs conventional comparison
 - Live sliders for price, deposit, term and rates
-- Year-by-year balance and cost charts
+- Year-by-year balance charts with table view
 - Stamp duty calculator with first-time buyer relief
-- Affordability checker (4.5×, 4.75×, 6.5× income)
-- Overpayment calculator
+- Affordability checker with employment status (employed/self-employed)
+- Customisable income multiples (4.5×–6× conventional, 4.75× Gatehouse, 6.5× StrideUp)
+- Overpayment calculator with equity explanation
 - City price presets
 - Shareable URLs
 - Dark mode

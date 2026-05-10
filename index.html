@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- ════════════════════════════════════════
-     SECTION: META & HEAD
-     ════════════════════════════════════════ -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Free Islamic mortgage calculator for UK Muslims. Compare Halal Home Purchase Plans (HPP) vs conventional mortgages — see monthly payments, total cost, and how much interest you avoid.">
@@ -14,9 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<!-- ════════════════════════════════════════
-     SECTION: CSS VARIABLES & RESET
-     ════════════════════════════════════════ -->
+<!-- [SECTION:CSS_VARIABLES] -->
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -390,6 +385,19 @@ input[type=range]::-moz-range-thumb {
 }
 .quran-callout em { font-style: italic; }
 
+/* ── MODAL MOBILE ── */
+@media (max-width: 540px) {
+  .modal-overlay.open { padding: 0.5rem; }
+  .modal-header { padding: 1rem; }
+  .modal-title { font-size: 1.1rem; }
+  .modal-body { padding: 1rem; }
+  .how-step { gap: 10px; margin-bottom: 1.25rem; }
+  .step-num { width: 28px; height: 28px; font-size: 11px; }
+  .step-body h3 { font-size: 13px; }
+  .step-body p { font-size: 12px; line-height: 1.55; }
+  .quran-callout { padding: 0.75rem; font-size: 12px; }
+}
+
 /* ── SHARE TOAST ── */
 .toast {
   position: fixed; bottom: 1.5rem; left: 50%;
@@ -421,6 +429,18 @@ input[type=range]::-moz-range-thumb {
   .header-actions { width: 100%; margin-top: 1rem; }
   .btn-ghost, .btn-teal { flex: 1; justify-content: center; }
   .stat-value { font-size: 20px; }
+}
+
+/* ── SMALL MOBILE (iPhone SE) ── */
+@media (max-width: 380px) {
+  .main { padding-left: 0.75rem; padding-right: 0.75rem; }
+  .card { padding: 0.75rem; }
+  .stat-value { font-size: 18px; }
+  .preset-btn { font-size: 11px; padding: 4px 10px; }
+  .city-btn, .term-btn { font-size: 10px; padding: 3px 8px; }
+  .summary-headline { font-size: 18px; }
+  .afford-input { width: 150px; }
+  .overpay-card { padding: 0.75rem; }
 }
 
 /* ── COLLAPSIBLE ── */
@@ -547,7 +567,7 @@ input[type=range]::-moz-range-thumb {
   padding: 8px 12px;
   border: 1px solid var(--border-med);
   border-radius: var(--radius-xs);
-  width: 140px;
+  width: 170px;
   background: #fff;
   color: var(--ink);
 }
@@ -570,6 +590,13 @@ input[type=range]::-moz-range-thumb {
 .afford-card.red { background: var(--coral-light); border-color: rgba(153,60,29,0.18); }
 .afford-note {
   font-size: 12px;
+  color: var(--ink-mute);
+  line-height: 1.5;
+}
+.afford-note.spaced { margin-top: 0.75rem; }
+.afford-disclaimer {
+  margin-top: 0.5rem;
+  font-size: 11px;
   color: var(--ink-mute);
   line-height: 1.5;
 }
@@ -985,20 +1012,78 @@ input[type=range]::-moz-range-thumb {
 .chart-container-short {
   height: 190px;
 }
+
+/* ── BALANCE TABLE ── */
+.balance-details {
+  margin-top: 0.75rem;
+}
+.balance-details summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--teal);
+  padding: 8px 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.balance-details summary::-webkit-details-marker { display: none; }
+.balance-details summary::before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 5px solid var(--teal);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  transition: transform 0.2s;
+}
+.balance-details[open] summary::before {
+  transform: rotate(90deg);
+}
+.balance-table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 0.5rem;
+}
+.balance-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  min-width: 340px;
+}
+.balance-table th,
+.balance-table td {
+  padding: 8px 10px;
+  text-align: right;
+  border-bottom: 1px solid var(--border);
+}
+.balance-table th {
+  font-weight: 500;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+.balance-table th:first-child,
+.balance-table td:first-child { text-align: left; }
+.balance-table .teal { color: var(--teal); }
+.balance-table .blue { color: var(--blue); }
+.balance-table .coral { color: var(--coral); }
+[data-theme="dark"] .balance-table th { color: var(--ink-mute); }
+[data-theme="dark"] .balance-table td { color: var(--ink-soft); }
+
 .footer-credit {
   margin-top: 12px;
   font-size: 11px;
   color: var(--ink-mute);
 }
 </style>
+<!-- [/SECTION:CSS_VARIABLES] -->
 </head>
 <body>
 
-<!-- ════════════════════════════════════════
-     SECTION: MODALS
-     ════════════════════════════════════════ -->
-
-<!-- HOW IT WORKS MODAL -->
+<!-- [SECTION:MODAL_HOW_IT_WORKS] -->
 <div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title-text" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-header">
@@ -1059,8 +1144,9 @@ input[type=range]::-moz-range-thumb {
     </div>
   </div>
 </div>
+<!-- [/SECTION:MODAL_HOW_IT_WORKS] -->
 
-<!-- SHARE MODAL -->
+<!-- [SECTION:MODAL_SHARE_PANEL] -->
 <div class="modal-overlay" id="share-modal-overlay" role="dialog" aria-modal="true" onclick="if(event.target===this)closeShareModal()">
   <div class="share-modal">
     <div class="share-modal-header">
@@ -1102,13 +1188,13 @@ input[type=range]::-moz-range-thumb {
     </div>
   </div>
 </div>
+<!-- [/SECTION:MODAL_SHARE_PANEL] -->
 
-<!-- TOAST -->
+<!-- [SECTION:TOAST] -->
 <div class="toast" id="toast"></div>
+<!-- [/SECTION:TOAST] -->
 
-<!-- ════════════════════════════════════════
-     SECTION: HEADER
-     ════════════════════════════════════════ -->
+<!-- [SECTION:HEADER] -->
 <div class="header">
   <div class="header-inner">
     <div class="header-top-row">
@@ -1134,10 +1220,8 @@ input[type=range]::-moz-range-thumb {
     </div>
   </div>
 </div>
+<!-- [/SECTION:HEADER] -->
 
-<!-- ════════════════════════════════════════
-     SECTION: MAIN CALCULATOR
-     ════════════════════════════════════════ -->
 <div class="main" id="main-content">
   <nav class="sticky-nav no-print" aria-label="Jump to section">
     <div class="sticky-nav-inner">
@@ -1152,6 +1236,7 @@ input[type=range]::-moz-range-thumb {
     </div>
   </nav>
 
+  <!-- [SECTION:SLIDERS] -->
   <p class="sec" id="section-property">Property &amp; mortgage details</p>
   <div class="card">
     <div class="controls-grid">
@@ -1221,10 +1306,9 @@ input[type=range]::-moz-range-thumb {
       </div>
     </div>
   </div>
+  <!-- [/SECTION:SLIDERS] -->
 
-  <!-- ════════════════════════════════════════
-       SECTION: RESULTS CARDS
-       ════════════════════════════════════════ -->
+  <!-- [SECTION:RESULTS_CARDS] -->
   <p class="sec" id="section-results">Side-by-side results</p>
 
   <!-- Comparison Summary Card -->
@@ -1282,9 +1366,13 @@ input[type=range]::-moz-range-thumb {
       </div>
     </div>
   </div>
+  <!-- [/SECTION:RESULTS_CARDS] -->
 
+  <!-- [SECTION:DIFF_BOX] -->
   <div class="diff-box" id="diff-box"></div>
+  <!-- [/SECTION:DIFF_BOX] -->
 
+  <!-- [SECTION:BREAKDOWN_BARS] -->
   <p class="sec" id="section-breakdown">Monthly payment breakdown — year 1 (what you're actually paying)</p>
   <div class="card">
     <div class="breakdown-section">
@@ -1314,10 +1402,9 @@ input[type=range]::-moz-range-thumb {
       <div class="leg"><div class="leg-sq bar-blue-light"></div>Interest (riba)</div>
     </div>
   </div>
+  <!-- [/SECTION:BREAKDOWN_BARS] -->
 
-  <!-- ════════════════════════════════════════
-       SECTION: CHARTS
-       ════════════════════════════════════════ -->
+  <!-- [SECTION:CHARTS] -->
   <p class="sec" id="section-charts">Remaining balance over time</p>
   <div class="chart-wrap">
     <div class="chart-title">How quickly you pay off the property — year by year</div>
@@ -1328,6 +1415,22 @@ input[type=range]::-moz-range-thumb {
     <div class="chart-container chart-container-tall">
       <canvas id="chart1" role="img" aria-label="Line chart comparing remaining balance for Islamic HPP and conventional mortgage over the mortgage term">Balance comparison over time.</canvas>
     </div>
+    <details class="balance-details">
+      <summary>View year-by-year figures</summary>
+      <div class="balance-table-wrap">
+        <table class="balance-table">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th class="teal">Islamic HPP</th>
+              <th class="blue">Conventional</th>
+              <th>Cumulative Diff</th>
+            </tr>
+          </thead>
+          <tbody id="balance-table-body"></tbody>
+        </table>
+      </div>
+    </details>
   </div>
 
   <p class="sec">Cumulative extra cost of going halal</p>
@@ -1341,6 +1444,7 @@ input[type=range]::-moz-range-thumb {
       <canvas id="chart2" role="img" aria-label="Bar chart showing cumulative difference in cost between Islamic HPP and conventional mortgage year by year">Cumulative cost difference.</canvas>
     </div>
   </div>
+  <!-- [/SECTION:CHARTS] -->
 
   <p class="sec" id="section-stamp">Stamp duty estimate</p>
   <div class="collapsible-header" id="stamp-header" onclick="toggleStampDuty()">
@@ -1374,26 +1478,42 @@ input[type=range]::-moz-range-thumb {
       <label for="salary-input">Your annual salary</label>
       <input type="number" id="salary-input" class="afford-input" placeholder="£50,000" oninput="calcAffordability()">
     </div>
+    <div class="afford-input-row">
+      <label for="conv-mult">Conventional multiplier</label>
+      <select id="conv-mult" class="afford-input" onchange="calcAffordability()">
+        <option value="4.5">4.5x salary</option>
+        <option value="5">5x salary</option>
+        <option value="5.5">5.5x salary</option>
+        <option value="6">6x salary</option>
+      </select>
+    </div>
+    <div class="afford-input-row">
+      <label for="employ-status">Employment status</label>
+      <select id="employ-status" class="afford-input" onchange="calcAffordability()">
+        <option value="employed">Employed (PAYE)</option>
+        <option value="self-employed">Self-employed</option>
+      </select>
+    </div>
     <div class="afford-grid">
       <div class="afford-card">
         <div class="stat">
           <div class="stat-label">Conventional max borrow</div>
           <div class="stat-value" id="afford-conv">—</div>
-          <div class="stat-sub">Salary × 4.5</div>
+          <div class="stat-sub" id="afford-conv-sub">Salary × 4.5</div>
         </div>
       </div>
       <div class="afford-card">
         <div class="stat">
           <div class="stat-label">Gatehouse max borrow</div>
           <div class="stat-value" id="afford-gatehouse">—</div>
-          <div class="stat-sub">Salary × 4.75</div>
+          <div class="stat-sub" id="afford-gatehouse-sub">Salary × 4.75</div>
         </div>
       </div>
       <div class="afford-card">
         <div class="stat">
           <div class="stat-label">StrideUp max borrow</div>
           <div class="stat-value" id="afford-stride">—</div>
-          <div class="stat-sub">Salary × 6.5</div>
+          <div class="stat-sub" id="afford-stride-sub">Salary × 6.5</div>
         </div>
       </div>
       <div class="afford-card" id="afford-loan-card">
@@ -1405,6 +1525,9 @@ input[type=range]::-moz-range-thumb {
       </div>
     </div>
     <div class="afford-note" id="afford-note">Enter your salary above to see if you can afford this property.</div>
+    <p class="afford-disclaimer">
+      <strong>Disclaimer:</strong> These figures are rough estimates only. Actual affordability depends on your credit history, existing debts, deposit size, and individual lender criteria. Self-employed applicants typically need 2-3 years of accounts. Please seek independent financial advice for your specific circumstances.
+    </p>
   </div>
 
   <p class="sec" id="section-overpay">What if I overpay?</p>
@@ -1433,17 +1556,18 @@ input[type=range]::-moz-range-thumb {
       </div>
       <div class="overpay-card">
         <div class="stat">
-          <div class="stat-label">Total profit saved</div>
+          <div class="stat-label">Rent saved</div>
           <div class="stat-value" id="overpay-saved">£0</div>
-          <div class="stat-sub">Less paid to lender</div>
+          <div class="stat-sub">Less profit to bank</div>
         </div>
       </div>
     </div>
+    <p class="afford-note spaced">
+      <strong>How this works:</strong> Extra payments buy more of the bank's share faster. As your ownership grows, the rent on the bank's portion decreases. This calculator keeps monthly payments constant, paying off the property sooner.
+    </p>
   </div>
 
-  <!-- ════════════════════════════════════════
-       SECTION: PROVIDERS
-       ════════════════════════════════════════ -->
+  <!-- [SECTION:PROVIDERS] -->
   <p class="sec" id="section-providers">UK Islamic mortgage providers (2026)</p>
   <div class="providers">
     <div class="provider-card">
@@ -1467,7 +1591,9 @@ input[type=range]::-moz-range-thumb {
       <div class="provider-detail">Shared ownership &amp; community-driven. Pfida has waiting lists. Wayhome flexible &amp; interest-free.</div>
     </div>
   </div>
+  <!-- [/SECTION:PROVIDERS] -->
 
+  <!-- [SECTION:FOOTER] -->
   <div class="footer-note">
     <strong>Important:</strong> This calculator is for educational purposes only and does not constitute financial advice. It is not regulated by the FCA. Rates are illustrative, based on publicly available 2026 market data and will change frequently. Always obtain a personalised quote and speak to a qualified Islamic mortgage broker before making any financial decisions.<br><br>
     <div class="footer-links">
@@ -1478,15 +1604,11 @@ input[type=range]::-moz-range-thumb {
     </div>
     <div class="footer-credit">Built as a free community resource. Share freely. No copyright claimed.</div>
   </div>
+  <!-- [/SECTION:FOOTER] -->
 </div>
 
-<!-- ════════════════════════════════════════
-     SECTION: JAVASCRIPT
-     ════════════════════════════════════════ -->
 <script>
-/* ════════════════════════════════════════
-   JAVASCRIPT — STATE & UTILITIES
-   ════════════════════════════════════════ */
+// [JS:UTILS]
 let chart1 = null, chart2 = null;
 
 function fmt(n) { return '£' + Math.round(n).toLocaleString('en-GB'); }
@@ -1497,8 +1619,9 @@ function showToast(msg) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2800);
 }
+// [/JS:UTILS]
 
-/* ── MODAL ── */
+// [JS:MODAL]
 function openModal() {
   document.getElementById('modal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1508,14 +1631,19 @@ function closeModal() {
   document.body.style.overflow = '';
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+// [/JS:MODAL]
 
 /* ── THEME TOGGLE ── */
 function toggleTheme() {
   const html = document.documentElement;
   const isDark = html.getAttribute('data-theme') === 'dark';
-  const newTheme = isDark ? 'light' : 'dark';
-  html.setAttribute('data-theme', newTheme);
-  try { localStorage.setItem('theme', newTheme); } catch (e) { /* Private mode */ }
+  if (isDark) {
+    html.removeAttribute('data-theme');
+    try { localStorage.setItem('theme', 'light'); } catch (e) { /* Private mode */ }
+  } else {
+    html.setAttribute('data-theme', 'dark');
+    try { localStorage.setItem('theme', 'dark'); } catch (e) { /* Private mode */ }
+  }
   updateThemeIcon();
 }
 
@@ -1530,7 +1658,11 @@ function initTheme() {
   try { saved = localStorage.getItem('theme'); } catch (e) { /* Private mode */ }
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const theme = saved || (prefersDark ? 'dark' : 'light');
-  document.documentElement.setAttribute('data-theme', theme);
+  if (theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+  }
   updateThemeIcon();
 }
 
@@ -1576,9 +1708,7 @@ function getConfigUrl() {
   return base + '#' + new URLSearchParams(state).toString();
 }
 
-/* ════════════════════════════════════════
-   JAVASCRIPT — SHARE / EXPORT
-   ════════════════════════════════════════ */
+// [JS:SHARE_EXPORT]
 function openShareModal() {
   document.getElementById('share-modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1632,8 +1762,9 @@ function savePDF() {
   showToast('Opening print / save as PDF…');
   setTimeout(() => window.print(), 400);
 }
+// [/JS:SHARE_EXPORT]
 
-/* ── PRESETS ── */
+// [JS:PRESETS]
 function setPreset(hr, cr, el) {
   document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
   el.classList.add('active');
@@ -1649,10 +1780,9 @@ function setTerm(years, el) {
   document.getElementById('term').value = years;
   calc();
 }
+// [/JS:PRESETS]
 
-/* ════════════════════════════════════════
-   JAVASCRIPT — CALCULATIONS
-   ════════════════════════════════════════ */
+// [JS:CALC_ENGINE]
 function calc() {
   const price    = +document.getElementById('price').value;
   const depPct   = +document.getElementById('deposit').value;
@@ -1744,7 +1874,7 @@ function calc() {
   document.getElementById('h-bar-label').textContent = fmt(hM) + '/mo · ' + hAcqPct + '% acquiring · ' + hRentPct + '% rent';
   document.getElementById('c-bar-label').textContent = fmt(cM) + '/mo · ' + cPrinPct + '% principal · ' + cIntPct + '% interest';
 
-  /* ── CHART RENDERING ── */
+  // [JS:CHART_RENDER]
   const labels = [], hBals = [], cBals = [], cumDiffs = [];
   let hBal = loan, cBal = loan, cumDiff = 0;
   for (let y = 1; y <= termYrs; y++) {
@@ -1758,6 +1888,11 @@ function calc() {
     cBals.push(Math.round(cBal));
     cumDiffs.push(Math.round(cumDiff));
   }
+
+  /* ── BALANCE TABLE ── */
+  document.getElementById('balance-table-body').innerHTML = labels.map((lbl, i) =>
+    `<tr><td>${lbl}</td><td class="teal">${fmt(hBals[i])}</td><td class="blue">${fmt(cBals[i])}</td><td class="${cumDiffs[i] >= 0 ? 'coral' : 'teal'}">${cumDiffs[i] >= 0 ? '+' : ''}${fmt(cumDiffs[i])}</td></tr>`
+  ).join('');
 
   const tc = 'rgba(74,74,70,0.55)', gc = 'rgba(0,0,0,0.04)';
 
@@ -1797,6 +1932,7 @@ function calc() {
       }
     }
   });
+  // [/JS:CHART_RENDER]
 
   /* Update dependent calculators */
   calcStampDuty();
@@ -1806,6 +1942,7 @@ function calc() {
   /* Update URL state for sharing */
   updateUrlState();
 }
+// [/JS:CALC_ENGINE]
 
 /* ── CITY PRESETS ── */
 function setCity(price, el) {
@@ -1883,17 +2020,28 @@ function calcAffordability() {
   const depPct = +document.getElementById('deposit').value;
   const loan = price - (price * depPct / 100);
 
-  const convMax = salary * 4.5;
-  const gatehouseMax = salary * 4.75;
-  const strideMax = salary * 6.5;
+  const isSelfEmployed = document.getElementById('employ-status').value === 'self-employed';
+  const seReduction = isSelfEmployed ? 0.5 : 0; // Reduce multipliers by 0.5x for self-employed
+
+  const convMult = (+document.getElementById('conv-mult').value || 4.5) - seReduction;
+  const gatehouseMult = 4.75 - seReduction;
+  const strideMult = 6.5 - (isSelfEmployed ? 1 : 0); // StrideUp reduces by 1x for self-employed
+
+  const convMax = salary * convMult;
+  const gatehouseMax = salary * gatehouseMult;
+  const strideMax = salary * strideMult;
 
   document.getElementById('afford-conv').textContent = salary > 0 ? fmt(convMax) : '—';
+  document.getElementById('afford-conv-sub').textContent = 'Salary × ' + convMult;
   document.getElementById('afford-gatehouse').textContent = salary > 0 ? fmt(gatehouseMax) : '—';
+  document.getElementById('afford-gatehouse-sub').textContent = 'Salary × ' + gatehouseMult;
   document.getElementById('afford-stride').textContent = salary > 0 ? fmt(strideMax) : '—';
+  document.getElementById('afford-stride-sub').textContent = 'Salary × ' + strideMult;
   document.getElementById('afford-loan').textContent = fmt(loan);
 
   const card = document.getElementById('afford-loan-card');
   const noteEl = document.getElementById('afford-note');
+  const seNote = isSelfEmployed ? ' (self-employed rates)' : '';
 
   // Remove all color classes
   card.classList.remove('green', 'amber', 'red');
@@ -1905,16 +2053,16 @@ function calcAffordability() {
 
   if (loan <= convMax) {
     card.classList.add('green');
-    noteEl.textContent = 'Your loan is within conventional lending limits (4.5× salary). Most lenders should consider this.';
+    noteEl.textContent = 'Your loan is within conventional lending limits (' + convMult + '× salary)' + seNote + '. Most lenders should consider this.';
   } else if (loan <= gatehouseMax) {
     card.classList.add('green');
-    noteEl.textContent = 'Your loan exceeds conventional limits but is within Gatehouse Bank\'s 4.75× income threshold.';
+    noteEl.textContent = 'Your loan exceeds conventional limits but is within Gatehouse Bank\'s ' + gatehouseMult + '× income threshold' + seNote + '.';
   } else if (loan <= strideMax) {
     card.classList.add('amber');
-    noteEl.textContent = 'Your loan exceeds Gatehouse limits but is within StrideUp\'s 6.5× income threshold.';
+    noteEl.textContent = 'Your loan exceeds Gatehouse limits but is within StrideUp\'s ' + strideMult + '× income threshold' + seNote + '.';
   } else {
     card.classList.add('red');
-    noteEl.textContent = 'Your loan exceeds all standard lender limits. Consider a larger deposit or lower price.';
+    noteEl.textContent = 'Your loan exceeds all standard lender limits' + seNote + '. Consider a larger deposit or lower price.';
   }
 }
 
@@ -2042,7 +2190,7 @@ Always speak to a qualified broker before making decisions.`;
   window.location.href = mailtoUrl;
 }
 
-/* ── INIT ── */
+// [JS:INIT]
 initTheme();
 loadFromUrl();
 calc();
@@ -2053,6 +2201,7 @@ document.addEventListener('keydown', e => {
     closeShareModal();
   }
 });
+// [/JS:INIT]
 </script>
 
 <!-- Author footer -->
