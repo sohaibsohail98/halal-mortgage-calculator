@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Free Islamic mortgage calculator for UK Muslims. Compare Halal Home Purchase Plans (HPP) vs conventional mortgages — see monthly payments, total cost, and how much interest you avoid.">
-<meta property="og:title" content="Halal Mortgage Calculator — HPP vs Conventional">
+<meta name="description" content="Free UK Islamic mortgage calculator. Compare HPP, conventional & shared ownership costs. Check affordability, stamp duty, buying fees. No signup, no ads.">
+<meta property="og:title" content="UK Islamic Mortgage Calculator — HPP, Conventional & Shared Ownership">
 <meta property="og:description" content="Free tool for UK Muslims to compare Islamic Home Purchase Plans with conventional mortgages. No signup. No ads.">
 <meta name="theme-color" content="#1a1a18">
-<title>Halal Mortgage Calculator — Islamic HPP vs Conventional</title>
+<title>UK Islamic Mortgage Calculator — Compare HPP, Conventional & Shared Ownership</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
@@ -35,6 +35,7 @@ body {
   color: var(--ink);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 /* ── HEADER ── */
@@ -215,6 +216,9 @@ input[type=range]::-moz-range-thumb {
 }
 .result-card.halal { background: var(--teal-light); border-color: rgba(15,110,86,0.18); }
 .result-card.conv  { background: var(--blue-light);  border-color: rgba(24,95,165,0.18); }
+.result-card.shared { background: var(--purple-light); border-color: rgba(139,92,246,0.18); }
+.card-label.shared { color: var(--purple); }
+.card-badge.shared { background: rgba(139,92,246,0.15); color: var(--purple); }
 
 .card-label {
   font-size: 11px; font-weight: 500;
@@ -275,6 +279,8 @@ input[type=range]::-moz-range-thumb {
 .bar-teal-light { background: #9FE1CB; }
 .bar-blue-dark { background: var(--blue-mid); }
 .bar-blue-light { background: #B5D4F4; }
+.bar-purple-dark { background: #8B5CF6; }
+.bar-purple-light { background: #C4B5FD; }
 
 /* ── CHARTS ── */
 .chart-wrap {
@@ -429,6 +435,10 @@ input[type=range]::-moz-range-thumb {
   .header-actions { width: 100%; margin-top: 1rem; }
   .btn-ghost, .btn-teal { flex: 1; justify-content: center; }
   .stat-value { font-size: 20px; }
+  .author-footer { right: 0.5rem; bottom: 0.5rem; padding: 0.35rem 0.5rem; font-size: 11px; }
+  .author-footer svg { width: 14px; height: 14px; }
+  .author-footer a { width: 24px; height: 24px; }
+  .author-label { font-size: 10px; }
 }
 
 /* ── SMALL MOBILE (iPhone SE) ── */
@@ -513,6 +523,50 @@ input[type=range]::-moz-range-thumb {
 }
 .rate-freshness svg { width: 13px; height: 13px; flex-shrink: 0; }
 
+/* ── SHARED OWNERSHIP TOGGLE ── */
+.so-toggle-row {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--ink);
+}
+.toggle-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--purple, #8B5CF6);
+}
+.toggle-text { font-weight: 500; }
+.toggle-hint { color: var(--ink-mute); font-size: 12px; }
+.so-inputs {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+}
+.so-inputs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 540px) { .so-inputs-grid { grid-template-columns: 1fr; } }
+.so-rent-hint {
+  font-size: 10px;
+  color: var(--ink-mute);
+  margin-top: 4px;
+}
+input[type="range"].purple {
+  accent-color: var(--purple, #8B5CF6);
+}
+:root { --purple: #8B5CF6; --purple-light: #EDE9FE; }
+[data-theme="dark"] { --purple: #A78BFA; --purple-light: #3B2F5B; }
+
 /* ── STAMP DUTY TOGGLE ── */
 .stamp-toggle {
   display: flex;
@@ -548,6 +602,59 @@ input[type=range]::-moz-range-thumb {
   padding: 0.875rem 1rem;
 }
 .stamp-card .stat-label { color: var(--gold); }
+
+/* ── BUYING COSTS ── */
+.buying-costs-section {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+.buying-costs-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.buying-costs-grid {
+  display: grid;
+  gap: 0.5rem;
+}
+.cost-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+.cost-label { color: var(--ink-soft); }
+.cost-value { color: var(--ink); font-weight: 500; }
+.cost-row-input { margin-top: 0.25rem; }
+.cost-input {
+  width: 100px;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  text-align: right;
+}
+.cost-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
+  font-size: 14px;
+  font-weight: 600;
+}
+.cost-total-label { color: var(--ink); }
+.cost-total-value { color: var(--teal); font-size: 16px; }
+.cost-note {
+  font-size: 10px;
+  color: var(--ink-mute);
+  margin-top: 0.5rem;
+}
 
 /* ── AFFORDABILITY ── */
 .afford-input-row {
@@ -599,6 +706,25 @@ input[type=range]::-moz-range-thumb {
   font-size: 11px;
   color: var(--ink-mute);
   line-height: 1.5;
+}
+.employ-docs {
+  font-size: 11px;
+  color: var(--ink-mute);
+  margin: -0.25rem 0 0.75rem 0;
+  padding-left: 0.25rem;
+}
+.debt-note {
+  font-size: 11px;
+  color: var(--ink-mute);
+  margin: 0.5rem 0 0 0;
+}
+.debt-impact {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
 }
 
 /* ── OVERPAYMENT ── */
@@ -688,7 +814,7 @@ input[type=range]::-moz-range-thumb {
 }
 .summary-main {
   flex: 1;
-  min-width: 200px;
+  min-width: 160px;
 }
 .summary-headline {
   font-size: clamp(20px, 4vw, 26px);
@@ -753,6 +879,7 @@ input[type=range]::-moz-range-thumb {
 [data-theme="dark"] .summary-card { background: var(--surface); }
 [data-theme="dark"] .result-card.halal { background: rgba(15,110,86,0.15); }
 [data-theme="dark"] .result-card.conv { background: rgba(24,95,165,0.15); }
+[data-theme="dark"] .result-card.shared { background: rgba(139,92,246,0.15); }
 [data-theme="dark"] .sticky-nav { background: var(--paper); }
 [data-theme="dark"] .modal { background: var(--surface); }
 [data-theme="dark"] .modal-header { background: #0f0f0e; }
@@ -806,6 +933,8 @@ input[type=range]::-moz-range-thumb {
 /* Dark mode - Bar chart colors */
 [data-theme="dark"] .bar-teal-light { background: rgba(29,158,117,0.5); }
 [data-theme="dark"] .bar-blue-light { background: rgba(55,138,221,0.5); }
+[data-theme="dark"] .bar-purple-dark { background: rgba(139,92,246,0.9); }
+[data-theme="dark"] .bar-purple-light { background: rgba(139,92,246,0.5); }
 [data-theme="dark"] .bar-track { background: var(--surface2); }
 [data-theme="dark"] .leg-sq { border: 1px solid rgba(255,255,255,0.1); }
 
@@ -891,13 +1020,14 @@ input[type=range]::-moz-range-thumb {
   .header { background: #1a1a18 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .result-card.halal { background: #E1F5EE !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   .result-card.conv { background: #E6F1FB !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .result-card.shared { background: #EDE9FE !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
 
 /* Author footer */
 .author-footer {
   position: fixed;
-  bottom: 1rem;
-  right: 1rem;
+  bottom: max(1rem, env(safe-area-inset-bottom, 1rem));
+  right: max(1rem, env(safe-area-inset-right, 1rem));
   display: flex;
   gap: 0.5rem;
   background: var(--surface);
@@ -984,6 +1114,9 @@ input[type=range]::-moz-range-thumb {
 .text-blue {
   color: var(--blue);
 }
+.text-purple {
+  color: var(--purple);
+}
 .text-muted {
   color: var(--ink-mute);
 }
@@ -1050,7 +1183,7 @@ input[type=range]::-moz-range-thumb {
   width: 100%;
   border-collapse: collapse;
   font-size: 12px;
-  min-width: 340px;
+  min-width: 300px;
 }
 .balance-table th,
 .balance-table td {
@@ -1200,7 +1333,7 @@ input[type=range]::-moz-range-thumb {
     <div class="header-top-row">
       <div class="header-text">
         <p class="header-eyebrow">Shariah-compliant finance · UK 2026</p>
-        <h1>Halal mortgage <em>vs</em> conventional<br>— what does it actually cost?</h1>
+        <h1>UK Islamic mortgage calculator<br>— compare costs, affordability &amp; fees</h1>
         <p class="header-sub">A free, honest side-by-side calculator for UK Muslims comparing Islamic Home Purchase Plans with conventional mortgages. No signup. No ads. No fluff.</p>
       </div>
       <div class="header-actions no-print">
@@ -1305,6 +1438,28 @@ input[type=range]::-moz-range-thumb {
         </div>
       </div>
     </div>
+
+    <!-- Shared Ownership Toggle -->
+    <div class="so-toggle-row">
+      <label class="toggle-label">
+        <input type="checkbox" id="so-toggle" onchange="toggleSharedOwnership()">
+        <span class="toggle-text">Compare with Shared Ownership</span>
+        <span class="toggle-hint">(Heylo/Your Home model)</span>
+      </label>
+    </div>
+    <div class="so-inputs" id="so-inputs" style="display: none;">
+      <div class="so-inputs-grid">
+        <div class="slider-group">
+          <div class="slider-top"><span class="slider-name">Your share</span><span class="slider-val" id="so-share-out">25%</span></div>
+          <input type="range" class="purple" min="10" max="75" step="5" value="25" id="so-share" oninput="calc()" aria-label="Shared ownership share percentage">
+        </div>
+        <div class="slider-group">
+          <div class="slider-top"><span class="slider-name">Rent on remainder</span><span class="slider-val" id="so-rent-out">2.75%</span></div>
+          <input type="range" class="purple" min="2" max="5" step="0.25" value="2.75" id="so-rent" oninput="calc()" aria-label="Rent rate on unowned share">
+          <div class="so-rent-hint">Standard: 2.75% | Heylo Sharia: 4.89%</div>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- [/SECTION:SLIDERS] -->
 
@@ -1365,6 +1520,30 @@ input[type=range]::-moz-range-thumb {
         <div class="stat-sub">can be 5% with some lenders</div>
       </div>
     </div>
+    <!-- Shared Ownership Card (hidden by default) -->
+    <div class="result-card shared" id="so-card" style="display: none;">
+      <div class="card-label shared">Shared Ownership <span class="card-badge shared">Halal ✓</span></div>
+      <div class="stat">
+        <div class="stat-label">Monthly cost</div>
+        <div class="stat-value" id="so-monthly">—</div>
+        <div class="stat-sub" id="so-monthly-sub">mortgage + rent on remainder</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Total paid over term</div>
+        <div class="stat-value" id="so-total">—</div>
+        <div class="stat-sub" id="so-total-sub">includes rent inflation</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Rent paid on unowned share</div>
+        <div class="stat-value" id="so-rent-paid">—</div>
+        <div class="stat-sub">on <span id="so-unowned-pct">75%</span> you don't own</div>
+      </div>
+      <div class="stat">
+        <div class="stat-label">Deposit required</div>
+        <div class="stat-value" id="so-deposit">—</div>
+        <div class="stat-sub" id="so-dep-note">5% of your share only</div>
+      </div>
+    </div>
   </div>
   <!-- [/SECTION:RESULTS_CARDS] -->
 
@@ -1393,6 +1572,17 @@ input[type=range]::-moz-range-thumb {
       <div class="bar-track">
         <div class="bar-seg bar-blue-dark" id="bar-c-p"></div>
         <div class="bar-seg bar-blue-light" id="bar-c-i"></div>
+      </div>
+    </div>
+    <!-- Shared Ownership breakdown (hidden by default) -->
+    <div id="so-breakdown" style="display: none;">
+      <div class="breakdown-label">
+        <span class="text-purple">Shared Ownership</span>
+        <span id="so-bar-label" class="text-muted"></span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-seg bar-purple-dark" id="bar-so-mort"></div>
+        <div class="bar-seg bar-purple-light" id="bar-so-rent"></div>
       </div>
     </div>
     <div class="legend-row legend-row-mt">
@@ -1470,6 +1660,34 @@ input[type=range]::-moz-range-thumb {
         </div>
       </div>
     </div>
+
+    <!-- Buying Costs Estimates -->
+    <div class="buying-costs-section">
+      <div class="buying-costs-title">Other upfront costs (estimates)</div>
+      <div class="buying-costs-grid">
+        <div class="cost-row">
+          <span class="cost-label">Solicitor/conveyancing</span>
+          <span class="cost-value" id="cost-solicitor">—</span>
+        </div>
+        <div class="cost-row">
+          <span class="cost-label">Survey (HomeBuyer Report)</span>
+          <span class="cost-value" id="cost-survey">—</span>
+        </div>
+        <div class="cost-row">
+          <span class="cost-label">Searches &amp; Land Registry</span>
+          <span class="cost-value" id="cost-searches">—</span>
+        </div>
+        <div class="cost-row cost-row-input">
+          <label class="cost-label" for="cost-other">Other costs (optional)</label>
+          <input type="number" id="cost-other" class="cost-input" placeholder="£0" value="0" oninput="calcBuyingCosts()">
+        </div>
+      </div>
+      <div class="cost-total-row">
+        <span class="cost-total-label">Total upfront costs</span>
+        <span class="cost-total-value" id="cost-total">—</span>
+      </div>
+      <div class="cost-note">Estimates based on typical UK 2026 rates. Actual costs vary by provider and location.</div>
+    </div>
   </div>
 
   <p class="sec" id="section-afford">Can I afford this?</p>
@@ -1492,8 +1710,43 @@ input[type=range]::-moz-range-thumb {
       <select id="employ-status" class="afford-input" onchange="calcAffordability()">
         <option value="employed">Employed (PAYE)</option>
         <option value="self-employed">Self-employed</option>
+        <option value="contractor">Contractor</option>
+        <option value="director">Director/Ltd Company</option>
       </select>
     </div>
+    <div id="employ-docs" class="employ-docs"></div>
+
+    <!-- Optional debt section (collapsed by default) -->
+    <div class="collapsible-header" id="debt-header" onclick="toggleDebtSection()">
+      <span class="collapsible-title">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        Include existing debts (optional)
+      </span>
+      <svg class="collapsible-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+    <div class="collapsible-content" id="debt-content">
+      <div class="afford-input-row">
+        <label for="credit-card-bal">Credit card balance</label>
+        <input type="number" id="credit-card-bal" class="afford-input" placeholder="£0" value="0" oninput="calcAffordability()">
+      </div>
+      <div class="afford-input-row">
+        <label for="monthly-loans">Monthly loan/car payments</label>
+        <input type="number" id="monthly-loans" class="afford-input" placeholder="£0" value="0" oninput="calcAffordability()">
+      </div>
+      <div class="afford-input-row">
+        <label for="student-loan">Student loan plan</label>
+        <select id="student-loan" class="afford-input" onchange="calcAffordability()">
+          <option value="none">None</option>
+          <option value="plan1">Plan 1 (pre-2012)</option>
+          <option value="plan2">Plan 2 (post-2012)</option>
+          <option value="plan4">Plan 4 (Scotland)</option>
+          <option value="plan5">Plan 5 (post-2023)</option>
+          <option value="postgrad">Postgraduate</option>
+        </select>
+      </div>
+      <p class="debt-note">Debts reduce your maximum borrowing. This is an estimate only.</p>
+    </div>
+
     <div class="afford-grid">
       <div class="afford-card">
         <div class="stat">
@@ -1526,7 +1779,7 @@ input[type=range]::-moz-range-thumb {
     </div>
     <div class="afford-note" id="afford-note">Enter your salary above to see if you can afford this property.</div>
     <p class="afford-disclaimer">
-      <strong>Disclaimer:</strong> These figures are rough estimates only. Actual affordability depends on your credit history, existing debts, deposit size, and individual lender criteria. Self-employed applicants typically need 2-3 years of accounts. Please seek independent financial advice for your specific circumstances.
+      <strong>Disclaimer:</strong> These figures are estimates only and do not constitute financial advice. Actual affordability depends on your credit history, existing debts, deposit size, and individual lender criteria. Debt calculations are approximate—lenders use their own affordability models. Self-employed and contractor applicants typically need additional documentation. Please consult a qualified mortgage adviser for your specific circumstances.
     </p>
   </div>
 
@@ -1590,6 +1843,11 @@ input[type=range]::-moz-range-thumb {
       <div class="provider-tag">Alternative models</div>
       <div class="provider-detail">Shared ownership &amp; community-driven. Pfida has waiting lists. Wayhome flexible &amp; interest-free.</div>
     </div>
+    <div class="provider-card">
+      <div class="provider-name">Your Home (Heylo)</div>
+      <div class="provider-tag">Sharia shared ownership</div>
+      <div class="provider-detail">Buy 25%+ share with cash, rent the rest at 4.89% capped. Staircase to 100%. Islamic Council certified.</div>
+    </div>
   </div>
   <!-- [/SECTION:PROVIDERS] -->
 
@@ -1599,6 +1857,7 @@ input[type=range]::-moz-range-thumb {
     <div class="footer-links">
       <a href="https://gatehousebank.com/personal/home-finance" target="_blank" rel="noopener">Gatehouse Bank</a>
       <a href="https://strideup.co" target="_blank" rel="noopener">StrideUp</a>
+      <a href="https://yourhome.org.uk/sharia" target="_blank" rel="noopener">Your Home Sharia</a>
       <a href="https://www.islamicfinanceguru.com" target="_blank" rel="noopener">Islamic Finance Guru</a>
       <a href="https://www.moneyhelper.org.uk/en/homes/buying-a-home/sharia-compliant-home-purchase-plans" target="_blank" rel="noopener">MoneyHelper guide</a>
     </div>
@@ -1874,6 +2133,60 @@ function calc() {
   document.getElementById('h-bar-label').textContent = fmt(hM) + '/mo · ' + hAcqPct + '% acquiring · ' + hRentPct + '% rent';
   document.getElementById('c-bar-label').textContent = fmt(cM) + '/mo · ' + cPrinPct + '% principal · ' + cIntPct + '% interest';
 
+  /* Shared Ownership Calculations (if enabled) */
+  const soEnabled = document.getElementById('so-toggle').checked;
+  if (soEnabled) {
+    const soSharePct = +document.getElementById('so-share').value;
+    const soRentRate = +document.getElementById('so-rent').value;
+
+    // Update slider output displays
+    document.getElementById('so-share-out').textContent = soSharePct + '%';
+    document.getElementById('so-rent-out').textContent = soRentRate.toFixed(2) + '%';
+
+    const shareValue = price * soSharePct / 100;
+    const unownedValue = price - shareValue;
+    const soDeposit = shareValue * 0.05; // 5% of your share only
+    const soLoan = shareValue - soDeposit;
+
+    // Mortgage on your share (using halal rate)
+    const soMortgage = hr === 0 ? soLoan/n : soLoan * hr * Math.pow(1+hr,n) / (Math.pow(1+hr,n)-1);
+
+    // Monthly rent on unowned share
+    const annualRent = unownedValue * soRentRate / 100;
+    const monthlyRent = annualRent / 12;
+
+    // Total monthly cost
+    const soMonthly = soMortgage + monthlyRent;
+
+    // Total over term (with rent inflation at ~3% per year)
+    const mortgageTotal = soMortgage * n;
+    let rentTotal = 0, currentRent = monthlyRent;
+    for (let y = 0; y < termYrs; y++) {
+      rentTotal += currentRent * 12;
+      currentRent *= 1.03; // 3% annual rent increase
+    }
+    const soTotal = mortgageTotal + rentTotal;
+
+    // Update display
+    document.getElementById('so-monthly').textContent = fmt(soMonthly);
+    document.getElementById('so-monthly-sub').textContent = fmt(soMortgage) + ' mortgage + ' + fmt(monthlyRent) + ' rent';
+    document.getElementById('so-total').textContent = fmt(soTotal);
+    document.getElementById('so-total-sub').textContent = 'includes ~3% annual rent inflation';
+    document.getElementById('so-rent-paid').textContent = fmt(rentTotal);
+    document.getElementById('so-unowned-pct').textContent = (100 - soSharePct) + '%';
+    document.getElementById('so-deposit').textContent = fmt(soDeposit);
+    document.getElementById('so-dep-note').textContent = '5% of ' + fmt(shareValue) + ' share';
+
+    // Breakdown bar
+    const soMortPct = Math.round(soMortgage / soMonthly * 100);
+    const soRentPct = 100 - soMortPct;
+    const bSOM = document.getElementById('bar-so-mort');
+    const bSOR = document.getElementById('bar-so-rent');
+    bSOM.style.width = soMortPct + '%'; bSOM.textContent = soMortPct > 14 ? soMortPct + '%' : '';
+    bSOR.style.width = soRentPct + '%'; bSOR.textContent = soRentPct > 14 ? soRentPct + '%' : '';
+    document.getElementById('so-bar-label').textContent = fmt(soMonthly) + '/mo · ' + soMortPct + '% mortgage · ' + soRentPct + '% rent';
+  }
+
   // [JS:CHART_RENDER]
   const labels = [], hBals = [], cBals = [], cumDiffs = [];
   let hBal = loan, cBal = loan, cumDiff = 0;
@@ -1963,6 +2276,39 @@ function toggleStampDuty() {
   }
 }
 
+/* ── DEBT SECTION TOGGLE ── */
+function toggleDebtSection() {
+  const header = document.getElementById('debt-header');
+  const content = document.getElementById('debt-content');
+  header.classList.toggle('open');
+  content.classList.toggle('open');
+  if (content.classList.contains('open')) {
+    calcAffordability();
+  }
+}
+
+/* ── SHARED OWNERSHIP TOGGLE ── */
+function toggleSharedOwnership() {
+  const enabled = document.getElementById('so-toggle').checked;
+  const inputs = document.getElementById('so-inputs');
+  const soCard = document.getElementById('so-card');
+  const soBreakdown = document.getElementById('so-breakdown');
+
+  inputs.style.display = enabled ? 'block' : 'none';
+  soCard.style.display = enabled ? 'block' : 'none';
+  soBreakdown.style.display = enabled ? 'block' : 'none';
+
+  // Adjust grid to accommodate 3 cards
+  const grid = document.querySelector('.compare-grid');
+  if (enabled) {
+    grid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(250px, 1fr))';
+  } else {
+    grid.style.gridTemplateColumns = '';
+  }
+
+  if (enabled) calc();
+}
+
 function calcStampDuty() {
   const price = +document.getElementById('price').value;
   const isFTB = document.getElementById('ftb-check').checked;
@@ -2011,6 +2357,38 @@ function calcStampDuty() {
 
   document.getElementById('stamp-amount').textContent = fmt(duty);
   document.getElementById('stamp-note').textContent = note;
+
+  // Also calculate buying costs when stamp duty is calculated
+  calcBuyingCosts();
+}
+
+/* ── BUYING COSTS ── */
+function calcBuyingCosts() {
+  const price = +document.getElementById('price').value;
+  const stampDuty = parseFloat(document.getElementById('stamp-amount').textContent.replace(/[£,]/g, '')) || 0;
+  const otherCosts = +document.getElementById('cost-other').value || 0;
+
+  // Solicitor/conveyancing: ~£1,200 base + 0.1% of price (typical UK 2026)
+  const solicitor = Math.round(1200 + price * 0.001);
+
+  // Survey (HomeBuyer Report): scales with property value
+  let survey;
+  if (price < 200000) survey = 400;
+  else if (price < 350000) survey = 500;
+  else if (price < 500000) survey = 600;
+  else survey = 750;
+
+  // Searches & Land Registry: ~£400-600 depending on value
+  const searches = price < 300000 ? 400 : (price < 500000 ? 500 : 600);
+
+  // Total
+  const total = stampDuty + solicitor + survey + searches + otherCosts;
+
+  // Update display
+  document.getElementById('cost-solicitor').textContent = fmt(solicitor);
+  document.getElementById('cost-survey').textContent = fmt(survey);
+  document.getElementById('cost-searches').textContent = fmt(searches);
+  document.getElementById('cost-total').textContent = fmt(total);
 }
 
 /* ── AFFORDABILITY ── */
@@ -2020,28 +2398,66 @@ function calcAffordability() {
   const depPct = +document.getElementById('deposit').value;
   const loan = price - (price * depPct / 100);
 
-  const isSelfEmployed = document.getElementById('employ-status').value === 'self-employed';
-  const seReduction = isSelfEmployed ? 0.5 : 0; // Reduce multipliers by 0.5x for self-employed
+  // Employment status handling
+  const employStatus = document.getElementById('employ-status').value;
+  const isSelfEmployed = employStatus === 'self-employed' || employStatus === 'director';
+  const isContractor = employStatus === 'contractor';
+  const seReduction = isSelfEmployed ? 0.5 : 0;
 
-  const convMult = (+document.getElementById('conv-mult').value || 4.5) - seReduction;
+  // Employment documentation display
+  const docsEl = document.getElementById('employ-docs');
+  const docsMap = {
+    'employed': 'Typically required: 3 months payslips + P60',
+    'self-employed': 'Typically required: 2-3 years accounts + SA302',
+    'contractor': 'Typically required: 12+ month contract history',
+    'director': 'Typically required: 2-3 years accounts + SA302 (treated as self-employed)'
+  };
+  docsEl.textContent = docsMap[employStatus] || '';
+
+  // Get debt inputs (optional - only if debt section is open and values entered)
+  const debtOpen = document.getElementById('debt-content').classList.contains('open');
+  const creditCardBal = debtOpen ? (+document.getElementById('credit-card-bal').value || 0) : 0;
+  const monthlyLoans = debtOpen ? (+document.getElementById('monthly-loans').value || 0) : 0;
+  const studentLoanPlan = debtOpen ? document.getElementById('student-loan').value : 'none';
+
+  // Calculate student loan monthly payment
+  let studentLoanPayment = 0;
+  if (studentLoanPlan !== 'none' && salary > 0) {
+    const thresholds = { plan1: 24990, plan2: 27295, plan4: 31395, plan5: 25000, postgrad: 21000 };
+    const threshold = thresholds[studentLoanPlan] || 0;
+    const annualAbove = Math.max(0, salary - threshold);
+    studentLoanPayment = (annualAbove * 0.09) / 12;
+  }
+
+  // Calculate total monthly debt impact
+  const creditCardMonthly = creditCardBal * 0.03; // 3% of balance
+  const totalMonthlyDebts = creditCardMonthly + monthlyLoans + studentLoanPayment;
+  const annualDebtImpact = totalMonthlyDebts * 12 * 3; // £3 reduction per £1 annual debt
+
+  // Calculate multipliers
+  const baseMult = +document.getElementById('conv-mult').value || 4.5;
+  const convMult = baseMult - seReduction;
   const gatehouseMult = 4.75 - seReduction;
-  const strideMult = 6.5 - (isSelfEmployed ? 1 : 0); // StrideUp reduces by 1x for self-employed
+  const strideMult = 6.5 - (isSelfEmployed ? 1 : 0);
 
-  const convMax = salary * convMult;
-  const gatehouseMax = salary * gatehouseMult;
-  const strideMax = salary * strideMult;
+  // Calculate max borrowing (with debt adjustment if debts entered)
+  const hasDebts = totalMonthlyDebts > 0;
+  const convMax = Math.max(0, (salary * convMult) - (hasDebts ? annualDebtImpact : 0));
+  const gatehouseMax = Math.max(0, (salary * gatehouseMult) - (hasDebts ? annualDebtImpact : 0));
+  const strideMax = Math.max(0, (salary * strideMult) - (hasDebts ? annualDebtImpact : 0));
 
+  // Update display
   document.getElementById('afford-conv').textContent = salary > 0 ? fmt(convMax) : '—';
-  document.getElementById('afford-conv-sub').textContent = 'Salary × ' + convMult;
+  document.getElementById('afford-conv-sub').textContent = 'Salary × ' + convMult + (hasDebts ? ' - debts' : '');
   document.getElementById('afford-gatehouse').textContent = salary > 0 ? fmt(gatehouseMax) : '—';
-  document.getElementById('afford-gatehouse-sub').textContent = 'Salary × ' + gatehouseMult;
+  document.getElementById('afford-gatehouse-sub').textContent = 'Salary × ' + gatehouseMult + (hasDebts ? ' - debts' : '');
   document.getElementById('afford-stride').textContent = salary > 0 ? fmt(strideMax) : '—';
-  document.getElementById('afford-stride-sub').textContent = 'Salary × ' + strideMult;
+  document.getElementById('afford-stride-sub').textContent = 'Salary × ' + strideMult + (hasDebts ? ' - debts' : '');
   document.getElementById('afford-loan').textContent = fmt(loan);
 
   const card = document.getElementById('afford-loan-card');
   const noteEl = document.getElementById('afford-note');
-  const seNote = isSelfEmployed ? ' (self-employed rates)' : '';
+  const statusNote = isSelfEmployed ? ' (self-employed rates)' : (isContractor ? ' (contractor)' : '');
 
   // Remove all color classes
   card.classList.remove('green', 'amber', 'red');
@@ -2051,18 +2467,24 @@ function calcAffordability() {
     return;
   }
 
+  // Build debt impact message
+  let debtMsg = '';
+  if (hasDebts) {
+    debtMsg = ' Your debts reduce max borrowing by ~' + fmt(annualDebtImpact) + '.';
+  }
+
   if (loan <= convMax) {
     card.classList.add('green');
-    noteEl.textContent = 'Your loan is within conventional lending limits (' + convMult + '× salary)' + seNote + '. Most lenders should consider this.';
+    noteEl.textContent = 'Your loan is within conventional lending limits (' + convMult + '× salary)' + statusNote + '.' + debtMsg;
   } else if (loan <= gatehouseMax) {
     card.classList.add('green');
-    noteEl.textContent = 'Your loan exceeds conventional limits but is within Gatehouse Bank\'s ' + gatehouseMult + '× income threshold' + seNote + '.';
+    noteEl.textContent = 'Your loan exceeds conventional limits but is within Gatehouse Bank\'s ' + gatehouseMult + '× income threshold' + statusNote + '.' + debtMsg;
   } else if (loan <= strideMax) {
     card.classList.add('amber');
-    noteEl.textContent = 'Your loan exceeds Gatehouse limits but is within StrideUp\'s ' + strideMult + '× income threshold' + seNote + '.';
+    noteEl.textContent = 'Your loan exceeds Gatehouse limits but is within StrideUp\'s ' + strideMult + '× income threshold' + statusNote + '.' + debtMsg;
   } else {
     card.classList.add('red');
-    noteEl.textContent = 'Your loan exceeds all standard lender limits' + seNote + '. Consider a larger deposit or lower price.';
+    noteEl.textContent = 'Your loan exceeds all standard lender limits' + statusNote + '. Consider a larger deposit or lower price.' + debtMsg;
   }
 }
 
