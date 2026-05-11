@@ -171,6 +171,10 @@ body {
 .toggle-label.compact { font-size: 12px; gap: 6px; }
 .toggle-label.compact input[type="checkbox"] { width: 14px; height: 14px; }
 .custom-deposit-input { width: 110px; padding: 5px 8px; font-size: 13px; border: 1px solid var(--border-med); border-radius: var(--radius-xs); }
+.rate-input { width: 65px; padding: 3px 6px; font-size: 14px; font-weight: 500; text-align: right; border: 1px solid var(--border-med); border-radius: var(--radius-xs); background: var(--paper); color: var(--ink); font-variant-numeric: tabular-nums; }
+.rate-input:focus { outline: none; border-color: var(--teal); }
+.rate-input.blue:focus { border-color: var(--blue); }
+.slider-val-wrap { display: flex; align-items: center; gap: 4px; }
 
 input[type=range] {
   -webkit-appearance: none; appearance: none;
@@ -1513,9 +1517,12 @@ input[type="range"].purple {
               <span class="rate-dot rate-dot-teal"></span>
               Halal rental rate
             </span>
-            <span class="slider-val" id="hrate-out">5.9%</span>
+            <div class="slider-val-wrap">
+              <input type="number" class="rate-input" id="hrate-input" min="3" max="10" step="0.01" value="5.9" oninput="syncRateFromInput('hrate')" aria-label="Halal rate input">
+              <span>%</span>
+            </div>
           </div>
-          <input type="range" class="teal" min="3" max="10" step="0.1" value="5.9" id="hrate" oninput="calc()" aria-label="Islamic HPP rental rate">
+          <input type="range" class="teal" min="3" max="10" step="0.01" value="5.9" id="hrate" oninput="syncRateFromSlider('hrate')" aria-label="Islamic HPP rental rate">
         </div>
         <div class="slider-group">
           <div class="slider-top">
@@ -1523,9 +1530,12 @@ input[type="range"].purple {
               <span class="rate-dot rate-dot-blue"></span>
               Conventional rate
             </span>
-            <span class="slider-val" id="crate-out">5.5%</span>
+            <div class="slider-val-wrap">
+              <input type="number" class="rate-input blue" id="crate-input" min="3" max="10" step="0.01" value="5.5" oninput="syncRateFromInput('crate')" aria-label="Conventional rate input">
+              <span>%</span>
+            </div>
           </div>
-          <input type="range" class="blue" min="3" max="10" step="0.1" value="5.5" id="crate" oninput="calc()" aria-label="Conventional mortgage rate">
+          <input type="range" class="blue" min="3" max="10" step="0.01" value="5.5" id="crate" oninput="syncRateFromSlider('crate')" aria-label="Conventional mortgage rate">
         </div>
         <div>
           <div class="preset-label">Quick presets — real 2026 UK rates <span class="info-icon" title="These presets use current average rates from UK Islamic mortgage providers. 'Gatehouse 2yr' is their 2-year fixed rate, 'StrideUp 10% dep' is for 10% deposits, 'Higher rates' shows a cautious scenario, and 'Parity' assumes equal rates for comparison.">?</span></div>
@@ -2283,6 +2293,8 @@ function setPreset(hr, cr, el) {
   el.classList.add('active');
   document.getElementById('hrate').value = hr;
   document.getElementById('crate').value = cr;
+  document.getElementById('hrate-input').value = hr.toFixed(2);
+  document.getElementById('crate-input').value = cr.toFixed(2);
   calc();
 }
 
@@ -2295,6 +2307,25 @@ function setTerm(years, el) {
 }
 // [/JS:PRESETS]
 
+/* ── RATE INPUT SYNC ── */
+function syncRateFromSlider(rateId) {
+  const slider = document.getElementById(rateId);
+  const input = document.getElementById(rateId + '-input');
+  input.value = parseFloat(slider.value).toFixed(2);
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  calc();
+}
+function syncRateFromInput(rateId) {
+  const input = document.getElementById(rateId + '-input');
+  const slider = document.getElementById(rateId);
+  let val = parseFloat(input.value);
+  if (isNaN(val)) return;
+  val = Math.max(3, Math.min(10, val));
+  slider.value = val;
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  calc();
+}
+
 // [JS:CALC_ENGINE]
 function calc() {
   const price    = +document.getElementById('price').value;
@@ -2306,8 +2337,6 @@ function calc() {
   document.getElementById('price-out').textContent = fmt(price);
   document.getElementById('dep-out').textContent   = depPct + '%';
   document.getElementById('term-out').textContent  = termYrs + ' yrs';
-  document.getElementById('hrate-out').textContent = hRateAnn.toFixed(1) + '%';
-  document.getElementById('crate-out').textContent = cRateAnn.toFixed(1) + '%';
 
   const deposit = price * depPct / 100;
   const loan    = price - deposit;
