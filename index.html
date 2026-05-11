@@ -830,40 +830,322 @@ input[type="range"].purple {
 .remort-total-row .stat { margin-bottom: 0; }
 
 /* ── STICKY NAV ── */
+/* ── HAMBURGER MENU ── */
+.hamburger-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 200;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 8px;
+  background: var(--ink);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  transition: background 0.2s;
+}
+.hamburger-btn:hover { background: #2a2a28; }
+.hamburger-btn span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #fff;
+  border-radius: 1px;
+  transition: all 0.3s;
+}
+.hamburger-btn.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.hamburger-btn.open span:nth-child(2) { opacity: 0; }
+.hamburger-btn.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+/* ── SIDEBAR ── */
+.sidebar-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 150;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+.sidebar-overlay.open { opacity: 1; visibility: visible; }
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -280px;
+  width: 280px;
+  height: 100%;
+  background: var(--ink);
+  z-index: 175;
+  transition: right 0.3s ease;
+  overflow-y: auto;
+  padding: 5rem 0 2rem;
+}
+.sidebar.open { right: 0; }
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-link {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 14px 24px;
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  transition: all 0.2s;
+}
+.sidebar-link:hover { background: rgba(255,255,255,0.05); color: #fff; }
+.sidebar-link.active { border-left-color: var(--teal-mid); color: var(--teal-mid); background: rgba(29,158,117,0.1); }
+.sidebar-link.home-link { color: var(--teal-mid); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 10px; }
+.sidebar-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 0.5rem 24px; }
+
+[data-theme="dark"] .hamburger-btn { background: #0f0f0e; }
+[data-theme="dark"] .hamburger-btn:hover { background: #1a1a18; }
+[data-theme="dark"] .sidebar { background: #0f0f0e; }
+
+/* ── STICKY HORIZONTAL NAV (Desktop) ── */
 .sticky-nav {
   position: sticky;
   top: 0;
   z-index: 50;
   background: var(--paper);
   border-bottom: 1px solid var(--border);
-  padding: 0.6rem clamp(1rem, 3vw, 1.5rem);
-  margin: 0 calc(-1 * clamp(1rem, 3vw, 1.5rem));
+  padding: 0 1rem;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
 }
-.sticky-nav::-webkit-scrollbar { display: none; }
 .sticky-nav-inner {
   display: flex;
+  align-items: center;
+  gap: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-width: max-content;
+}
+.sticky-nav-link {
+  display: flex;
+  align-items: center;
   gap: 6px;
-  max-width: 900px;
+  padding: 12px 16px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+.sticky-nav-link:hover {
+  color: var(--teal);
+  background: rgba(29,158,117,0.05);
+}
+.sticky-nav-link.active {
+  color: var(--teal);
+  border-bottom-color: var(--teal);
+}
+.sticky-nav-link svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .sticky-nav {
+  background: #0f0f0e;
+  border-color: rgba(255,255,255,0.1);
+}
+[data-theme="dark"] .sticky-nav-link {
+  color: rgba(255,255,255,0.7);
+}
+[data-theme="dark"] .sticky-nav-link:hover {
+  color: var(--teal-mid);
+  background: rgba(29,158,117,0.1);
+}
+[data-theme="dark"] .sticky-nav-link.active {
+  color: var(--teal-mid);
+  border-bottom-color: var(--teal-mid);
+}
+
+/* ── BOTTOM TAB BAR (Mobile) ── */
+.bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--paper);
+  border-top: 1px solid var(--border);
+  padding: 8px 0;
+  padding-bottom: max(8px, env(safe-area-inset-bottom, 8px));
+}
+.bottom-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 0;
+  color: var(--ink-mute);
+  text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.bottom-nav-item svg { width: 22px; height: 22px; }
+.bottom-nav-item:hover, .bottom-nav-item.active { color: var(--teal); }
+.bottom-nav-item.active svg { stroke: var(--teal); }
+
+[data-theme="dark"] .bottom-nav { background: #0f0f0e; border-color: rgba(255,255,255,0.1); }
+[data-theme="dark"] .bottom-nav-item { color: var(--ink-mute); }
+[data-theme="dark"] .bottom-nav-item:hover, [data-theme="dark"] .bottom-nav-item.active { color: var(--teal-mid); }
+
+/* ── MORE MENU POPUP ── */
+.more-menu {
+  display: none;
+  position: fixed;
+  bottom: 70px;
+  right: 1rem;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  z-index: 110;
+  padding: 8px 0;
+  min-width: 160px;
+}
+.more-menu.open { display: block; }
+.more-menu-item {
+  display: block;
+  padding: 12px 20px;
+  color: var(--ink);
+  text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+.more-menu-item:hover { background: var(--surface); }
+
+[data-theme="dark"] .more-menu { background: #1a1a18; border-color: rgba(255,255,255,0.1); }
+[data-theme="dark"] .more-menu-item { color: var(--ink); }
+[data-theme="dark"] .more-menu-item:hover { background: var(--surface); }
+
+/* ── LIVE RESULTS STRIP (Mobile) ── */
+.results-strip {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: linear-gradient(135deg, #1a1a18 0%, #2d2d2a 100%);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding: 10px 12px;
+  padding-bottom: max(10px, env(safe-area-inset-bottom, 10px));
+}
+.results-strip-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  max-width: 400px;
   margin: 0 auto;
 }
-.nav-link {
+.results-strip-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.08);
+}
+.results-strip-item.halal {
+  background: rgba(29,158,117,0.2);
+  border: 1px solid rgba(29,158,117,0.3);
+}
+.results-strip-item.conv {
+  background: rgba(24,95,165,0.2);
+  border: 1px solid rgba(24,95,165,0.3);
+}
+.results-strip-icon {
+  font-size: 14px;
+}
+.results-strip-label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.results-strip-value {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+.results-strip-suffix {
   font-family: 'DM Sans', sans-serif;
   font-size: 11px;
-  padding: 5px 12px;
-  border-radius: 16px;
-  border: 1px solid var(--border-med);
-  background: var(--paper);
-  color: var(--ink-soft);
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
-  text-decoration: none;
+  color: rgba(255,255,255,0.5);
 }
-.nav-link:hover { border-color: var(--ink-mute); color: var(--ink); }
-.nav-link.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.results-strip-vs {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  padding: 0 2px;
+}
+.results-strip-diff {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.1);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--coral);
+}
+.results-strip-diff.cheaper {
+  color: var(--teal-mid);
+}
+
+/* ── RESPONSIVE: Show/Hide Nav Elements ── */
+@media (max-width: 768px) {
+  .hamburger-btn { display: none !important; }
+  .sidebar { display: none !important; }
+  .sidebar-overlay { display: none !important; }
+  .sticky-nav { display: block !important; }
+  .bottom-nav { display: none !important; }
+  .results-strip { display: block !important; }
+  .author-footer {
+    position: static !important;
+    margin: 2rem auto 1rem !important;
+    justify-content: center !important;
+    box-shadow: none !important;
+  }
+  body { padding-bottom: 70px; }
+}
+@media (min-width: 769px) {
+  .sticky-nav { display: none; }
+  .bottom-nav { display: none; }
+  .results-strip { display: none; }
+  .more-menu { display: none !important; }
+}
 
 /* ── TERM PRESETS ── */
 .term-presets {
@@ -967,7 +1249,7 @@ input[type="range"].purple {
 [data-theme="dark"] .result-card.halal { background: rgba(15,110,86,0.15); }
 [data-theme="dark"] .result-card.conv { background: rgba(24,95,165,0.15); }
 [data-theme="dark"] .result-card.shared { background: rgba(139,92,246,0.15); }
-[data-theme="dark"] .sticky-nav { background: var(--paper); }
+[data-theme="dark"] .sticky-nav { background: #0f0f0e; }
 [data-theme="dark"] .modal { background: var(--surface); }
 [data-theme="dark"] .modal-header { background: #0f0f0e; }
 [data-theme="dark"] .modal-title { color: #faf9f6; }
@@ -1478,22 +1760,111 @@ input[type="range"].purple {
 </div>
 <!-- [/SECTION:HEADER] -->
 
-<div class="main" id="main-content">
-  <nav class="sticky-nav no-print" aria-label="Jump to section">
-    <div class="sticky-nav-inner">
-      <a href="#section-property" class="nav-link">Property</a>
-      <a href="#section-results" class="nav-link">Results</a>
-      <a href="#section-breakdown" class="nav-link">Breakdown</a>
-      <a href="#section-charts" class="nav-link">Charts</a>
-      <a href="#section-stamp" class="nav-link">Buying Costs</a>
-      <a href="#section-afford" class="nav-link">Affordability</a>
-      <a href="#section-overpay" class="nav-link">Overpay</a>
-      <a href="#section-remortgage" class="nav-link">Remortgage</a>
-      <a href="#section-providers" class="nav-link">Providers</a>
-      <a href="#section-feedback" class="nav-link">Feedback</a>
-    </div>
-  </nav>
+<!-- Sticky Horizontal Nav (Desktop) -->
+<nav class="sticky-nav no-print" aria-label="Main navigation">
+  <div class="sticky-nav-inner">
+    <a href="#" class="sticky-nav-link" onclick="scrollToTop(); return false;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home
+    </a>
+    <a href="#section-property" class="sticky-nav-link">Calculate</a>
+    <a href="#section-results" class="sticky-nav-link">Results</a>
+    <a href="#section-breakdown" class="sticky-nav-link">Breakdown</a>
+    <a href="#section-charts" class="sticky-nav-link">Charts</a>
+    <a href="#section-stamp" class="sticky-nav-link">Costs</a>
+    <a href="#section-afford" class="sticky-nav-link">Affordability</a>
+    <a href="#section-overpay" class="sticky-nav-link">Overpay</a>
+    <a href="#section-remortgage" class="sticky-nav-link">Remortgage</a>
+    <a href="#section-providers" class="sticky-nav-link">Providers</a>
+    <a href="#section-feedback" class="sticky-nav-link">Feedback</a>
+  </div>
+</nav>
 
+<!-- Hamburger Button (Desktop) -->
+<button class="hamburger-btn no-print" onclick="toggleSidebar()" aria-label="Open menu">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- Sidebar Overlay -->
+<div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<!-- Sidebar (Desktop) -->
+<nav class="sidebar no-print" aria-label="Navigation">
+  <div class="sidebar-nav">
+    <a href="#" class="sidebar-link home-link" onclick="scrollToTop(); toggleSidebar();">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home
+    </a>
+    <div class="sidebar-divider"></div>
+    <a href="#section-property" class="sidebar-link" onclick="toggleSidebar()">Property Details</a>
+    <a href="#section-results" class="sidebar-link" onclick="toggleSidebar()">Results</a>
+    <a href="#section-breakdown" class="sidebar-link" onclick="toggleSidebar()">Breakdown</a>
+    <a href="#section-charts" class="sidebar-link" onclick="toggleSidebar()">Charts</a>
+    <a href="#section-stamp" class="sidebar-link" onclick="toggleSidebar()">Buying Costs</a>
+    <a href="#section-afford" class="sidebar-link" onclick="toggleSidebar()">Affordability</a>
+    <a href="#section-overpay" class="sidebar-link" onclick="toggleSidebar()">Overpay</a>
+    <a href="#section-remortgage" class="sidebar-link" onclick="toggleSidebar()">Remortgage</a>
+    <a href="#section-providers" class="sidebar-link" onclick="toggleSidebar()">Providers</a>
+    <a href="#section-feedback" class="sidebar-link" onclick="toggleSidebar()">Feedback</a>
+  </div>
+</nav>
+
+<!-- Bottom Tab Bar (Mobile) -->
+<nav class="bottom-nav no-print" aria-label="Mobile navigation">
+  <a href="#" class="bottom-nav-item" onclick="scrollToTop()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>Home</span>
+  </a>
+  <a href="#section-property" class="bottom-nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    <span>Calculate</span>
+  </a>
+  <a href="#section-results" class="bottom-nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    <span>Results</span>
+  </a>
+  <a href="#section-stamp" class="bottom-nav-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+    <span>Costs</span>
+  </a>
+  <button class="bottom-nav-item" onclick="toggleMoreMenu()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+    <span>More</span>
+  </button>
+</nav>
+
+<!-- More Menu Popup (Mobile) -->
+<div class="more-menu" id="more-menu">
+  <a href="#section-afford" class="more-menu-item" onclick="closeMoreMenu()">Affordability</a>
+  <a href="#section-overpay" class="more-menu-item" onclick="closeMoreMenu()">Overpay</a>
+  <a href="#section-remortgage" class="more-menu-item" onclick="closeMoreMenu()">Remortgage</a>
+  <a href="#section-providers" class="more-menu-item" onclick="closeMoreMenu()">Providers</a>
+  <a href="#section-feedback" class="more-menu-item" onclick="closeMoreMenu()">Feedback</a>
+</div>
+
+<!-- Live Results Strip (Mobile) -->
+<div class="results-strip no-print" id="results-strip">
+  <a href="#section-results" class="results-strip-inner">
+    <div class="results-strip-item halal">
+      <span class="results-strip-icon">🕌</span>
+      <span class="results-strip-label">Islamic</span>
+      <span class="results-strip-value" id="strip-hpp">£1,847</span>
+      <span class="results-strip-suffix">/mo</span>
+    </div>
+    <div class="results-strip-vs">vs</div>
+    <div class="results-strip-item conv">
+      <span class="results-strip-icon">🏦</span>
+      <span class="results-strip-label">Conv.</span>
+      <span class="results-strip-value" id="strip-conv">£1,792</span>
+      <span class="results-strip-suffix">/mo</span>
+    </div>
+    <div class="results-strip-diff" id="strip-diff">
+      <span>+£55</span>
+    </div>
+  </a>
+</div>
+
+<div class="main" id="main-content">
   <!-- [SECTION:SLIDERS] -->
   <p class="sec" id="section-property">Property &amp; mortgage details</p>
   <div class="card">
@@ -2189,6 +2560,35 @@ function closeModal() {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 // [/JS:MODAL]
 
+/* ── NAVIGATION ── */
+function toggleSidebar() {
+  document.querySelector('.hamburger-btn').classList.toggle('open');
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.querySelector('.sidebar-overlay').classList.toggle('open');
+  document.body.style.overflow = document.querySelector('.sidebar').classList.contains('open') ? 'hidden' : '';
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleMoreMenu() {
+  document.getElementById('more-menu').classList.toggle('open');
+}
+
+function closeMoreMenu() {
+  document.getElementById('more-menu').classList.remove('open');
+}
+
+// Close more menu when clicking outside
+document.addEventListener('click', function(e) {
+  const moreMenu = document.getElementById('more-menu');
+  const moreBtn = document.querySelector('.bottom-nav-item:last-child');
+  if (moreMenu && !moreMenu.contains(e.target) && !moreBtn.contains(e.target)) {
+    moreMenu.classList.remove('open');
+  }
+});
+
 /* ── THEME TOGGLE ── */
 function toggleTheme() {
   const html = document.documentElement;
@@ -2429,6 +2829,26 @@ function calc() {
     summarySub.textContent = `${fmt(Math.abs(diff))} saved over ${termYrs} years with halal`;
     summaryBadge.className = 'summary-badge less';
     summaryBadge.textContent = 'Halal saves money';
+  }
+
+  /* Update Live Results Strip */
+  const stripHpp = document.getElementById('strip-hpp');
+  const stripConv = document.getElementById('strip-conv');
+  const stripDiff = document.getElementById('strip-diff');
+  if (stripHpp && stripConv && stripDiff) {
+    stripHpp.textContent = fmt(hM);
+    stripConv.textContent = fmt(cM);
+    const diffAbs = Math.abs(mDiff);
+    if (mDiff > 0) {
+      stripDiff.innerHTML = '<span>+' + fmt(diffAbs) + '</span>';
+      stripDiff.className = 'results-strip-diff';
+    } else if (mDiff < 0) {
+      stripDiff.innerHTML = '<span>−' + fmt(diffAbs) + '</span>';
+      stripDiff.className = 'results-strip-diff cheaper';
+    } else {
+      stripDiff.innerHTML = '<span>Same</span>';
+      stripDiff.className = 'results-strip-diff cheaper';
+    }
   }
 
   /* Breakdown bars */
