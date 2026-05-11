@@ -6,9 +6,17 @@
 <meta name="description" content="Free UK Islamic mortgage calculator. Compare HPP, conventional & shared ownership costs. Check affordability, stamp duty, buying fees. No signup, no ads.">
 <meta property="og:title" content="UK Islamic Mortgage Calculator — HPP, Conventional & Shared Ownership">
 <meta property="og:description" content="Free tool for UK Muslims to compare Islamic Home Purchase Plans with conventional mortgages. No signup. No ads.">
+<meta property="og:image" content="https://halalmortgagecalculator.org.uk/og-image.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://halalmortgagecalculator.org.uk">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UK Islamic Mortgage Calculator">
+<meta name="twitter:description" content="Free tool for UK Muslims to compare Islamic Home Purchase Plans with conventional mortgages.">
+<meta name="twitter:image" content="https://halalmortgagecalculator.org.uk/og-image.png">
 <meta name="theme-color" content="#1a1a18">
 <title>UK Islamic Mortgage Calculator — Compare HPP, Conventional &amp; Shared Ownership</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <!-- [SECTION:CSS_VARIABLES] -->
@@ -42,6 +50,7 @@ body {
 /* ── HEADER ── */
 .header {
   background: var(--ink);
+  padding: 1.5rem 1rem 1.25rem;
   padding: clamp(1.5rem, 5vw, 3rem) clamp(1rem, 4vw, 2rem) clamp(1.25rem, 4vw, 2.5rem);
   position: relative;
   overflow: hidden;
@@ -76,6 +85,8 @@ body {
   gap: 1rem;
   flex-wrap: wrap;
 }
+.header-top-row > * { margin-bottom: 0.5rem; }
+@supports (gap: 1rem) { .header-top-row > * { margin-bottom: 0; } }
 .header-text { flex: 1; min-width: 0; }
 .header-eyebrow {
   font-size: 11px; font-weight: 500;
@@ -84,12 +95,14 @@ body {
 }
 .header h1 {
   font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 1.55rem;
   font-size: clamp(1.55rem, 5vw, 2.7rem);
   font-weight: 400; line-height: 1.13;
   color: #faf9f6; margin-bottom: 10px;
 }
 .header h1 em { font-style: italic; color: var(--teal-mid); }
 .header-sub {
+  font-size: 13px;
   font-size: clamp(13px, 2.5vw, 14px);
   color: rgba(255,255,255,0.65);
   max-width: 520px; line-height: 1.65;
@@ -101,6 +114,9 @@ body {
   align-items: flex-start;
   padding-top: 4px;
 }
+.header-actions > * { margin-right: 8px; }
+.header-actions > *:last-child { margin-right: 0; }
+@supports (gap: 8px) { .header-actions > * { margin-right: 0; } }
 .btn-ghost {
   font-family: 'DM Sans', sans-serif;
   font-size: 13px; font-weight: 500;
@@ -133,7 +149,7 @@ body {
 .btn-teal svg { width: 15px; height: 15px; flex-shrink: 0; }
 
 /* ── MAIN ── */
-.main { max-width: 900px; margin: 0 auto; padding: clamp(1.25rem, 4vw, 2rem) clamp(1rem, 3vw, 1.5rem) 4rem; }
+.main { max-width: 900px; margin: 0 auto; padding: 1.25rem 1rem 4rem; padding: clamp(1.25rem, 4vw, 2rem) clamp(1rem, 3vw, 1.5rem) 4rem; }
 
 .sec {
   font-size: 10.5px; font-weight: 500;
@@ -146,6 +162,7 @@ body {
   background: #fff;
   border: 1px solid var(--border);
   border-radius: var(--radius);
+  padding: 1rem;
   padding: clamp(1rem, 3vw, 1.5rem);
   margin-bottom: 1.25rem;
   box-shadow: var(--shadow);
@@ -201,6 +218,8 @@ input[type=range]::-moz-range-thumb {
 
 /* ── PRESETS ── */
 .presets { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 0.75rem; }
+.preset-btn { margin: 0 6px 6px 0; }
+@supports (gap: 6px) { .preset-btn { margin: 0; } }
 .preset-btn {
   font-family: 'DM Sans', sans-serif;
   font-size: 12px; padding: 5px 13px;
@@ -247,7 +266,7 @@ input[type=range]::-moz-range-thumb {
 
 .stat { margin-bottom: 13px; }
 .stat-label { font-size: 11px; color: var(--ink-mute); margin-bottom: 2px; }
-.stat-value { font-size: clamp(18px, 4vw, 22px); font-weight: 300; color: var(--ink); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.stat-value { font-size: 18px; font-size: clamp(18px, 4vw, 22px); font-weight: 300; color: var(--ink); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 .stat-sub { font-size: 11px; color: var(--ink-mute); margin-top: 1px; line-height: 1.4; }
 
 /* ── DIFF BOX ── */
@@ -351,7 +370,7 @@ input[type=range]::-moz-range-thumb {
 /* ── HOW IT WORKS MODAL ── */
 .modal-overlay {
   display: none;
-  position: fixed; inset: 0; z-index: 100;
+  position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 100;
   background: rgba(10,10,8,0.65);
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
@@ -525,6 +544,8 @@ input[type=range]::-moz-range-thumb {
   flex-wrap: wrap;
   margin-bottom: 0.75rem;
 }
+.city-btn { margin: 0 6px 6px 0; }
+@supports (gap: 6px) { .city-btn { margin: 0; } }
 .city-btn {
   font-family: 'DM Sans', sans-serif;
   font-size: 11px;
@@ -1115,6 +1136,8 @@ input[type="range"].purple {
 /* Author footer */
 .author-footer {
   position: fixed;
+  bottom: 1rem;
+  right: 1rem;
   bottom: max(1rem, env(safe-area-inset-bottom, 1rem));
   right: max(1rem, env(safe-area-inset-right, 1rem));
   display: flex;
@@ -1538,16 +1561,16 @@ input[type="range"].purple {
           <input type="range" class="blue" min="3" max="10" step="0.01" value="5.5" id="crate" oninput="syncRateFromSlider('crate')" aria-label="Conventional mortgage rate">
         </div>
         <div>
-          <div class="preset-label">Quick presets — real 2026 UK rates <span class="info-icon" title="These presets use current average rates from UK Islamic mortgage providers. 'Gatehouse 2yr' is their 2-year fixed rate, 'StrideUp 10% dep' is for 10% deposits, 'Higher rates' shows a cautious scenario, and 'Parity' assumes equal rates for comparison.">?</span></div>
+          <div class="preset-label">Rate scenarios <span class="info-icon" title="Example rates for comparison. Actual rates vary by provider, deposit amount, and loan size. Always check directly with providers for your specific situation.">?</span></div>
           <div class="presets">
-            <button type="button" class="preset-btn active" onclick="setPreset(5.9,5.5,this)">Gatehouse 2yr</button>
-            <button type="button" class="preset-btn" onclick="setPreset(6.2,5.5,this)">StrideUp 10% dep</button>
-            <button type="button" class="preset-btn" onclick="setPreset(6.8,6.0,this)">Higher rates</button>
-            <button type="button" class="preset-btn" onclick="setPreset(5.5,5.5,this)">Parity</button>
+            <button type="button" class="preset-btn active" onclick="setPreset(5.9,5.5,this)">Typical market</button>
+            <button type="button" class="preset-btn" onclick="setPreset(6.5,6.0,this)">Conservative</button>
+            <button type="button" class="preset-btn" onclick="setPreset(5.5,5.2,this)">Optimistic</button>
+            <button type="button" class="preset-btn" onclick="setPreset(5.5,5.5,this)">Equal rates</button>
           </div>
           <div class="rate-freshness">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            Rates last verified: May 2026 — always confirm directly with providers before applying.
+            Rates vary by deposit %, loan amount, and provider. Enter your exact quoted rates above for accurate comparison.
           </div>
         </div>
       </div>
@@ -1803,6 +1826,16 @@ input[type="range"].purple {
         <div class="cost-row">
           <span class="cost-label">Searches &amp; Land Registry</span>
           <span class="cost-value" id="cost-searches">—</span>
+        </div>
+        <div class="cost-row cost-row-input">
+          <label class="cost-label" for="cost-arrangement">Arrangement/product fee</label>
+          <input type="number" id="cost-arrangement" class="cost-input" placeholder="£0" value="995" oninput="calcBuyingCosts()">
+          <span class="cost-hint">Typically £500-2,000. Can often be added to loan.</span>
+        </div>
+        <div class="cost-row cost-row-input">
+          <label class="cost-label" for="cost-application">Application fee</label>
+          <input type="number" id="cost-application" class="cost-input" placeholder="£0" value="0" oninput="calcBuyingCosts()">
+          <span class="cost-hint">Some lenders charge £100-300 upfront</span>
         </div>
         <div class="cost-row cost-row-input">
           <label class="cost-label" for="cost-broker">Broker fee (optional)</label>
@@ -2686,6 +2719,8 @@ function calcStampDuty() {
 function calcBuyingCosts() {
   const price = +document.getElementById('price').value;
   const stampDuty = parseFloat(document.getElementById('stamp-amount').textContent.replace(/[£,]/g, '')) || 0;
+  const arrangementFee = +document.getElementById('cost-arrangement').value || 0;
+  const applicationFee = +document.getElementById('cost-application').value || 0;
   const brokerFee = +document.getElementById('cost-broker').value || 0;
   const otherCosts = +document.getElementById('cost-other').value || 0;
 
@@ -2703,7 +2738,7 @@ function calcBuyingCosts() {
   const searches = price < 300000 ? 400 : (price < 500000 ? 500 : 600);
 
   // Total
-  const total = stampDuty + solicitor + survey + searches + brokerFee + otherCosts;
+  const total = stampDuty + solicitor + survey + searches + arrangementFee + applicationFee + brokerFee + otherCosts;
 
   // Update display
   document.getElementById('cost-solicitor').textContent = fmt(solicitor);
